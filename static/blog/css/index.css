@@ -1,0 +1,68 @@
+* {
+    font-family:"Microsoft YaHei";
+}
+.brand a{
+    font-family: cursive;
+}
+.heading{
+    padding: 50px 20px;
+}
+.wrapper{
+    margin-top: 0px;
+}
+.module li a:hover{
+    color: #55774c;
+}
+.naver .sub a{
+    color: #55774c;
+}
+.heading .wrapper h2{
+    font-family: consolas, "Courier New", courier, monospace;
+    font-weight: 300;
+}
+.heading .wrapper .lead{
+    margin-bottom: 10px;
+}
+.top_img{
+    width: 1000px;
+    margin: 0px auto;
+}
+.top_img img{
+    height: 55px;
+    width: 112px;
+    margin-left: 108px;
+}
+.contents{
+    width: 1000px;
+    height: 1000px;
+    margin: 30px auto;
+}
+.contents .box1{
+    border-top: 1px solid #CCCCCC;
+    width: 720px;
+    float: left;
+    height: 100%;
+}
+.contents .box2{
+    width: 248px;
+    padding: 15px;
+    float: left;
+    height: 100%;
+    border-left: 1px solid #CCCCCC;
+    border-top: 1px solid #CCCCCC;
+}
+.login_status img{
+    width: 58px;
+    float: left;
+}
+
+.login_status h5{
+    width: 100px;
+    line-height: 10px;
+    margin-left: 70px;
+    margin-bottom: 30px;
+
+}
+.login_status p{
+
+}

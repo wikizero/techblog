@@ -1,0 +1,14 @@
+.timeline{
+    width: 800px;
+    margin: 20px auto;
+}
+.timeline li{
+    list-style: none;
+}
+.timeline h3{
+    font-size: 20px;
+    margin: 8px 0px;
+}
+.timeline .event{
+    margin-bottom: 60px;
+}

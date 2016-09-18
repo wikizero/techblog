@@ -1,0 +1,62 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="{% static 'blog/css/slicy.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'blog/css/uikit.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'blog/css/uikit.gradient.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'blog/css/sticky.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'blog/css/index.css' %}" rel="stylesheet" type="text/css">
+    <script src="{% static 'blog/js/jquery-1.7.1.min.js' %}"></script>
+    <script src="{% static 'blog/js/uikit.js' %}"></script>
+    <script src="{% static 'blog/js/sticky.min.js' %}"></script>
+    <script src="{% static 'blog/js/slicy.js' %}"></script>
+    <title>{{ note.type }} - {{ note.title }}</title>
+
+    <style>
+        .uk-article-title {
+            margin-top: 20px;
+            font-size: 25px;
+            line-height: 25px;
+            margin-left: 20px;
+        }
+
+        .uk-article-meta {
+            line-height: 20px;
+            margin-left: 20px;
+        }
+        .p{
+            padding: 10px 20px;
+            border-top: 1px solid #EEEEEE;
+        }
+        code{
+            background-color: inherit;
+            font-size: 16px;
+            line-height: 23px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="contents" style="width: 80%;padding: 20px;margin: 0px auto">
+
+    <div class="uk-article" style="margin-bottom: 30px">
+        <h3 class="uk-article-title">{{ note.title }}</h3>
+        <a href="#" style="float: right; margin-right: 20px">下载本页</a>
+        <p class="uk-article-meta"> 创建时间 : {{ note.create|date:"Y-m-d H:i:s" }} &nbsp; &nbsp; 最后更新 : {{ note.edit|date:"Y-m-d H:i:s" }} &nbsp; &nbsp;
+            <span style="background-color: #fafff8;padding: 3px 6px;border: 1px solid #EEEEEE">{{ note.type }}</span> </p>
+
+        <p class="p">{{ note.content }}</p>
+    </div>
+
+</div>
+
+<script>
+    $(function () {
+        text = $('.p').text()
+        $('.p').text('').html(text)
+    })
+</script>
+</body>
+</html>

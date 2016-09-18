@@ -1,0 +1,31 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="{% static 'blog/js/jquery-1.7.1.min.js' %}"></script>
+    <script src="{% static 'blog/js/jquery.easings.min.js' %}"></script>
+    <script src="{% static 'blog/js/jquery.fullpage.min.js' %}"></script>
+    <link href="{% static 'blog/css/jquery.fullpage.min.css' %}" rel="stylesheet" type="text/css">
+    <title>运作项目</title>
+    <script>
+        $(function () {
+            $('#fullpage').fullpage({
+                navigation:true,
+                loopBottom:true
+            });
+        });
+    </script>
+</head>
+<body>
+<div id="fullpage">
+    <div class="section" style="background-color: #F4F4F4">
+        第一屏
+        <a href="index">返回</a>
+    </div>
+    <div class="section" style="background-color: #F4F4F4">第二屏</div>
+    <div class="section" style="background-color: #F4F4F4">第三屏</div>
+    <div class="section" style="background-color: #F4F4F4">第四屏</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,97 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="{% static 'blog/css/slicy.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'blog/css/uikit.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'blog/css/uikit.gradient.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'blog/css/sticky.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'blog/css/index.css' %}" rel="stylesheet" type="text/css">
+    <script src="{% static 'blog/js/jquery-1.7.1.min.js' %}"></script>
+    <script src="{% static 'blog/js/uikit.js' %}"></script>
+    <script src="{% static 'blog/js/sticky.min.js' %}"></script>
+    <script src="{% static 'blog/js/slicy.js' %}"></script>
+    <title>notes - share</title>
+
+    <style>
+        .uk-article-title {
+            margin-top: 20px;
+            font-size: 25px;
+            line-height: 25px;
+        }
+
+        .uk-article-meta {
+            line-height: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="naver">
+    <div class="wrapper">
+        <div class="brand">
+            <a href="./index.html">Attitude</a>
+        </div>
+        <div class="gh">
+            <a href="#"></a>
+        </div>
+        <div class="module">
+            <ul>
+                <li class="">
+                    <a href="/index">主页</a>
+                </li>
+                <li class="">
+                    <a href="/notes/share">笔记分享</a>
+                </li>
+                <li>
+                    <a href="/full_page">运作项目</a>
+                </li>
+                <li>
+                    <a href="">生活记忆</a>
+                </li>
+                <li>
+                    <a href="/about">关于本站</a>
+                </li>
+            </ul>
+        </div>
+        <div class="sub">
+            <ul>
+                <li><a href="https://github.com/wikizero/" target="_blank" title="GiuHub">我的项目（GitHub）</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="heading">
+    <div class="wrapper">
+        <h2>主页</h2>
+
+        <div class="lead">国产响应式css框架</div>
+        <div class="social">兼容ie6，ie7，ie8，firefox，chrome等浏览器</div>
+    </div>
+</div>
+<div class="contents" style="width: 840px;padding: 20px;">
+
+    {% for n in notes %}
+        <div class="uk-article" {% if forloop.last %}  style="margin-bottom: 30px"  {% endif %}>
+            <h3 class="uk-article-title">{{ forloop.counter }}. {{ n.title }}</h3>
+            <p class="uk-article-meta"> 创建时间 : {{ n.create|date:"Y-m-d H:i:s" }} &nbsp; &nbsp; 最后更新 : {{ n.edit|date:"Y-m-d H:i:s" }} &nbsp; &nbsp;
+                <span style="background-color: #fafff8;padding: 3px 6px;border: 1px solid #EEEEEE">{{ n.type }}</span> </p>
+            <p class="p">{{ n.desc }}</p>
+            <a href="/notes/details?id={{ n.id }}" style="float: right" target="_blank">点击阅读</a>
+        </div>
+    {% endfor %}
+
+</div>
+
+<script>
+    $(function () {
+{#        $('.p').each(function () {#}
+{#            text = $(this).text()#}
+{#            $(this).text('').html(text)#}
+{#        })#}
+
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="{% static 'blog/css/slicy.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'blog/css/index.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'blog/css/about.css' %}" rel="stylesheet" type="text/css">
+    <script src="{% static 'blog/js/jquery-1.7.1.min.js' %}"></script>
+    <script src="{% static 'blog/js/slicy.js' %}"></script>
+    <title>home</title>
+</head>
+<body>
+<div class="naver">
+    <div class="wrapper">
+        <div class="brand">
+            <a href="index">Attitude</a>
+        </div>
+        <div class="gh">
+            <a href="#"></a>
+        </div>
+        <div class="module">
+            <ul>
+                <li class="">
+                    <a href="index">主页</a>
+                </li>
+                <li class="">
+                    <a href="">技术分享</a>
+                </li>
+                <li>
+                    <a href="full_page">运作项目</a>
+                </li>
+                <li>
+                    <a href="">生活记忆</a>
+                </li>
+                <li>
+                    <a href="">关于本站</a>
+                </li>
+            </ul>
+        </div>
+        <div class="sub">
+            <ul>
+                <li><a href="https://github.com/wikizero/" target="_blank" title="GitHub">我的项目（GitHub）</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="heading">
+    <div class="wrapper">
+        <h2>关于本站</h2>
+        <div class="lead">国产响应式css框架</div>
+        <div class="social">兼容ie6，ie7，ie8，firefox，chrome等浏览器</div>
+    </div>
+</div>
+<ul class="timeline">
+    <li class="event">
+        <label></label>
+        <div class="thumb" style="background-image:url({% static 'blog/images/photo.jpg' %});">
+            <span>2016-6-26</span></div>
+        <div class="inner">
+            <h3>正式启动项目</h3>
+            <p>迷茫，那是因为你的才华还撑不起你的梦想！</p>
+        </div>
+    </li>
+    <li class="event">
+        <label></label>
+        <div class="thumb" style="background-image:url({% static 'blog/images/photo.jpg' %});">
+            <span>2016-6-27</span></div>
+        <div class="inner">
+            <h3>Attitude </h3>
+            <p>终点的距离，无关前行的速度，而是取决于前行的态度！</p>
+        </div>
+    </li>
+</ul>
+</body>
+</html>
