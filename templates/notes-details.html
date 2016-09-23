@@ -15,6 +15,9 @@
     <title>{{ note.type }} - {{ note.title }}</title>
 
     <style>
+	*{
+	    font-family: arial, "Microsoft YaHei", "\5fae\8f6f\96c5\9ed1"
+	}
         .uk-article-title {
             margin-top: 20px;
             font-size: 25px;
@@ -31,15 +34,16 @@
             border-top: 1px solid #EEEEEE;
         }
         code{
+	    font-family: Monaco,Menlo,Consolas,"Courier New",monospace, "Microsoft YaHei";
             background-color: inherit;
-            font-size: 16px;
-            line-height: 23px;
+            font-size: 15px;
+            line-height: 25px;
         }
     </style>
 </head>
 <body>
 
-<div class="contents" style="width: 80%;padding: 20px;margin: 0px auto">
+<div class="contents" style="width: 1000px;padding: 20px;margin: 0px auto">
 
     <div class="uk-article" style="margin-bottom: 30px">
         <h3 class="uk-article-title">{{ note.title }}</h3>
