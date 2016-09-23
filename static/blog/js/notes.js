@@ -261,6 +261,8 @@ $(function () {
             alert('can not find the doc')
             return false
         }
+	alert('you have no right to alter the doc')
+	return false
         $.ajax({
             url: '/save/note',
             type: 'post',

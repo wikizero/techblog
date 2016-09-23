@@ -30,7 +30,7 @@
 <div class="naver">
     <div class="wrapper">
         <div class="brand">
-            <a href="./index.html">Attitude</a>
+            <a href="/">Attitude</a>
         </div>
         <div class="gh">
             <a href="#"></a>
@@ -38,7 +38,7 @@
         <div class="module">
             <ul>
                 <li class="">
-                    <a href="/index">主页</a>
+                    <a href="/">主页</a>
                 </li>
                 <li class="">
                     <a href="/notes/share">笔记分享</a>
@@ -70,19 +70,30 @@
         <div class="social">兼容ie6，ie7，ie8，firefox，chrome等浏览器</div>
     </div>
 </div>
-<div class="contents" style="width: 840px;padding: 20px;">
-
-    {% for n in notes %}
-        <div class="uk-article" {% if forloop.last %}  style="margin-bottom: 30px"  {% endif %}>
+	<!-- <div class="col3">
+                <ul class="sidebar affixed">
+            <li class="">
+            <a href="#what">什么是slicy？</a></li>
+            <li class=""><a href="#ie6">关于ie6支持</a></li>
+            <li class="selected"><a href="#download">下载</a></li>
+            <li class=""><a href="#files">文件结构目录</a></li>
+            <li class=""><a href="#template">正确加载</a></li>
+            <li><a href="#license">使用许可</a></li>
+            <li><a href="#feedback">反馈与建议</a></li>
+            </ul>
+        </div> -->
+	<div class="contents" style="width: 840px;padding: 20px;">
+	    {% for n in notes %}
+		<div class="uk-article" {% if forloop.last %}  style="margin-bottom: 30px"  {% endif %}>
             <h3 class="uk-article-title">{{ forloop.counter }}. {{ n.title }}</h3>
             <p class="uk-article-meta"> 创建时间 : {{ n.create|date:"Y-m-d H:i:s" }} &nbsp; &nbsp; 最后更新 : {{ n.edit|date:"Y-m-d H:i:s" }} &nbsp; &nbsp;
                 <span style="background-color: #fafff8;padding: 3px 6px;border: 1px solid #EEEEEE">{{ n.type }}</span> </p>
             <p class="p">{{ n.desc }}</p>
             <a href="/notes/details?id={{ n.id }}" style="float: right" target="_blank">点击阅读</a>
-        </div>
-    {% endfor %}
+		</div>
+	    {% endfor %}
 
-</div>
+	<div>
 
 <script>
     $(function () {
