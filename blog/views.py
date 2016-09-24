@@ -2,6 +2,9 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.http import StreamingHttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from blog.models import *
 import pdfkit
 import random
@@ -21,6 +24,12 @@ def full_page(request):
     return render(request, 'fullpage.html')
 
 
+def notes_logout(request):
+    logout(request)
+    return redirect('/')
+
+
+@login_required(login_url="/notes/login")
 def notes(request):
     notes = Notes.objects.all()
     dct = {}
@@ -33,6 +42,22 @@ def notes(request):
         'notes': dct
     }
     return render(request, 'notes.html', data)
+
+
+@csrf_exempt
+def notes_login(request):
+    if request.method == "GET":
+        return render(request, 'notes-login.html')
+    elif request.method == "POST":
+        username = request.POST.get('username', False)
+        password = request.POST.get('password', False)
+        if not username or not password:
+            return HttpResponse('username or password can not be none')
+        user = authenticate(username=username, password=password)
+        if not user:
+            return HttpResponse('error')
+        login(request, user)
+        return redirect('/notes')
 
 
 def notes_share(request):
