@@ -2,14 +2,15 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.http import StreamingHttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from blog.models import *
 import pdfkit
 import random
 import datetime
 import json
 
-
-# Create your views here.
 
 def index(request):
     return render(request, 'index.html')
@@ -23,6 +24,12 @@ def full_page(request):
     return render(request, 'fullpage.html')
 
 
+def notes_logout(request):
+    logout(request)
+    return redirect('/')
+
+
+@login_required(login_url="/notes/login")
 def notes(request):
     notes = Notes.objects.all()
     dct = {}
@@ -35,6 +42,22 @@ def notes(request):
         'notes': dct
     }
     return render(request, 'notes.html', data)
+
+
+@csrf_exempt
+def notes_login(request):
+    if request.method == "GET":
+        return render(request, 'notes-login.html')
+    elif request.method == "POST":
+        username = request.POST.get('username', False)
+        password = request.POST.get('password', False)
+        if not username or not password:
+            return HttpResponse('username or password can not be none')
+        user = authenticate(username=username, password=password)
+        if not user:
+            return HttpResponse('error')
+        login(request, user)
+        return redirect('/notes')
 
 
 def notes_share(request):
@@ -57,25 +80,6 @@ def notes_details(request):
 
 
 def file_download(request):
-    # with open('static/blog/images/java.png') as f:
-    #     c = f.read()
-    # return HttpResponse(c)
-
-    # def file_iterator(file_name, chunk_size=512):
-    #     with open(file_name) as f:
-    #         while True:
-    #             c = f.read(chunk_size)
-    #             if c:
-    #                 yield c
-    #             else:
-    #                 break
-    #
-    # the_file_name = "static/blog/images/templet.zip"
-    # response = StreamingHttpResponse(file_iterator(the_file_name))
-    # response['Content-Type'] = 'application/zip'
-    # response['Content-Disposition'] = 'attachment;filename="{0}"'.format(the_file_name)
-    #
-    # return response
     response = HttpResponse(content_type='image/png')
     response['Content-Disposition'] = 'attachment; filename="java.png"'
     with open('static/blog/images/java.png') as fp:

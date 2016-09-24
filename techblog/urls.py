@@ -23,6 +23,8 @@ urlpatterns = [
     url(r'^full_page', views.full_page),
     url(r'^download', views.file_download),
     url(r'^notes$', views.notes),
+    url(r'^notes/login$', views.notes_login),
+    url(r'^notes/logout$', views.notes_logout),
     url(r'^sign/in', views.sign_sys),
     url(r'^notes/share$', views.notes_share),
     url(r'^notes/details$', views.notes_details),
