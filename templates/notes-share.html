@@ -24,6 +24,33 @@
         .uk-article-meta {
             line-height: 20px;
         }
+
+        .col3 {
+            position: absolute;
+            width: 210px;
+            display: none;
+        }
+
+        @media (min-width: 1300px) {
+            .col3 {
+                margin-left: 10px;
+                display: block;
+            }
+        }
+
+        @media (min-width: 1500px) {
+            .col3 {
+                margin-left: 100px;
+                display: block;
+            }
+        }
+
+        @media (min-width: 1800px) {
+            .col3 {
+                margin-left: 200px;
+                display: block;
+            }
+        }
     </style>
 </head>
 <body>
@@ -65,44 +92,44 @@
 <div class="heading">
     <div class="wrapper">
         <h2>主页</h2>
-
         <div class="lead">国产响应式css框架</div>
         <div class="social">兼容ie6，ie7，ie8，firefox，chrome等浏览器</div>
     </div>
 </div>
-	<!-- <div class="col3">
-                <ul class="sidebar affixed">
-            <li class="">
-            <a href="#what">什么是slicy？</a></li>
-            <li class=""><a href="#ie6">关于ie6支持</a></li>
-            <li class="selected"><a href="#download">下载</a></li>
-            <li class=""><a href="#files">文件结构目录</a></li>
-            <li class=""><a href="#template">正确加载</a></li>
-            <li><a href="#license">使用许可</a></li>
-            <li><a href="#feedback">反馈与建议</a></li>
-            </ul>
-        </div> -->
-	<div class="contents" style="width: 840px;padding: 20px;">
-	    {% for n in notes %}
-		<div class="uk-article" {% if forloop.last %}  style="margin-bottom: 30px"  {% endif %}>
+
+<div class="col3">
+    <ul class="sidebar">
+        <li class=""><a href="#">所有笔记</a></li>
+        {% for key, val in dct.items %}
+            <li class=""><a href="#">{{ key }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="contents" style="width: 840px;padding: 20px;">
+    {% for n in notes %}
+        <div class="uk-article" {% if forloop.last %}  style="margin-bottom: 30px"  {% endif %}>
             <h3 class="uk-article-title">{{ forloop.counter }}. {{ n.title }}</h3>
-            <p class="uk-article-meta"> 创建时间 : {{ n.create|date:"Y-m-d H:i:s" }} &nbsp; &nbsp; 最后更新 : {{ n.edit|date:"Y-m-d H:i:s" }} &nbsp; &nbsp;
-                <span style="background-color: #fafff8;padding: 3px 6px;border: 1px solid #EEEEEE">{{ n.type }}</span> </p>
+
+            <p class="uk-article-meta"> 创建时间 : {{ n.create|date:"Y-m-d H:i:s" }} &nbsp; &nbsp; 最后更新
+                : {{ n.edit|date:"Y-m-d H:i:s" }} &nbsp; &nbsp;
+                <span style="background-color: #fafff8;padding: 3px 6px;border: 1px solid #EEEEEE">{{ n.type }}</span>
+            </p>
+
             <p class="p">{{ n.desc }}</p>
             <a href="/notes/details?id={{ n.id }}" style="float: right" target="_blank">点击阅读</a>
-		</div>
-	    {% endfor %}
+        </div>
+    {% endfor %}
+    <div>
 
-	<div>
+        <script>
+            $(function () {
+                {#        $('.p').each(function () {#}
+                {#            text = $(this).text()#}
+                {#            $(this).text('').html(text)#}
+                {#        })#}
 
-<script>
-    $(function () {
-{#        $('.p').each(function () {#}
-{#            text = $(this).text()#}
-{#            $(this).text('').html(text)#}
-{#        })#}
-
-    })
-</script>
+            })
+        </script>
 </body>
 </html>

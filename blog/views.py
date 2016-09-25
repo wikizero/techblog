@@ -61,9 +61,18 @@ def notes_login(request):
 
 
 def notes_share(request):
+
     notes = Notes.objects.filter(show=True).order_by('-id')
+    dct = {}
+    for note in notes:
+        if not dct.get(note.type, False):
+            dct[note.type] = []
+        lst = dct.get(note.type)
+        lst.append(note)
+
     data = {
-        'notes': notes
+        'notes': notes,
+        'dct': dct
     }
     return render(request, 'notes-share.html', data)
 
