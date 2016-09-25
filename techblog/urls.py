@@ -35,3 +35,6 @@ urlpatterns = [
     url(r'^del/note', views.del_note)
 
 ]
+
+
+

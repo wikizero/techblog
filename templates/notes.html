@@ -55,7 +55,8 @@
                     <div>
                         <ul class="uk-nav-sub">
                             {% for n in val %}
-                                <li class="notes" data="{{ n.id }}"><a><i class="uk-icon-file-text-o"></i> <span>{{ n.title }}</span>
+                                <li class="notes" data="{{ n.id }}"><a><i class="uk-icon-file-text-o"></i>
+                                    <span>{{ n.title }}</span>
                                 </a></li>
                             {% endfor %}
                         </ul>
@@ -74,19 +75,21 @@
     <div class="left-bottom">
         <button class="uk-button save" type="button" data="">save</button>
         <button class="uk-button" type="button" style="margin-left: 25px"
-                 onclick="javascript:window.location.href='/notes/share'">share</button>
-        <a class="uk-button" type="button" href="/notes/logout"  style="margin-left: 25px">logout</a>
+                onclick="javascript:window.location.href='/notes/share'">share
+        </button>
+        <a class="uk-button" type="button" href="/notes/logout" style="margin-left: 25px">logout</a>
 
     </div>
 </div>
 <p class="information">open a document...</p>
 
-<form class="p-title" data-uk-search >
+<form class="p-title" data-uk-search>
     <i class="uk-icon-commenting-o" style="margin-right:-20px;color: #888"></i>
     <input class="uk-search-field p-desc" type="search" placeholder="for description..."
            style="width: 638px;border-bottom: 1px solid #dddddd;text-align: center;color: #888;padding: 0">
 </form>
 <a class="uk-icon-button uk-icon-eye p-hide" alt="toggle"></a>
+
 <div class="right-side">
     <div class="editor">
         <textarea id="editor" data-autosave="editor-content" autofocus required></textarea>
@@ -94,6 +97,7 @@
     <div class="visual uk-panel" style='display:none'>
         <h3 class="uk-panel-title"><i class="uk-icon-paperclip"></i> 下面是笔记预览:</h3>
         <a class="uk-icon-hover uk-icon-chevron-up close"></a>
+
         <div></div>
     </div>
 </div>
