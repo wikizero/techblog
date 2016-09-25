@@ -120,10 +120,10 @@
 
             <p class="uk-article-meta"> 创建时间 : {{ n.create|date:"Y-m-d H:i:s" }} &nbsp; &nbsp; 最后更新
                 : {{ n.edit|date:"Y-m-d H:i:s" }} &nbsp; &nbsp;
-                <span style="background-color: #fafff8;padding: 3px 6px;border: 1px solid #EEEEEE">{{ n.type }}</span>
+                <span style="background-color: #ECF0F1;padding: 3px 6px;border: 1px solid #d2d2d2">{{ n.type }}</span>
             </p>
 
-            <p class="p">{{ n.desc }}</p>
+            <p class="p" style="font-size: 14px">{{ n.desc }}</p>
             <a href="/notes/details?id={{ n.id }}" style="float: right" target="_blank">点击阅读</a>
         </div>
     {% endfor %}
