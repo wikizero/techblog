@@ -64,14 +64,12 @@ def notes_login(request):
 def notes_share(request):
     if request.method == 'GET':
         type = request.GET.get('type', False)
-        print type
         notes = Notes.objects.filter(show=True).order_by('-id')
         if type:
             all_note = Notes.objects.filter(show=True, type=type).order_by('-id')
         else:
             all_note = notes
         dct = {}
-        print all_note
         for note in notes:
             if not dct.get(note.type, False):
                 dct[note.type] = []
