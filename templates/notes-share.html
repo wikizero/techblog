@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load my_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,6 +30,9 @@
             position: absolute;
             width: 210px;
             display: none;
+        }
+        .sidebar a{
+            text-decoration: none;
         }
 
         @media (min-width: 1300px) {
@@ -99,8 +103,9 @@
 
 <div class="col3">
     <ul class="sidebar">
-        <li class=""><a href="#">所有笔记</a></li>
+        <li class=""><a href="#">All Documents</a></li>
         {% for key, val in dct.items %}
+            {{ forloop.counter.0 }}
             <li class=""><a href="#">{{ key }}</a></li>
         {% endfor %}
     </ul>
