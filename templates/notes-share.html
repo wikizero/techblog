@@ -24,6 +24,7 @@
 
         .uk-article-meta {
             line-height: 20px;
+            font-size: 14px;
         }
 
         .col3 {
@@ -33,6 +34,7 @@
         }
         .sidebar a{
             text-decoration: none;
+            font-size: 15px;
         }
 
         @media (min-width: 1300px) {
@@ -103,10 +105,10 @@
 
 <div class="col3">
     <ul class="sidebar">
-        <li class=""><a href="#">All Documents</a></li>
+        <li class="left-bar"><a>All Documents</a></li>
         {% for key, val in dct.items %}
             {{ forloop.counter.0 }}
-            <li class=""><a href="#">{{ key }}</a></li>
+            <li class="left-bar" data="{{ key }}"><a>{{ key }}</a></li>
         {% endfor %}
     </ul>
 </div>
@@ -129,11 +131,14 @@
 
         <script>
             $(function () {
-                {#        $('.p').each(function () {#}
-                {#            text = $(this).text()#}
-                {#            $(this).text('').html(text)#}
-                {#        })#}
-
+                $('.left-bar').click(function () {   // 其实没必要这样，django直接渲染就可以了，但js出错，或许jquery版本太低了
+                   var type = $(this).attr('data')
+                    if (type == null){
+                        window.location.href='/notes/share'
+                    }else{
+                        window.location.href='/notes/share?type='+type
+                    }
+                })
             })
         </script>
 </body>

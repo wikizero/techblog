@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from blog.models import *
+from django.db.models import Q
 import pdfkit
 import random
 import datetime
@@ -61,19 +62,28 @@ def notes_login(request):
 
 
 def notes_share(request):
+    if request.method == 'GET':
+        type = request.GET.get('type', False)
+        print type
+        notes = Notes.objects.filter(show=True).order_by('-id')
+        if type:
+            all_note = Notes.objects.filter(show=True, type=type).order_by('-id')
+        else:
+            all_note = notes
+        dct = {}
+        print all_note
+        for note in notes:
+            if not dct.get(note.type, False):
+                dct[note.type] = []
+            lst = dct.get(note.type)
+            lst.append(note)
 
-    notes = Notes.objects.filter(show=True).order_by('-id')
-    dct = {}
-    for note in notes:
-        if not dct.get(note.type, False):
-            dct[note.type] = []
-        lst = dct.get(note.type)
-        lst.append(note)
-
-    data = {
-        'notes': notes,
-        'dct': dct
-    }
+        data = {
+            'notes': all_note,
+            'dct': dct
+        }
+    elif request.method == 'POST':
+        print 'to do'
     return render(request, 'notes-share.html', data)
 
 
