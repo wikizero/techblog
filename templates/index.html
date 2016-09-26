@@ -157,13 +157,20 @@
                 <p>登录就能下载源码，还能评论呢！</p>
                 <a class="uk-button uk-button uk-button-small" href="/notes">进入wiki-note</a>
 
-                <p style="margin-top: 50px;margin-bottom: 5px;cursor: pointer">
-                    <a href="/notes/share" style="font-size: 15px;color:#7F8C8D;text-decoration: none">最新文章(点这进入列表) <span style="float: right">>></span></a></p>
+                <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86
+                        src="http://music.163.com/outchain/player?type=2&id=30780496&auto=0&height=66"
+                        style="margin: 20px -10px"></iframe>
+
+                <p style="margin-bottom: 5px;cursor: pointer">
+                    <a href="/notes/share" style="font-size: 15px;color:#7F8C8D;text-decoration: none">最新文章(点这进入列表)
+                        <span style="float: right">>></span></a></p>
+
                 <div class="singlerolling">
                     <ul style="margin-top: 0; padding-left: 8px">
                         {% for note in notes %}
-                        <li><a href="/notes/details?id={{ note.id }}">{{ forloop.counter }}. {{ note.title }}</a></li>
-                       {% endfor %}
+                            <li><a href="/notes/details?id={{ note.id }}">{{ forloop.counter }}. {{ note.title }}</a>
+                            </li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
