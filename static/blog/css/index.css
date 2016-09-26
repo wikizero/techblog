@@ -99,4 +99,15 @@
 }
 
 /*--------------------------------------------*/
-
+.singlerolling{
+    height: 110px;
+    line-height: 21px;
+}
+.singlerolling li{
+    list-style: none;
+    text-align: left;
+}
+.singlerolling li a{
+     color: #95A5A6;
+    font-size: 15px;
+}

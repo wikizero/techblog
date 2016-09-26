@@ -1,211 +1,174 @@
+{% extends 'base.html' %}
 {% load staticfiles %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link href="{% static 'blog/css/slicy.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% static 'blog/css/uikit.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% static 'blog/css/uikit.gradient.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% static 'blog/css/sticky.min.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% static 'blog/css/index.css' %}" rel="stylesheet" type="text/css">
-    <script src="{% static 'blog/js/jquery-1.7.1.min.js' %}"></script>
-    <script src="{% static 'blog/js/uikit.js' %}"></script>
-    <script src="{% static 'blog/js/sticky.min.js' %}"></script>
-    <script src="{% static 'blog/js/grid.min.js' %}"></script>
-    <script src="{% static 'blog/js/slicy.js' %}"></script>
-    <title>home</title>
-</head>
-<body>
-<div class="naver">
-    <div class="wrapper">
-        <div class="brand">
-            <a href="/">Attitude</a>
-        </div>
-        <div class="gh">
-            <a href="#"></a>
-        </div>
-        <div class="module">
-            <ul>
-                <li class="">
-                    <a href="/">主页</a>
-                </li>
-                <li class="">
-                    <a href="/notes/share">笔记分享</a>
-                </li>
-                <li>
-                    <a href="/full_page">运作项目</a>
-                </li>
-                <li>
-                    <a href="/sign/in">生活记忆</a>
-                </li>
-                <li>
-                    <a href="/about">关于本站</a>
-                </li>
-            </ul>
-        </div>
-        <div class="sub">
-            <ul>
-                <li><a href="https://github.com/wikizero/" target="_blank" title="GiuHub">我的项目（GitHub）</a></li>
-            </ul>
+{% block title %}attitude-blog{% endblock title %}
+{% block head %}{% endblock head %}
+{% block content %}
+
+    <div class="heading">
+        <div class="wrapper">
+            <h2>主页</h2>
+
+            <div class="lead">国产响应式css框架</div>
+            <div class="social">兼容ie6，ie7，ie8，firefox，chrome等浏览器</div>
         </div>
     </div>
-</div>
+    <div class="top_img">
+        <a href="#"><img src="{% static 'blog/images/python.png' %}" class="img-scale" width="100"/></a>
+        <a href="#"><img src="{% static 'blog/images/linux.png' %}" class="img-scale" width="100"/></a>
+        <a href="#"><img src="{% static 'blog/images/jquery.jpg' %}" class="img-scale" width="100"/></a>
+        <a href="#"><img src="{% static 'blog/images/git.png' %}" class="img-scale" width="100"/></a>
 
-<div class="heading">
-    <div class="wrapper">
-        <h2>主页</h2>
-
-        <div class="lead">国产响应式css框架</div>
-        <div class="social">兼容ie6，ie7，ie8，firefox，chrome等浏览器</div>
     </div>
-</div>
-<div class="top_img">
-    <a href="#"><img src="{% static 'blog/images/python.png' %}" class="img-scale" width="100"/></a>
-    <a href="#"><img src="{% static 'blog/images/linux.png' %}" class="img-scale" width="100"/></a>
-    <a href="#"><img src="{% static 'blog/images/jquery.jpg' %}" class="img-scale" width="100"/></a>
-    <a href="#"><img src="{% static 'blog/images/git.png' %}" class="img-scale" width="100"/></a>
+    <div class="contents">
+        <div class="box1">
+            <div class="center-box">
+                <ul id="filter" class="uk-subnav uk-subnav-pill">
+                    <li class="uk-active" data-uk-filter=""><a href="#">全部</a></li>
+                    <li data-uk-filter="filter-a"><a href="#">深色</a></li>
+                    <li data-uk-filter="filter-b"><a href="#">浅色</a></li>
+                </ul>
 
-</div>
-<div class="contents">
-    <div class="box1">
-        <div class="center-box">
-            <ul id="filter" class="uk-subnav uk-subnav-pill">
-                <li class="uk-active" data-uk-filter=""><a href="#">全部</a></li>
-                <li data-uk-filter="filter-a"><a href="#">深色</a></li>
-                <li data-uk-filter="filter-b"><a href="#">浅色</a></li>
-            </ul>
+                <div style="position: relative; margin-left: -20px; height: 394px;"
+                     class="uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 tm-grid-heights"
+                     data-uk-grid="{gutter: 20, controls: '#filter'}">
+                    <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 0px; left: 421.366px; opacity: 1;"
+                         data-grid-prepared="true" data-uk-filter="filter-a">
+                        <div class="uk-panel-box" style="background-color: #7F8C8D">#7F8C8D</div>
+                    </div>
+                    <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 0px; left: 632.049px; opacity: 1;"
+                         data-grid-prepared="true" data-uk-filter="filter-b">
+                        <div class="uk-panel-box" style="background-color: #95A5A6">#95A5A6</div>
+                    </div>
+                    <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 0px; left: 0px; opacity: 1;"
+                         data-grid-prepared="true" data-uk-filter="filter-b">
+                        <div class="uk-panel-box" style="background-color: #BDC3C7">#BDC3C7</div>
+                    </div>
+                    <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 0px; left: 210.683px; opacity: 1;"
+                         data-grid-prepared="true" data-uk-filter="filter-b">
+                        <div class="uk-panel-box" style="background-color: #ECF0F1">#ECF0F1</div>
+                    </div>
 
-            <div style="position: relative; margin-left: -20px; height: 394px;"
-                 class="uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 tm-grid-heights"
-                 data-uk-grid="{gutter: 20, controls: '#filter'}">
-                <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 0px; left: 421.366px; opacity: 1;"
-                     data-grid-prepared="true" data-uk-filter="filter-a">
-                    <div class="uk-panel-box" style="background-color: #7F8C8D">#7F8C8D</div>
-                </div>
-                <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 0px; left: 632.049px; opacity: 1;"
-                     data-grid-prepared="true" data-uk-filter="filter-b">
-                    <div class="uk-panel-box" style="background-color: #95A5A6">#95A5A6</div>
-                </div>
-                <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 0px; left: 0px; opacity: 1;"
-                     data-grid-prepared="true" data-uk-filter="filter-b">
-                    <div class="uk-panel-box" style="background-color: #BDC3C7">#BDC3C7</div>
-                </div>
-                <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 0px; left: 210.683px; opacity: 1;"
-                     data-grid-prepared="true" data-uk-filter="filter-b">
-                    <div class="uk-panel-box" style="background-color: #ECF0F1">#ECF0F1</div>
-                </div>
+                    <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 132px; left: 0px; opacity: 1;"
+                         data-grid-prepared="true" data-uk-filter="filter-a">
+                        <div class="uk-panel-box" style="background-color: #2C3E50">#2C3E50</div>
+                    </div>
+                    <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 152px; left: 210.683px; opacity: 1;"
+                         data-grid-prepared="true" data-uk-filter="filter-a">
+                        <div class="uk-panel-box" style="background-color: #34495E">#34495E</div>
+                    </div>
+                    <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 152px; left: 210.683px; opacity: 1;"
+                         data-grid-prepared="true" data-uk-filter="filter-a">
+                        <div class="uk-panel-box" style="background-color: #51779b">#51779b</div>
+                    </div>
+                    <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 152px; left: 210.683px; opacity: 1;"
+                         data-grid-prepared="true" data-uk-filter="filter-a">
+                        <div class="uk-panel-box" style="background-color: #6699CC ">#6699CC</div>
+                    </div>
+                    <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 212px; left: 421.366px; opacity: 1;"
+                         data-grid-prepared="true" data-uk-filter="filter-a">
+                        <div class="uk-panel-box" style="background-color: #16A085">#16A085</div>
+                    </div>
+                    <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
+                         data-grid-prepared="true" data-uk-filter="filter-a">
+                        <div class="uk-panel-box" style="background-color: #1ABC9C">#1ABC9C</div>
+                    </div>
+                    <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
+                         data-grid-prepared="true" data-uk-filter="filter-a">
+                        <div class="uk-panel-box" style="background-color: #33CC99 ">#33CC99</div>
+                    </div>
+                    <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
+                         data-grid-prepared="true" data-uk-filter="filter-a">
+                        <div class="uk-panel-box" style="background-color: #33FFCC ">#33FFCC</div>
+                    </div>
+                    <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
+                         data-grid-prepared="true" data-uk-filter="filter-a">
+                        <div class="uk-panel-box" style="background-color: #006699  ">#006699</div>
+                    </div>
+                    <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
+                         data-grid-prepared="true" data-uk-filter="filter-a">
+                        <div class="uk-panel-box" style="background-color: #0099CC ">#0099CC</div>
+                    </div>
 
-                <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 132px; left: 0px; opacity: 1;"
-                     data-grid-prepared="true" data-uk-filter="filter-a">
-                    <div class="uk-panel-box" style="background-color: #2C3E50">#2C3E50</div>
-                </div>
-                <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 152px; left: 210.683px; opacity: 1;"
-                     data-grid-prepared="true" data-uk-filter="filter-a">
-                    <div class="uk-panel-box" style="background-color: #34495E">#34495E</div>
-                </div>
-                <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 152px; left: 210.683px; opacity: 1;"
-                     data-grid-prepared="true" data-uk-filter="filter-a">
-                    <div class="uk-panel-box" style="background-color: #51779b">#51779b</div>
-                </div>
-                <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 152px; left: 210.683px; opacity: 1;"
-                     data-grid-prepared="true" data-uk-filter="filter-a">
-                    <div class="uk-panel-box" style="background-color: #6699CC ">#6699CC</div>
-                </div>
-                <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 212px; left: 421.366px; opacity: 1;"
-                     data-grid-prepared="true" data-uk-filter="filter-a">
-                    <div class="uk-panel-box" style="background-color: #16A085">#16A085</div>
-                </div>
-                <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
-                     data-grid-prepared="true" data-uk-filter="filter-a">
-                    <div class="uk-panel-box" style="background-color: #1ABC9C">#1ABC9C</div>
-                </div>
-                <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
-                     data-grid-prepared="true" data-uk-filter="filter-a">
-                    <div class="uk-panel-box" style="background-color: #33CC99 ">#33CC99</div>
-                </div>
-                <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
-                     data-grid-prepared="true" data-uk-filter="filter-a">
-                    <div class="uk-panel-box" style="background-color: #33FFCC ">#33FFCC</div>
-                </div>
-                <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
-                     data-grid-prepared="true" data-uk-filter="filter-a">
-                    <div class="uk-panel-box" style="background-color: #006699  ">#006699</div>
-                </div>
-                <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
-                     data-grid-prepared="true" data-uk-filter="filter-a">
-                    <div class="uk-panel-box" style="background-color: #0099CC ">#0099CC</div>
-                </div>
+                    <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
+                         data-grid-prepared="true" data-uk-filter="filter-a">
+                        <div class="uk-panel-box" style="background-color: #00abdf ">#00abdf</div>
+                    </div>
+                    <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
+                         data-grid-prepared="true" data-uk-filter="filter-a">
+                        <div class="uk-panel-box" style="background-color: #00CCFF ">#00CCFF</div>
+                    </div>
+                    <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
+                         data-grid-prepared="true" data-uk-filter="filter-a">
+                        <div class="uk-panel-box" style="background-color: #D35400">#D35400</div>
+                    </div>
+                    <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
+                         data-grid-prepared="true" data-uk-filter="filter-a">
+                        <div class="uk-panel-box" style="background-color: #e28327">#e28327</div>
+                    </div>
+                    <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
+                         data-grid-prepared="true" data-uk-filter="filter-a">
+                        <div class="uk-panel-box" style="background-color: #F39C12">#F39C12</div>
+                    </div>
+                    <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
+                         data-grid-prepared="true" data-uk-filter="filter-b">
+                        <div class="uk-panel-box" style="background-color: #F1C40F">#F1C40F</div>
+                    </div>
+                    <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
+                         data-grid-prepared="true" data-uk-filter="filter-a">
+                        <div class="uk-panel-box" style="background-color: #FF3366  ">#FF3366</div>
+                    </div>
+                    <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
+                         data-grid-prepared="true" data-uk-filter="filter-a">
+                        <div class="uk-panel-box" style="background-color: #FF6699  ">#FF6699</div>
+                    </div>
+                    <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
+                         data-grid-prepared="true" data-uk-filter="filter-b">
+                        <div class="uk-panel-box" style="background-color: #FF99CC ">#FF99CC</div>
+                    </div>
+                    <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
+                         data-grid-prepared="true" data-uk-filter="filter-b">
+                        <div class="uk-panel-box" style="background-color: #FFCCCC ">#FFCCCC</div>
+                    </div>
 
-                <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
-                     data-grid-prepared="true" data-uk-filter="filter-a">
-                    <div class="uk-panel-box" style="background-color: #00abdf ">#00abdf</div>
-                </div>
-                <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
-                     data-grid-prepared="true" data-uk-filter="filter-a">
-                    <div class="uk-panel-box" style="background-color: #00CCFF ">#00CCFF</div>
-                </div>
-                <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
-                     data-grid-prepared="true" data-uk-filter="filter-a">
-                    <div class="uk-panel-box" style="background-color: #D35400">#D35400</div>
-                </div>
-                <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
-                     data-grid-prepared="true" data-uk-filter="filter-a">
-                    <div class="uk-panel-box" style="background-color: #e28327">#e28327</div>
-                </div>
-                <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
-                     data-grid-prepared="true" data-uk-filter="filter-a">
-                    <div class="uk-panel-box" style="background-color: #F39C12">#F39C12</div>
-                </div>
-                <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
-                     data-grid-prepared="true" data-uk-filter="filter-b">
-                    <div class="uk-panel-box" style="background-color: #F1C40F">#F1C40F</div>
-                </div>
-                <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
-                     data-grid-prepared="true" data-uk-filter="filter-a">
-                    <div class="uk-panel-box" style="background-color: #FF3366  ">#FF3366</div>
-                </div>
-                <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
-                     data-grid-prepared="true" data-uk-filter="filter-a">
-                    <div class="uk-panel-box" style="background-color: #FF6699  ">#FF6699</div>
-                </div>
-                <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
-                     data-grid-prepared="true" data-uk-filter="filter-b">
-                    <div class="uk-panel-box" style="background-color: #FF99CC ">#FF99CC</div>
-                </div>
-                <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
-                     data-grid-prepared="true" data-uk-filter="filter-b">
-                    <div class="uk-panel-box" style="background-color: #FFCCCC ">#FFCCCC</div>
-                </div>
-
-                <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
-                     data-grid-prepared="true" data-uk-filter="filter-a">
-                    <div class="uk-panel-box" style="background-color: #FFCC00  ">#FFCC00</div>
-                </div>
-                <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
-                     data-grid-prepared="true" data-uk-filter="filter-a">
-                    <div class="uk-panel-box" style="background-color: #FFCC66  ">#FFCC66</div>
-                </div>
-                <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
-                     data-grid-prepared="true" data-uk-filter="filter-b">
-                    <div class="uk-panel-box" style="background-color: #FFFF99  ">#FFFF99</div>
-                </div>
-                <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
-                     data-grid-prepared="true" data-uk-filter="filter-b">
-                    <div class="uk-panel-box" style="background-color: #FFFFCC ">#FFFFCC</div>
+                    <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
+                         data-grid-prepared="true" data-uk-filter="filter-a">
+                        <div class="uk-panel-box" style="background-color: #FFCC00  ">#FFCC00</div>
+                    </div>
+                    <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
+                         data-grid-prepared="true" data-uk-filter="filter-a">
+                        <div class="uk-panel-box" style="background-color: #FFCC66  ">#FFCC66</div>
+                    </div>
+                    <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
+                         data-grid-prepared="true" data-uk-filter="filter-b">
+                        <div class="uk-panel-box" style="background-color: #FFFF99  ">#FFFF99</div>
+                    </div>
+                    <div style="position: absolute; box-sizing: border-box; padding-left: 30px; padding-bottom: 30px; top: 172px; left: 632.049px; opacity: 1;"
+                         data-grid-prepared="true" data-uk-filter="filter-b">
+                        <div class="uk-panel-box" style="background-color: #FFFFCC ">#FFFFCC</div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="box2">
-        <div class="uk-panel login_status">
-            <img class="uk-border-circle" src="{% static 'blog/images/photo.jpg' %}">
-            <h5>Attitude</h5>
+        <div class="box2">
+            <div class="uk-panel login_status" style="margin:15px 0 0 30px">
+                <img class="uk-border-circle" src="{% static 'blog/images/photo.jpg' %}">
+                <h5>Attitude</h5>
 
-            <p>登录就能下载源码，还能评论呢！</p>
-            <a class="uk-button uk-button uk-button-small" href="/notes">进入wiki-note</a>
+                <p>登录就能下载源码，还能评论呢！</p>
+                <a class="uk-button uk-button uk-button-small" href="/notes">进入wiki-note</a>
+
+                <p style="margin-top: 50px;margin-bottom: 5px;cursor: pointer">
+                    <a href="/notes/share" style="font-size: 15px;color:#7F8C8D;text-decoration: none">最新文章(点这进入列表) <span style="float: right">>></span></a></p>
+                <div class="singlerolling">
+                    <ul style="margin-top: 0; padding-left: 8px">
+                        {% for note in notes %}
+                        <li><a href="/notes/details?id={{ note.id }}">{{ forloop.counter }}. {{ note.title }}</a></li>
+                       {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+
         </div>
-
     </div>
-</div>
-</body>
-</html>
+{% endblock content %}

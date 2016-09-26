@@ -1,20 +1,8 @@
+{% extends 'base.html' %}
 {% load staticfiles %}
 {% load my_tags %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link href="{% static 'blog/css/slicy.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% static 'blog/css/uikit.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% static 'blog/css/uikit.gradient.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% static 'blog/css/sticky.min.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% static 'blog/css/index.css' %}" rel="stylesheet" type="text/css">
-    <script src="{% static 'blog/js/jquery-1.7.1.min.js' %}"></script>
-    <script src="{% static 'blog/js/uikit.js' %}"></script>
-    <script src="{% static 'blog/js/sticky.min.js' %}"></script>
-    <script src="{% static 'blog/js/slicy.js' %}"></script>
-    <title>notes - share</title>
-
+{% block title %}notes - share{% endblock title %}
+{% block head %}
     <style>
         .uk-article-title {
             margin-top: 5px;
@@ -32,7 +20,8 @@
             width: 210px;
             display: none;
         }
-        .sidebar a{
+
+        .sidebar a {
             text-decoration: none;
             font-size: 15px;
         }
@@ -58,62 +47,28 @@
             }
         }
     </style>
-</head>
-<body>
-<div class="naver">
-    <div class="wrapper">
-        <div class="brand">
-            <a href="/">Attitude</a>
-        </div>
-        <div class="gh">
-            <a href="#"></a>
-        </div>
-        <div class="module">
-            <ul>
-                <li class="">
-                    <a href="/">主页</a>
-                </li>
-                <li class="">
-                    <a href="/notes/share">笔记分享</a>
-                </li>
-                <li>
-                    <a href="/full_page">运作项目</a>
-                </li>
-                <li>
-                    <a href="">生活记忆</a>
-                </li>
-                <li>
-                    <a href="/about">关于本站</a>
-                </li>
-            </ul>
-        </div>
-        <div class="sub">
-            <ul>
-                <li><a href="https://github.com/wikizero/" target="_blank" title="GiuHub">我的项目（GitHub）</a></li>
-            </ul>
+{% endblock head %}
+{% block content %}
+
+    <div class="heading">
+        <div class="wrapper">
+            <h2>主页</h2>
+
+            <div class="lead">国产响应式css框架</div>
+            <div class="social">兼容ie6，ie7，ie8，firefox，chrome等浏览器</div>
         </div>
     </div>
-</div>
-
-<div class="heading">
-    <div class="wrapper">
-        <h2>主页</h2>
-        <div class="lead">国产响应式css框架</div>
-        <div class="social">兼容ie6，ie7，ie8，firefox，chrome等浏览器</div>
+    <div class="col3">
+        <ul class="sidebar">
+            <li class="left-bar"><a>All Documents</a></li>
+            {% for key, val in dct.items %}
+                {{ forloop.counter.0 }}
+                <li class="left-bar" data="{{ key }}"><a>{{ key }}</a></li>
+            {% endfor %}
+        </ul>
     </div>
-</div>
 
-<div class="col3">
-    <ul class="sidebar">
-        <li class="left-bar"><a>All Documents</a></li>
-        {% for key, val in dct.items %}
-            {{ forloop.counter.0 }}
-            <li class="left-bar" data="{{ key }}"><a>{{ key }}</a></li>
-        {% endfor %}
-    </ul>
-</div>
-
-<div class="contents" style="width: 840px;padding: 20px;">
+    <div class="contents" style="width: 840px;padding: 20px;">
     {% for n in notes %}
         <div class="uk-article" {% if forloop.last %}  style="margin-bottom: 30px"  {% endif %}>
             <h3 class="uk-article-title">{{ forloop.counter }}. {{ n.title }}</h3>
@@ -123,23 +78,23 @@
                 <span style="background-color: #ECF0F1;padding: 3px 6px;border: 1px solid #d2d2d2">{{ n.type }}</span>
             </p>
 
-            <p class="p" style="font-size: 14px">{{ n.desc }}</p>
+            <p class="p" style="font-size: 15px">{{ n.desc }}</p>
             <a href="/notes/details?id={{ n.id }}" style="float: right" target="_blank">点击阅读</a>
         </div>
     {% endfor %}
     <div>
 
-        <script>
-            $(function () {
-                $('.left-bar').click(function () {   // 其实没必要这样，django直接渲染就可以了，但js出错，或许jquery版本太低了
-                   var type = $(this).attr('data')
-                    if (type == null){
-                        window.location.href='/notes/share'
-                    }else{
-                        window.location.href='/notes/share?type='+type
-                    }
-                })
+    <script>
+        $(function () {
+            $('.left-bar').click(function () {   // 其实没必要这样，django直接渲染就可以了，但js出错，或许jquery版本太低了
+                var type = $(this).attr('data')
+                if (type == null) {
+                    window.location.href = '/notes/share'
+                } else {
+                    window.location.href = '/notes/share?type=' + type
+                }
             })
-        </script>
-</body>
-</html>
+        })
+    </script>
+
+{% endblock content %}

@@ -1,19 +1,7 @@
+{% extends 'base.html' %}
 {% load staticfiles %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link href="{% static 'blog/css/slicy.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% static 'blog/css/uikit.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% static 'blog/css/uikit.gradient.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% static 'blog/css/sticky.min.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% static 'blog/css/index.css' %}" rel="stylesheet" type="text/css">
-    <script src="{% static 'blog/js/jquery-1.7.1.min.js' %}"></script>
-    <script src="{% static 'blog/js/uikit.js' %}"></script>
-    <script src="{% static 'blog/js/sticky.min.js' %}"></script>
-    <script src="{% static 'blog/js/slicy.js' %}"></script>
-    <title>{{ note.type }} - {{ note.title }}</title>
-
+{% block title %}{{ note.type }} - {{ note.title }}{% endblock title %}
+{% block head %}
     <style>
 	*{
 	    font-family: arial, "Microsoft YaHei", "\5fae\8f6f\96c5\9ed1"
@@ -42,9 +30,8 @@
             line-height: 25px;
         }
     </style>
-</head>
-<body>
-
+{% endblock head %}
+{% block content %}
 <div class="contents" style="width: 1000px;padding: 20px;margin: 0px auto">
 
     <div class="uk-article" style="margin-bottom: 30px">
@@ -64,5 +51,4 @@
         $('.p').text('').html(text)
     })
 </script>
-</body>
-</html>
+{% endblock content %}
