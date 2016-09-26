@@ -1,0 +1,60 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="{% static 'blog/css/slicy.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'blog/css/uikit.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'blog/css/uikit.gradient.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'blog/css/sticky.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'blog/css/index.css' %}" rel="stylesheet" type="text/css">
+    <script src="{% static 'blog/js/jquery-1.7.1.min.js' %}"></script>
+    <script src="{% static 'blog/js/uikit.js' %}"></script>
+    <script src="{% static 'blog/js/sticky.min.js' %}"></script>
+    <script src="{% static 'blog/js/grid.min.js' %}"></script>
+    <script src="{% static 'blog/js/slicy.js' %}"></script>
+    {% block head %}
+    {% endblock %}
+    <title>{% block title %}attitude-blog{% endblock %}</title>
+</head>
+<body>
+<div class="naver">
+    <div class="wrapper">
+        <div class="brand">
+            <a href="/">Attitude</a>
+        </div>
+        <div class="gh">
+            <a href="#"></a>
+        </div>
+        <div class="module">
+            <ul>
+                <li>
+                    <a href="/">主页</a>
+                </li>
+                <li>
+                    <a href="/notes/share">笔记分享</a>
+                </li>
+                <li>
+                    <a href="/full_page">运作项目</a>
+                </li>
+                <li>
+                    <a href="/sign/in">生活记忆</a>
+                </li>
+                <li>
+                    <a href="/about">关于本站</a>
+                </li>
+            </ul>
+        </div>
+        <div class="sub">
+            <ul>
+                <li><a href="https://github.com/wikizero/" target="_blank" title="GiuHub">我的项目（GitHub）</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% block content %}
+{% endblock %}
+</body>
+</html>
