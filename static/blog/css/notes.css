@@ -67,6 +67,7 @@
 
 /*     -------------------------- right-------------------        */
 .editor {
+    margin-left:118px;
     width: 938px;
     float: left;
     /*{#            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);#} */
@@ -155,13 +156,13 @@
     z-index: 998;
     position: absolute;
     top: 68px;
-    left: 555px;
+    left: 588px;
 }
 .p-hide{
     z-index: 998;
     position: absolute;
     top: 72px;
-    left: 1235px;
+    left: 1362px;
     width: 30px;
     height: 30px;
     line-height: 26px;
