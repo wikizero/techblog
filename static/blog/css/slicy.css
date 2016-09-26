@@ -516,7 +516,7 @@ label{ display:block; font-size:14px; margin:10px 0 0 0; }
 	float: left; display: inline; height: 60px; overflow: hidden;
 }
 .naver .brand img{
-	height: 60px;
+	height: 45px;
 }
 .naver .brand a{
 	font-size:25px; padding-left:0 !important;  border-right:0; font-weight: bold; padding-left: 0; padding-right: 10px; display:block !important;
