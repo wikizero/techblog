@@ -18,17 +18,17 @@
 
     {% block head %}
     {% endblock %}
-    <title>{% block title %}attitude-blog{% endblock %}</title>
+    <title>{% block title %}Attitude 站点{% endblock %}</title>
     <style>
-        .droper{
-{#            display: block !important;#}
-            width: 720px !important;
+        .droper {
+        {#            display: block !important;#} width: 720px !important;
             left: -450px !important;
             border: 1px solid #EEEEEE !important;
             height: 188px;
             text-align: left !important;
         }
-        .droper a{
+
+        .droper a {
             padding: 0 80px;
         }
 
@@ -68,10 +68,10 @@
 
                     <div class="droper">
                         <a href="/full_page">fullpage演示</a>
-                        <a href="/sign/in" >签到系统</a>
-                        <a href="#" >测试子菜单3</a>
-                        <a href="#" >测试子菜单4</a>
-                        <a href="#" >测试子菜单5</a>
+                        <a href="/sign/in">签到系统</a>
+                        <a href="#">测试子菜单3</a>
+                        <a href="#">测试子菜单4</a>
+                        <a href="#">测试子菜单5</a>
                         <a href="#" target="_blank">测试子菜单6</a>
                     </div>
                 </li>
@@ -86,5 +86,9 @@
 </div>
 {% block content %}
 {% endblock %}
+<div class="wrapper footer" style="position: absolute; border-bottom: 0px; width: 100%; margin-top: 50px; height: 150px;background-color: #ECF0F1;left: 0">
+    <p style="margin: 60px auto; text-align: center">© CopyRight 2016-2017, wikizeros All Rights Reserved.<br>
+       许可证号：桂ICP备16007752号-1</p>
+</div>
 </body>
 </html>
