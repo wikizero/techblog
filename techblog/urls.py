@@ -21,7 +21,6 @@ urlpatterns = [
     url(r'^$', views.index),
     url(r'^about', views.about_us),
     url(r'^full_page', views.full_page),
-    url(r'^download', views.file_download),
     url(r'^notes$', views.notes),
     url(r'^notes/login$', views.notes_login),
     url(r'^notes/logout$', views.notes_logout),
@@ -32,7 +31,12 @@ urlpatterns = [
     url(r'^add/note', views.add_note),
     url(r'^get/note', views.get_note),
     url(r'^save/note', views.save_note),
-    url(r'^del/note', views.del_note)
+    url(r'^del/note', views.del_note),
+
+    url(r'^upload', views.upload),
+    url(r'^download', views.download),
+    url(r'^remove', views.remove),
+
 
 ]
 

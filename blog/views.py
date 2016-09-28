@@ -1,5 +1,5 @@
 # coding:utf-8
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, HttpResponse, redirect, render_to_response
 from django.http import StreamingHttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
@@ -11,6 +11,9 @@ import pdfkit
 import random
 import datetime
 import json
+import os
+import time
+import mimetypes
 
 
 def index(request):
@@ -108,24 +111,6 @@ def file_download(request):
         response.write(data)
         print data, '---' * 100
 
-    return response
-
-
-def export(request):
-    # order_num_list = request.GET.get('id', '')
-    options = {'margin-top': '0', 'margin-right': '0', 'margin-bottom': '0', 'margin-left': '0'}
-    output = '/tmp/out.pdf-%d' % random.randint(1000, 9999)
-    pdfkit.from_url('http://localhost:8022/index', output, options=options)
-    response = HttpResponse(content_type='application/pdf')
-
-    now = datetime.datetime.now()
-    pdf_name = now.strftime('%Y%m%d%H%M%S')
-    response['Content-Disposition'] = 'attachment; filename="' + pdf_name + '.pdf"'
-
-    with file(output) as fp:
-        data = fp.read()
-
-    response.write(data)
     return response
 
 
@@ -272,3 +257,92 @@ def save_note(request):
             'msg': 'ok'
         }
         return HttpResponse(json.dumps(result), content_type="application/json")
+
+
+@csrf_exempt
+def upload(request):
+    if request.method == 'GET':
+        root_dir = 'static/blog/files/'
+        file_lst = []
+
+        for parent_folder, folder_names, file_names in os.walk(root_dir):
+            for filename in file_names:
+                # print filename  # 文件名
+                size = os.path.getsize(root_dir+filename)/1024.0
+                file_size = round(size, 1)   # 文件大小
+                create_sec = os.stat(root_dir+filename).st_ctime
+                dates = datetime.datetime.fromtimestamp(create_sec)
+                create_date = dates.strftime('%Y-%m-%d %H:%M:%S')  # 文件创建时间（也即是文件上传时间 ）
+                file_lst.append([filename.decode('gbk'), file_size, create_date])   # filename.decode('gbk') 转中文显示
+        data = {
+            'file': file_lst[::-1]
+        }
+        return render(request, 'upload.html', data)
+
+    elif request.method == 'POST':
+        file_obj = request.FILES.getlist('files[]')
+        file_list = []
+        for f in file_obj:
+            if len(f) / 1024 > 10000:   # 不大于10M
+                result = {
+                    'filename': ','.join(file_list),
+                    'msg': 'err'
+                }
+                return HttpResponse(json.dumps(result), content_type="application/json")
+        destination = 'static/blog/files/'
+        if not os.path.exists(destination):
+            os.makedirs(destination)
+        with open(destination + f.name, 'wb+') as destination:
+            for chunk in f.chunks():
+                destination.write(chunk)
+        file_list.append(f.name)
+
+    result = {
+        'filename': ','.join(file_list),
+        'msg': 'ok'
+    }
+    return HttpResponse(json.dumps(result), content_type="application/json")
+
+
+@csrf_exempt
+def download(request):
+    name = request.GET.get('file', False)
+    root_dir = 'static/blog/files/'
+
+    # with open(root_dir+name) as f:
+    #     res = f.read()
+    # response = StreamingHttpResponse(res)
+    # response['Content-Type'] = 'application/octet-stream'
+    # response['Content-Disposition'] = 'attachment;filename="{0}"'.format(name)
+
+    # response = HttpResponse(content_type=mimetypes.guess_type(root_dir+name))
+    # response['Content-Disposition'] = 'attachment;filename="{0}"'.format(name)
+    # with open(root_dir+name) as fp:
+    #     data = fp.read()
+    #     response.write(data)
+
+    def readFile(fn, buf_size=262144):
+        f = open(fn, "rb")
+        while True:
+            c = f.read(buf_size)
+            if c:
+                yield c
+            else:
+                break
+        f.close()
+
+    file_name = root_dir+name
+    print file_name
+    response = HttpResponse(readFile(file_name))
+    response['Content-Type'] = 'application/octet-stream'
+    response['Content-Disposition'] = 'attachment;filename="{0}"'.format(name.encode('gbk'))
+
+    return response
+
+
+@csrf_exempt
+def remove(request):
+    name = request.GET.get('file', False)
+    root_dir = 'static/blog/files/'
+    os.remove(root_dir+name)
+    return redirect('/upload')

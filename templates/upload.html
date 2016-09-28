@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Attitude 文件中转站{% endblock title %}
+{% block head %}
+    <script src="{% static 'blog/js/upload.min.js' %}"></script>
+    <script src="{% static 'blog/js/notify.min.js' %}"></script>
+    <style>
+
+        table thead th ,table tr td{
+            background-color: #ffffff !important;
+            text-align: center !important;
+        }
+        .uk-icon-justify{
+            font-size: 18px;
+         }
+    </style>
+{% endblock head %}
+{% block content %}
+    <div class="contents" style="width: 800px;padding: 200px;margin: 0px auto">
+
+        <div id="upload-drop" class="uk-placeholder uk-text-center">
+            <i class="uk-icon-cloud-upload uk-icon-medium uk-text-muted uk-margin-small-right"></i> 将文件拖拽至此 或 <a
+                class="uk-form-file">选择一个文件 <input id="upload-select" name="upload-select" type="file"></a>.
+            {% csrf_token %}
+        </div>
+        <div id="progressbar" class="uk-progress uk-hidden">
+            <div class="uk-progress-bar" style="width: 0%;">0%</div>
+        </div>
+
+
+        <table class="uk-table" style="margin-top: 80px">
+            <thead>
+            <tr>
+                <th>文件名</th>
+                <th>文件大小</th>
+                <th>上传时间</th>
+                <th>删除文件</th>
+                <th>下载文件</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for f in file %}
+            <tr>
+                <td>{{ f.0 }}</td>
+                <td>{{ f.1 }} KB</td>
+                <td>{{ f.2 }}</td>
+                <td> <a href="/remove?file={{ f.0 }}" class="uk-icon-justify uk-icon-trash" style="color: #ff7799"></a></td>
+                <td> <a href="/download?file={{ f.0 }}" class="uk-icon-justify uk-icon-download"></a></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+    <script>
+        $(function () {
+            var progressbar = $("#progressbar"),
+                    bar = progressbar.find('.uk-progress-bar'),
+                    settings = {
+
+                        action: '/upload', // upload url
+
+                        {# allow: '*.(jpg|gif|png|jpeg|doc|txt|py|html|css|xlsx|xls|xlst|)', // allow only images#}
+
+                        loadstart: function () {
+                            bar.css("width", "0%").text("0%");
+                            progressbar.removeClass("uk-hidden");
+                        },
+
+                        progress: function (percent) {
+                            percent = Math.ceil(percent);
+                            bar.css("width", percent + "%").text(percent + "%");
+                        },
+
+                        allcomplete: function (response) {
+                            {#                            alert(response.filename)#}
+                            bar.css("width", "100%").text("100%");
+
+                            setTimeout(function () {
+                                progressbar.addClass("uk-hidden");
+                            }, 250);
+
+                            if (response.msg == 'ok') {
+                                UIkit.notify("<i class='uk-icon-paper-plane'></i> 文件已上传成功！(刷新后可见)", {status: 'success'});
+
+                            } else {
+                                UIkit.notify("<i class='uk-icon-exclamation-triangle'></i> 不支持大文件上传（>10M）！", {status: 'danger'});
+                            }
+                        },
+                        type: 'json'
+                    };
+            var select = UIkit.uploadSelect($("#upload-select"), settings),
+                    drop = UIkit.uploadDrop($("#upload-drop"), settings);
+        });
+
+    </script>
+{% endblock content %}
