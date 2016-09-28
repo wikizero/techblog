@@ -10,6 +10,7 @@
     <link href="{% static 'blog/css/uikit.gradient.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'blog/css/sticky.min.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'blog/css/index.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'blog/css/uikitdoc.min.css' %}" rel="stylesheet" type="text/css">
     <script src="{% static 'blog/js/jquery-1.7.1.min.js' %}"></script>
     <script src="{% static 'blog/js/uikit.js' %}"></script>
     <script src="{% static 'blog/js/sticky.min.js' %}"></script>
@@ -21,7 +22,8 @@
     <title>{% block title %}Attitude 站点{% endblock %}</title>
     <style>
         .droper {
-        {#            display: block !important;#} width: 720px !important;
+        {#            display: block !important;#}
+            width: 720px !important;
             left: -450px !important;
             border: 1px solid #EEEEEE !important;
             height: 188px;
@@ -69,7 +71,7 @@
                     <div class="droper">
                         <a href="/full_page">fullpage演示</a>
                         <a href="/sign/in">签到系统</a>
-                        <a href="#">测试子菜单3</a>
+                        <a href="/upload">文件中转站</a>
                         <a href="#">测试子菜单4</a>
                         <a href="#">测试子菜单5</a>
                         <a href="#" target="_blank">测试子菜单6</a>
@@ -86,9 +88,12 @@
 </div>
 {% block content %}
 {% endblock %}
-<div class="wrapper footer" style="position: absolute; border-bottom: 0px; width: 100%; margin-top: 50px; height: 150px;background-color: #ECF0F1;left: 0">
-    <p style="margin: 60px auto; text-align: center">© CopyRight 2016-2017, wikizeros All Rights Reserved.<br>
-       许可证号：桂ICP备16007752号-1</p>
+<div class="wrapper footer"
+     style="position: absolute; border-bottom: 0px; width: 100%; margin-top: 50px; height: 150px;background-color: #ECF0F1;left: 0">
+    <p style="margin: 60px auto; text-align: center;color: #2C3E50">© CopyRight 2016-2017, wikizeros All Rights
+        Reserved.<br>
+        <a href="http://www.beianbeian.com/" target="_blank" style="color: #2C3E50;text-decoration: none">许可证号：桂ICP备16007752号-1</a>
+    </p>
 </div>
 </body>
 </html>
