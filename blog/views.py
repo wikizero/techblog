@@ -272,7 +272,7 @@ def upload(request):
                 create_sec = os.stat(root_dir+filename).st_ctime
                 dates = datetime.datetime.fromtimestamp(create_sec)
                 create_date = dates.strftime('%Y-%m-%d %H:%M:%S')  # 文件创建时间（也即是文件上传时间 ）
-                file_lst.append([filename, file_size, create_date])   # filename.decode('gbk') 转中文显示
+                file_lst.append([filename, size, create_date])   # filename.decode('gbk') 转中文显示
         data = {
             'file': file_lst[::-1],
             'imtype': ['png', 'PNG', 'jpg', 'JPG','gif', 'GIF', 'peg', 'PEG'],
