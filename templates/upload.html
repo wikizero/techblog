@@ -4,6 +4,7 @@
 {% block head %}
     <script src="{% static 'blog/js/upload.min.js' %}"></script>
     <script src="{% static 'blog/js/notify.min.js' %}"></script>
+    <script src="{% static 'blog/js/lightbox.min.js' %}"></script>
     <style>
 
         table thead th ,table tr td{
@@ -20,7 +21,7 @@
 
         <div id="upload-drop" class="uk-placeholder uk-text-center">
             <i class="uk-icon-cloud-upload uk-icon-medium uk-text-muted uk-margin-small-right"></i> 将文件拖拽至此 或 <a
-                class="uk-form-file">选择一个文件 <input id="upload-select" name="upload-select" type="file"></a>.
+                class="uk-form-file">选择一个文件 <input id="upload-select" name="upload-select" type="file"></a> (目前仅支持<10M的文件).
             {% csrf_token %}
         </div>
         <div id="progressbar" class="uk-progress uk-hidden">
@@ -35,6 +36,7 @@
                 <th>文件大小</th>
                 <th>上传时间</th>
                 <th>删除文件</th>
+                <th>文件预览</th>
                 <th>下载文件</th>
             </tr>
             </thead>
@@ -42,9 +44,18 @@
             {% for f in file %}
             <tr>
                 <td>{{ f.0 }}</td>
-                <td>{{ f.1 }} KB</td>
+                <td>{{ f.1|filesizeformat }}</td>
                 <td>{{ f.2 }}</td>
-                <td> <a href="/remove?file={{ f.0 }}" class="uk-icon-justify uk-icon-trash" style="color: #ff7799"></a></td>
+                <td> <a data="{{ f.0 }}" class="uk-icon-justify uk-icon-trash remove" style="color: #ff7799"></a></td>
+
+                {% if f.0|slice:'-3:' in imtype %}
+                    <td><a data="{{ f.0 }}" href="static/blog/files/{{ f.0 }}" data-uk-lightbox="" class="uk-icon-justify uk-icon-image"></a></td>
+                {% elif f.0|slice:'-3:' in mvtype%}
+                    <td><a data="{{ f.0 }}" href="static/blog/files/{{ f.0 }}" data-uk-lightbox="" class="uk-icon-justify uk-icon-film"></a></td>
+                {% else %}
+                    <td><a data="{{ f.0 }}" href="static/blog/files/{{ f.0 }}" target="_blank" class="uk-icon-justify uk-icon-search"></a></td>
+                {% endif %}
+
                 <td> <a href="/download?file={{ f.0 }}" class="uk-icon-justify uk-icon-download"></a></td>
             </tr>
             {% endfor %}
@@ -82,7 +93,10 @@
                             }, 250);
 
                             if (response.msg == 'ok') {
-                                UIkit.notify("<i class='uk-icon-paper-plane'></i> 文件已上传成功！(刷新后可见)", {status: 'success'});
+                                UIkit.notify("<i class='uk-icon-paper-plane'></i> 文件上传成功了耶!", {status: 'success'});
+                                setTimeout(function(){
+                                    window.location.reload()
+                                }, 2000)
 
                             } else {
                                 UIkit.notify("<i class='uk-icon-exclamation-triangle'></i> 不支持大文件上传（>10M）！", {status: 'danger'});
@@ -92,6 +106,21 @@
                     };
             var select = UIkit.uploadSelect($("#upload-select"), settings),
                     drop = UIkit.uploadDrop($("#upload-drop"), settings);
+
+
+            $('.remove').click(function(){
+                name = $(this).attr('data')
+                UIkit.modal.confirm("此文件将会被移除哦，O不OK？", function(){
+                     // 点击OK确认后开始执行
+                    window.location.href = '/remove?file='+name
+                });s
+            })
+
+{#            var lightbox = UIkit.lightbox.create([#}   //灯箱
+{#                 {'source': 'static/blog/files/二维码.png', 'type':'image'},#}
+{#                 {'source': 'http://url/to/image.jpg', 'type':'image'}#}
+{#            ]);#}
+{#            lightbox.show();#}
         });
 
     </script>

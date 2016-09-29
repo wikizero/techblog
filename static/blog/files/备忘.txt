@@ -1,0 +1,42 @@
+（1）django 数据库 migrate异常
+python manage.py help 命令的解析
+（2）mysql 导出某个表的数据
+	mysqldump -u root(用户名) -p vr(数据库名) vr_product(表名) > product.sql
+mysql 导入某个表的数据
+	mysql -u root -p vr < product.sql
+
+
+模板中格式化日期：{{ od.datetime|date:'Y-m-d H:i:s' }}
+
+CREATE DATABASE `test2` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+
+
+git checkout . #本地所有修改的。没有的提交的，都返回到原来的状态
+git stash #把所有没有提交的修改暂存到stash里面。可用git stash pop回复。
+git reset --hard HASH #返回到某个节点，不保留修改。
+git reset --soft HASH #返回到某个节点。保留修改
+
+jquery插件：http://www.jq22.com/jquery-info3928
+http://www.jq22.com/jquery-info1257
+
+
+
+linux配置git免账号密码：
+在~/下， touch创建文件 .git-credentials：
+touch .git-credentials
+# 用vim编辑此文件，
+vim .git-credentials
+#输入内容格式
+https://username:password@github.com
+2. 在终端下执行 
+git config --global credential.helper store
+可以看到~/.gitconfig文件，会多了一项：
+[credential]
+    helper = store
+
+
+添加ssh key：vim ~/.ssh/authorized_keys
+
+GB18030是GBK的父集，所以能兼容GBK不能编码的字符。uni.encode('GB18030')
+18277192872 梁
