@@ -109,7 +109,6 @@ def file_download(request):
     with open('static/blog/images/java.png') as fp:
         data = fp.read()
         response.write(data)
-        print data, '---' * 100
 
     return response
 
@@ -268,14 +267,16 @@ def upload(request):
         for parent_folder, folder_names, file_names in os.walk(root_dir):
             for filename in file_names:
                 # print filename  # 文件名
-                size = os.path.getsize(root_dir+filename)/1024.0
-                file_size = round(size, 1)   # 文件大小
+                size = os.path.getsize(root_dir+filename)
+                # file_size = round(size, 1)   # 文件大小
                 create_sec = os.stat(root_dir+filename).st_ctime
                 dates = datetime.datetime.fromtimestamp(create_sec)
                 create_date = dates.strftime('%Y-%m-%d %H:%M:%S')  # 文件创建时间（也即是文件上传时间 ）
                 file_lst.append([filename, file_size, create_date])   # filename.decode('gbk') 转中文显示
         data = {
-            'file': file_lst[::-1]
+            'file': file_lst[::-1],
+            'imtype': ['png', 'PNG', 'jpg', 'JPG','gif', 'GIF', 'peg', 'PEG'],
+            'mvtype': ['mp4', 'MP4']
         }
         return render(request, 'upload.html', data)
 
@@ -283,9 +284,8 @@ def upload(request):
         file_obj = request.FILES.getlist('files[]')
         file_list = []
         for f in file_obj:
-            if len(f) / 1024 > 10000:   # 不大于10M
+            if len(f) / 1024 > 1000000000:   # 不大于10M
                 result = {
-                    'filename': ','.join(file_list),
                     'msg': 'err'
                 }
                 return HttpResponse(json.dumps(result), content_type="application/json")
@@ -297,11 +297,11 @@ def upload(request):
                 destination.write(chunk)
         file_list.append(f.name)
 
-    result = {
-        'filename': ','.join(file_list),
-        'msg': 'ok'
-    }
-    return HttpResponse(json.dumps(result), content_type="application/json")
+        result = {
+            'filename': ','.join(file_list),
+            'msg': 'ok'
+        }
+        return HttpResponse(json.dumps(result), content_type="application/json")
 
 
 @csrf_exempt
