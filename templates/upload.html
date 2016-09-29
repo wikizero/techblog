@@ -49,9 +49,9 @@
                 <td> <a data="{{ f.0 }}" class="uk-icon-justify uk-icon-trash remove" style="color: #ff7799"></a></td>
 
                 {% if f.0|slice:'-3:' in imtype %}
-                    <td><a data="{{ f.0 }}" href="static/blog/files/{{ f.0 }}" data-uk-lightbox="" class="uk-icon-justify uk-icon-image"></a></td>
+                    <td><a data="{{ f.0 }}" href="static/blog/files/{{ f.0 }}" data-uk-lightbox="" title="{{ f.0 }}" class="uk-icon-justify uk-icon-image"></a></td>
                 {% elif f.0|slice:'-3:' in mvtype%}
-                    <td><a data="{{ f.0 }}" href="static/blog/files/{{ f.0 }}" data-uk-lightbox="" class="uk-icon-justify uk-icon-film"></a></td>
+                    <td><a data="{{ f.0 }}" href="static/blog/files/{{ f.0 }}" data-uk-lightbox="" title="{{ f.0 }}" class="uk-icon-justify uk-icon-film"></a></td>
                 {% else %}
                     <td><a data="{{ f.0 }}" href="static/blog/files/{{ f.0 }}" target="_blank" class="uk-icon-justify uk-icon-search"></a></td>
                 {% endif %}
