@@ -275,7 +275,7 @@ def upload(request):
                 file_lst.append([filename, size, create_date])   # filename.decode('gbk') 转中文显示
         data = {
             'file': file_lst[::-1],
-            'imtype': ['png', 'PNG', 'jpg', 'JPG','gif', 'GIF', 'peg', 'PEG'],
+            'imtype': ['png', 'PNG', 'jpg', 'JPG','gif', 'GIF', 'peg', 'PEG', 'SVG', 'svg'],
             'mvtype': ['mp4', 'MP4']
         }
         return render(request, 'upload.html', data)
