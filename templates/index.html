@@ -153,8 +153,8 @@
             <div class="uk-panel login_status" style="margin:15px 0 0 30px">
                 <img class="uk-border-circle" src="{% static 'blog/images/photo.jpg' %}">
                 <h5>attitude</h5>
-
-                <p>当前访问ip: {{ ip }}</p>
+                <p>IP地址: {{ ip.ip }} </br>
+                    地理位置: {{ ip.country }} {{ ip.province }} {{ ip.city }} {{ ip.area }}</p>
                 <a class="uk-button uk-button uk-button-small" href="/notes">进入wiki-note</a>
 
                 <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86
