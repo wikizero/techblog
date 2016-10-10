@@ -38,15 +38,15 @@
     </style>
 {% endblock head %}
 {% block content %}
-<div class="contents" style="width: 1000px;padding: 20px;margin: 0px auto">
+<div style="width: 1000px;padding: 20px;margin: 0px auto">
 
     <div class="uk-article" style="margin-bottom: 30px">
         <h3 class="uk-article-title">{{ note.title }}</h3>
         <a href="#" style="float: right; margin-right: 20px">下载本页</a>
         <p class="uk-article-meta"> 创建时间 : {{ note.create|date:"Y-m-d H:i:s" }} &nbsp; &nbsp; 最后更新 : {{ note.edit|date:"Y-m-d H:i:s" }} &nbsp; &nbsp;
             <span style="background-color: #fafff8;padding: 3px 6px;border: 1px solid #EEEEEE">{{ note.type }}</span> </p>
-
-        <div>{{ note.content|safe }}</div>
+        
+        <p class="p">{{ note.content|safe }}</p>
     </div>
 
 </div>
