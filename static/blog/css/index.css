@@ -92,7 +92,7 @@
 }
 
 .uk-panel-box {
-    color: black;
+    color: black !important;
     border: none;
     text-align: center;
     border-radius: 0;

@@ -168,3 +168,9 @@
     line-height: 26px;
 
 }
+.simditor .simditor-body p, .simditor .simditor-body div, .editor-style p, .editor-style div{
+    margin: 0 0 3px 0 !important;
+}
+.simditor .simditor-body h1, .simditor .simditor-body h2, .simditor .simditor-body h3, .simditor .simditor-body h4, .simditor .simditor-body h5, .simditor .simditor-body h6, .editor-style h1, .editor-style h2, .editor-style h3, .editor-style h4, .editor-style h5, .editor-style h6{
+    margin: 15px 0 15px !important;
+}
