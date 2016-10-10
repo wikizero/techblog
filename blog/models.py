@@ -60,7 +60,8 @@ class IpInfo(models.Model):
     city = models.CharField(max_length=10, blank=True)
     area = models.CharField(max_length=20, blank=True)
     last_time = models.DateTimeField(auto_now=True)
-    times = models.IntegerField(default=0)
+    times = models.IntegerField(default=1)
+    mark = models.CharField(max_length=100, blank=True)
 
     def __unicode__(self):
         return self.city+':'+self.ip
