@@ -4,7 +4,7 @@
 {% block head %}
     <style>
 	*{
-	    font-family: arial, "Microsoft YaHei", "\5fae\8f6f\96c5\9ed1"
+{#	    font-family: arial, "Microsoft YaHei", "\5fae\8f6f\96c5\9ed1"#}
 	}
         .uk-article-title {
             margin-top: 20px;
@@ -23,12 +23,18 @@
             border-top: 1px solid #EEEEEE;
             font-size: 15px;
         }
+        .p p{
+            margin: 3px auto;
+        }
         code{
 	    font-family: Monaco,Menlo,Consolas,"Courier New",monospace, "Microsoft YaHei";
             background-color: inherit;
             font-size: 15px;
             line-height: 25px;
         }
+    * + h1, * + h2, * + h3, * + h4, * + h5, * + h6{
+        margin-top: 0 !important;
+    }
     </style>
 {% endblock head %}
 {% block content %}
