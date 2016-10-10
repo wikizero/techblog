@@ -18,8 +18,15 @@ import mimetypes
 
 def index(request):
     notes = Notes.objects.filter(show=True).order_by('-id')
+
+    if request.META.has_key('HTTP_X_FORWARDED_FOR'):
+        ip =  request.META['HTTP_X_FORWARDED_FOR']
+    else:
+        ip = request.META['REMOTE_ADDR']
+
     data = {
-        'notes': notes[:9]
+        'notes': notes[:9],
+        'ip':ip
     }
     return render(request, 'index.html', data)
 
