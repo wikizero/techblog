@@ -46,15 +46,11 @@
         <p class="uk-article-meta"> 创建时间 : {{ note.create|date:"Y-m-d H:i:s" }} &nbsp; &nbsp; 最后更新 : {{ note.edit|date:"Y-m-d H:i:s" }} &nbsp; &nbsp;
             <span style="background-color: #fafff8;padding: 3px 6px;border: 1px solid #EEEEEE">{{ note.type }}</span> </p>
 
-        <p class="p">{{ note.content }}</p>
+        <div>{{ note.content|safe }}</div>
     </div>
 
 </div>
 
 <script>
-    $(function () {
-        text = $('.p').text()
-        $('.p').text('').html(text)
-    })
 </script>
 {% endblock content %}
