@@ -1,32 +1,42 @@
 # coding:utf-8
 from django.shortcuts import render, HttpResponse, redirect, render_to_response
-from django.http import StreamingHttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from blog.models import *
-from django.db.models import Q
-import pdfkit
-import random
 import datetime
 import json
 import os
-import time
-import mimetypes
+from blog.api import get_addr
 
 
 def index(request):
     notes = Notes.objects.filter(show=True).order_by('-id')
 
     if request.META.has_key('HTTP_X_FORWARDED_FOR'):
-        ip =  request.META['HTTP_X_FORWARDED_FOR']
+        ip = request.META['HTTP_X_FORWARDED_FOR']
     else:
         ip = request.META['REMOTE_ADDR']
 
+    info = get_addr.addr(str(ip))
+    ips = IpInfo.objects.filter(ip=str(ip))
+    if not ips:
+        ips = IpInfo.objects.create(
+            ip=str(ip),
+            country=info['country'],
+            province=info['province'],
+            city=info['city'],
+            area=info['district'],
+        )
+    else:
+        ips = ips[0]
+        ips.times += 1
+        ips.save()
+
     data = {
         'notes': notes[:9],
-        'ip':ip
+        'ip': ips
     }
     return render(request, 'index.html', data)
 

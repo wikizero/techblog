@@ -49,3 +49,18 @@ class Notes(models.Model):
 
     def __unicode__(self):
         return self.type+'-'+self.title
+
+
+# ----------------IP------------------
+
+class IpInfo(models.Model):
+    ip = models.CharField(max_length=25)
+    country = models.CharField(max_length=10, blank=True)
+    province = models.CharField(max_length=10, blank=True)
+    city = models.CharField(max_length=10, blank=True)
+    area = models.CharField(max_length=20, blank=True)
+    last_time = models.DateTimeField(auto_now=True)
+    times = models.IntegerField(default=0)
+
+    def __unicode__(self):
+        return self.city+':'+self.ip
