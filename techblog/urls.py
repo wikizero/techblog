@@ -37,6 +37,7 @@ urlpatterns = [
     url(r'^download', views.download),
     url(r'^remove', views.remove),
 
+    url(r'^access/info', views.access_info),
 
 ]
 

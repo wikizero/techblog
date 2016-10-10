@@ -15,13 +15,13 @@ def index(request):
     notes = Notes.objects.filter(show=True).order_by('-id')
 
     if request.META.has_key('HTTP_X_FORWARDED_FOR'):
-        ip =  request.META['HTTP_X_FORWARDED_FOR']
+        ip = request.META['HTTP_X_FORWARDED_FOR']
     else:
         ip = request.META['REMOTE_ADDR']
 
-    info = get_addr.addr(str(ip))
     ips = IpInfo.objects.filter(ip=str(ip))
     if not ips:
+        info = get_addr.addr(str(ip))
         ips = IpInfo.objects.create(
             ip=str(ip),
             country=info['country'],
@@ -371,3 +371,11 @@ def remove(request):
     for n in name:
         os.remove(root_dir+n)
     return redirect('/upload')
+
+
+def access_info(request):
+    info = IpInfo.objects.all()
+    data = {
+        'info': info
+    }
+    return render(request, 'access-info.html', data)
