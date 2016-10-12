@@ -256,7 +256,13 @@ $(function () {
 
 //  保存文档 ajax
     $('.save').click(function () {
-        id = $(this).attr('data')
+        save_notes()
+    })
+    $('.simditor-body').keyup(function(){
+        save_notes()
+    })
+    function save_notes(){
+        id = $('.save').attr('data')
         if (id == '') {
             alert('can not find the doc')
             return false
@@ -273,11 +279,15 @@ $(function () {
                 if (msg.msg != 'ok') {
                     alert('can not save the document, check the network...')
                 } else {
-                    alert('save success')
+                    //alert('save success')
+                    $('.info').show()
+                    setTimeout(function(){
+                        $('.info').hide()
+                    }, 2500)
                 }
             }
         })
-    })
+    }
 
 //    隐藏切换
     $('.p-hide').click(function () {
