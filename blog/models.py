@@ -65,3 +65,15 @@ class IpInfo(models.Model):
 
     def __unicode__(self):
         return self.city+':'+self.ip
+
+# ----------------message-----------------
+
+
+class Message(models.Model):
+    ip = models.ForeignKey(IpInfo)
+    mark = models.CharField(max_length=500)
+    mark_time = models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+        return self.mark
+

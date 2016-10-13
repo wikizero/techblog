@@ -19,6 +19,7 @@ def index(request):
     else:
         ip = request.META['REMOTE_ADDR']
 
+    # ip = '159.106.121.75'
     ips = IpInfo.objects.filter(ip=str(ip))
     if not ips:
         info = get_addr.addr(str(ip))
@@ -379,3 +380,34 @@ def access_info(request):
         'info': info
     }
     return render(request, 'access-info.html', data)
+
+@csrf_exempt
+def message(request):
+    if request.method == 'GET':
+        msg = Message.objects.all().order_by('-id')
+        data = {
+            'msg': msg
+        }
+        return render(request, 'message.html', data)
+    elif request.method == 'POST':
+        msg = request.POST.get('text', False)
+        if not msg:
+            return HttpResponse('nothing to say?')
+
+        if request.META.has_key('HTTP_X_FORWARDED_FOR'):
+            ip = request.META['HTTP_X_FORWARDED_FOR']
+        else:
+            ip = request.META['REMOTE_ADDR']
+        # ip = '159.106.121.75'
+        ips = IpInfo.objects.filter(ip=str(ip))
+        if not ips:
+            info = get_addr.addr(str(ip))
+            ips = IpInfo.objects.create(
+                ip=str(ip),
+                country=info['country'],
+                province=info['province'],
+                city=info['city'],
+                area=info['district'],
+            )
+        Message.objects.create(ip=ips[0], mark=msg)
+        return redirect('/message')

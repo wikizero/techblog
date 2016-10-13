@@ -38,6 +38,7 @@ urlpatterns = [
     url(r'^remove', views.remove),
 
     url(r'^access/info', views.access_info),
+    url(r'^message', views.message),
 
 ]
 
