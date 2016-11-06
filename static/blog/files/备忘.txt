@@ -1,3 +1,5 @@
+国涛pac：https://cdn.huguotao.com/ss/577291bc24e8.pac
+
 （1）django 数据库 migrate异常
 python manage.py help 命令的解析
 （2）mysql 导出某个表的数据
@@ -12,31 +14,43 @@ CREATE DATABASE `test2` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 
 
-git checkout . #本地所有修改的。没有的提交的，都返回到原来的状态
-git stash #把所有没有提交的修改暂存到stash里面。可用git stash pop回复。
-git reset --hard HASH #返回到某个节点，不保留修改。
-git reset --soft HASH #返回到某个节点。保留修改
 
-jquery插件：http://www.jq22.com/jquery-info3928
-http://www.jq22.com/jquery-info1257
-
+pillow 缺少imaging c：
+$ sudo aptitude install libfreetype6-dev
+$ sudo -s # See PS!
+\# pip uninstall pil
+\# pip install pil # or use 'easy_install pil'
 
 
-linux配置git免账号密码：
-在~/下， touch创建文件 .git-credentials：
-touch .git-credentials
-# 用vim编辑此文件，
-vim .git-credentials
-#输入内容格式
-https://username:password@github.com
-2. 在终端下执行 
-git config --global credential.helper store
-可以看到~/.gitconfig文件，会多了一项：
-[credential]
-    helper = store
+
+vim ~/.ssh/authorized_keys 
 
 
-添加ssh key：vim ~/.ssh/authorized_keys
+win10 家庭升级专业，激活码：VK7JG-NPHTM-C97JM-9MPGT-3V66T
 
-GB18030是GBK的父集，所以能兼容GBK不能编码的字符。uni.encode('GB18030')
-18277192872 梁
+
+pro_lst = []
+pro = pck.product_set.all().values()
+for p in pro:
+   p['price_num'] = float(p['price'])*int(float(p['num']))
+   pro_lst.append(p)
+
+
+
+'product': [
+                {
+                    'name_standard': row_content[10 + 2 * i],
+                    'num': row_content[11 + 2 * i]
+                 } for i in range((len(row_content) - 9) / 2)
+            ]
+
+
+权限：http://www.jianshu.com/p/01126437e8a4
+
+django 模板获取第一个元素：
+	{%for l in  lst%}
+	 1.{{ l.0 }}
+	2.{{ l|first }}
+	{% endfor %}
+	或者：
+	{% first in lst %}(验证)
