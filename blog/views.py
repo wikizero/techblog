@@ -19,6 +19,8 @@ def index(request):
     else:
         ip = request.META['REMOTE_ADDR']
 
+    ua = request.META.get('HTTP_USER_AGENT', 'unknown')
+
     # ip = '159.106.121.75'
     ips = IpInfo.objects.filter(ip=str(ip))
     if not ips:
@@ -33,11 +35,12 @@ def index(request):
     else:
         ips = ips[0]
         ips.times += 1
+	ips.mark=ua  # 更新最后访问的设备信息
         ips.save()
 
     data = {
         'notes': notes[:9],
-        'ip': ips
+        'ip': ips,
     }
     return render(request, 'index.html', data)
 
@@ -375,7 +378,7 @@ def remove(request):
 
 
 def access_info(request):
-    info = IpInfo.objects.all()
+    info = IpInfo.objects.all().order_by('-times')
     data = {
         'info': info
     }
