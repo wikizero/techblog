@@ -1,0 +1,250 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}{{ movie.film_name }}{% endblock %}
+{% block head %}
+    <head>
+        <meta charset="UTF-8">
+        {#    <link rel="shortcut icon" href="{% static 'recSys/images/title.png' %}"/>#}
+
+        <link href="{% static 'recSys/css/components/tooltip.min.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'recSys/css/components/dotnav.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'recSys/css/components/slidenav.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'recSys/css/components/accordion.css' %}" rel="stylesheet" type="text/css">
+        <script src="{% static 'recSys/js/components/tooltip.min.js' %}"></script>
+        <script src="{% static 'recSys/js/components/slideset.min.js' %}"></script>
+    </head>
+    <style>
+        .box-right {
+            padding-top: 10px;
+
+        }
+
+        .box-right p {
+            margin: 8px auto;
+
+        }
+
+        .box-right .uk-icon-button {
+            float: right;
+            margin-left: 12px;
+            margin-top: 20px;
+        {#        border: 1px solid #dd7461;#}{#        border-bottom-color: #ea8958;#}{#        color: #00aff2;#}
+        }
+
+        .uk-panel img {
+            margin-top: -55px;
+            width: 175px;
+            height: 240px;
+            margin-left: 30px;
+            cursor: pointer;
+            border: 1px solid #e1e1e1;
+        }
+
+        .uk-grid + .uk-grid, .uk-grid-margin, .uk-grid > * > .uk-panel + .uk-panel {
+            margin-top: 0px;
+        }
+
+        .out-box {
+            width: 880px;
+            margin: 50px auto;
+        }
+
+        .font-color {
+            color: #131313;
+        }
+
+        .uk-slidenav {
+        {#        color: #eaea83;#}
+        }
+
+        .uk-slidenav-position .uk-slidenav {
+            top: 38%;
+        {# img slide #}
+        }
+
+        .uk-accordion-title {
+            font-size: 15px;
+        }
+
+        .uk-accordion-content a {
+            line-height: 28px;
+        }
+
+        .uk-comment {
+            margin-bottom: 28px;
+        }
+    </style>
+    <script>
+        $(function () {
+            $('.textarea').val('')
+
+            $('.btn-operate').click(function () {
+                op_type = $(this).attr('data-type')
+                movie_id = $('.out-box').attr('data-id')
+                $.ajax({
+                    type:'post',
+                    url:'/operate',
+                    data:{
+                        'type': op_type,
+                        'id': movie_id
+                    },
+                    success: function(msg){
+                        UIkit.notify(msg.msg, {status:'success', timeout : 1500});
+                    }
+                })
+            })
+
+            // 提交评论表单
+            $('.sub-btn').click(function () {
+                comment = $('.textarea').val()
+                if (comment == ''){
+                    UIkit.notify('好歹输入点东西嘛，请先输入评论内容再提交！', {status:'danger', timeout : 1500});
+                    return false
+                }
+                $.ajax({
+                    type:'post',
+                    url:'/movie/detail',
+                    data:{
+                        'text': comment,
+                        'id': {{ movie.douban_id }}
+                    },
+                    success: function(msg){
+                        UIkit.notify(msg.msg, {status: msg.type, timeout: 1500});
+                        if (msg.type == 'success'){
+                            setTimeout(function(){
+                                location.reload()
+                            }, 1500)
+                        }
+                    }
+                })
+            })
+
+        })
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="uk-grid uk-flex-middle out-box" data-uk-grid-margin="" data-id="{{ movie.douban_id }}">
+        <div class="uk-width-medium-1-3 uk-row-first">
+            <div class="uk-panel"><img src="{% static 'recSys/movie_imgs/' %}{{ movie.img_name }}" alt="Placeholder">
+            </div>
+        </div>
+        <div class="uk-width-medium-2-3 uk-flex-middle box-right">
+        <span style="font-size: 20px">{{ movie.film_name }} <span
+                style="color: #888"> ( {{ movie.year }} )</span></span>
+            <p>主演: <span class="font-color">{{ movie.actors|truncatechars:68 }}</span></p>
+            <p>类型: <span class="font-color">{{ movie.labels }}</span></p>
+            <p>地区: <span class="font-color">{{ movie.area }}</span></p>
+            <p>语言: <span class="font-color">{{ movie.language }}</span></p>
+            <p>上映日期: <span class="font-color">{{ movie.release_date }}</span></p>
+            <p>片长: <span class="font-color">{{ movie.film_length }} 分钟</span></p>
+            <p>豆瓣评分: {{ movie.douban_rate }} &nbsp; (评分人数: {{ movie.douban_comment_num }})</p>
+
+
+            <a title="想看" data-uk-tooltip="{pos:'right'}" data-type="want"
+               class="uk-icon-button uk-icon-eye btn-operate"></a>
+            <a title="喜欢" data-uk-tooltip="{pos:'top'}" data-type="like"
+               class="uk-icon-button uk-icon-heart btn-operate"></a>
+            <a title="不喜欢" data-uk-tooltip="{pos:'left'}" data-type="dislike"
+               class="uk-icon-button uk-icon-heart-o btn-operate"></a>
+
+        </div>
+        <h3 style=" margin-top: 30px; font-size: 16px">{{ movie.film_name }} 的故事简介 :</h3>
+        <p style="text-indent: 2em; margin-top: 3px">{{ movie.detail_info }}</p>
+
+        <h3 class="tm-article-subtitle" style="margin-top: 28px;margin-bottom: 6px">发现资源</h3>
+        <div class="uk-accordion" data-uk-accordion="{collapse: false}" style="width: 100%">
+            <h3 class="uk-accordion-title uk-active">电影天堂</h3>
+            <div data-wrapper="true" style="height: auto; position: relative;" aria-expanded="true">
+                <div class="uk-accordion-content">
+                    <a>ftp://ygdy8:ygdy8@yg73.dydytt.net:8007/[阳光电影www.ygdy8.com].一条狗的使命.BD.720p.中英双字幕.mkv
+                        <i class="uk-icon-copy"></i></a>
+                    <a>ftp://ygdy8:ygdy8@yg73.dydytt.net:8007/[阳光电影www.ygdy8.com].一条狗的使命.BD.1080p.中英双字幕.mkv
+                        <i class="uk-icon-copy"></i></a>
+                    <a>ftp://ygdy8:ygdy8@yg73.dydytt.net:8007/[阳光电影www.ygdy8.com].一条狗的使命.BD.4k.中英双字幕.mkv
+                        <i class="uk-icon-copy"></i></a>
+                    <br>
+                    <a href="#"><i class="uk-icon-paper-plane-o"></i> 没有资源、资源不可用？前往电影天堂</a>
+                </div>
+            </div>
+
+            <h3 class="uk-accordion-title uk-active">BT天堂</h3>
+            <div data-wrapper="true" style="height: auto; position: relative;" aria-expanded="true">
+                <div class="uk-accordion-content">
+                    <a>ftp://ygdy8:ygdy8@yg73.dydytt.net:8007/[阳光电影www.ygdy8.com].一条狗的使命.BD.720p.中英双字幕.mkv
+                        <i class="uk-icon-copy"></i></a>
+                    <a>ftp://ygdy8:ygdy8@yg73.dydytt.net:8007/[阳光电影www.ygdy8.com].一条狗的使命.BD.1080p.中英双字幕.mkv
+                        <i class="uk-icon-copy"></i></a>
+                    <br>
+                    <a href="#"><i class="uk-icon-paper-plane-o"></i> 没有资源、资源不可用？前往BT天堂</a>
+                </div>
+            </div>
+
+            <h3 class="uk-accordion-title uk-active">CK电影网</h3>
+            <div data-wrapper="true" style="height: auto; position: relative;" aria-expanded="true">
+                <div class="uk-accordion-content">
+                    <a>ftp://ygdy8:ygdy8@yg73.dydytt.net:8007/[阳光电影www.ygdy8.com].一条狗的使命.BD.720p.中英双字幕.mkv
+                        <i class="uk-icon-copy"></i></a>
+                    <a>ftp://ygdy8:ygdy8@yg73.dydytt.net:8007/[阳光电影www.ygdy8.com].一条狗的使命.BD.1080p.中英双字幕.mkv
+                        <i class="uk-icon-copy"></i></a>
+                    <br>
+                    <a href="#"><i class="uk-icon-paper-plane-o"></i> 没有资源、资源不可用？前往CK电影</a>
+                </div>
+            </div>
+        </div>
+
+        <p style="font-size: 16px; margin-top: 30px; margin-bottom: 10px">喜欢这部电影的人还喜欢 :</p>
+        <div class="uk-margin" data-uk-slideset="{default: 5}" style="margin:10px auto;width: 100%;height: 243px">
+            <div class="uk-slidenav-position uk-margin">
+                <ul class="uk-slideset uk-grid uk-flex-center uk-grid-width-1-6">
+                    {% for m in movies %}
+                        <li style="display: none;" class="">
+                            <img style="width: 120px; height: 168px"
+                                 src="{% static 'recSys/movie_imgs/' %}{{ m.img_name }}">
+                            <p style="font-size: 13px; text-align: center;width: 100%;"><a href="/movie/detail?id={{ m.douban_id }}">{{ m.film_name }}</a></p>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <a href="#" class="uk-slidenav uk-slidenav-previous" data-uk-slideset-item="previous"></a>
+                <a href="#" class="uk-slidenav uk-slidenav-next" data-uk-slideset-item="next"></a>
+            </div>
+            <ul class="uk-slideset-nav uk-dotnav uk-flex-center">
+                <li data-uk-slideset-item="0" class=""><a></a></li>
+                <li data-uk-slideset-item="1"><a></a></li>
+                <li data-uk-slideset-item="2" class="uk-active"><a></a></li>
+            </ul>
+        </div>
+
+
+        <div class="uk-form-row" style="margin: 50px auto">
+            <form action="" method="post" class="uk-form">
+                {% csrf_token %}
+                <p class="uk-form-help-block" style="font-size: 16px; line-height: 30px">{{ movie.film_name }} 的短评</p>
+                <textarea cols="134" rows="4" class="textarea" id="text" placeholder="这里输入评论内容..." name="text"
+                          style="padding: 8px 8px;border-radius: 4px"></textarea>
+                {#            <p class="uk-form-help-block">请注意措辞文明</p>#}
+                <button class="uk-button sub-btn" type="button" style="float: right;margin-top: 15px">提交评论</button>
+            </form>
+        </div>
+
+        {% for c in comments %}
+        <article class="uk-comment" style="width: 100%">
+            <header class="uk-comment-header">
+                <img class="uk-comment-avatar" src="{% static 'recSys/photo/photo.jpg' %}"
+                     style="width: 50px; height: 50px; border-radius: 50px">
+                <h4 class="uk-comment-title">{{ c.username }}</h4>
+                <div class="uk-comment-meta">{{ c.date|date:"Y-m-d" }} | {{ c.type }}</div>
+            </header>
+            <div class="uk-comment-body">
+                <p>{{ c.comment }}</p>
+                <a style="float: right; margin-left: 25px" class="uk-icon-small uk-icon-hover uk-icon-thumbs-o-down">
+                    <small> {{ c.unlike }}</small>
+                </a>
+                <a style="float: right" class="uk-icon-small uk-icon-hover uk-icon-thumbs-o-up">
+                    <small> {{ c.like }}</small>
+                </a>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+{% endblock %}

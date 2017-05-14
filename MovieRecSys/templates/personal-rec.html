@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %} 个性推荐 {% endblock %}
+{% block head %}
+    <link href="{% static 'recSys/css/components/tooltip.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'recSys/css/components/dotnav.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'recSys/css/components/slidenav.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'recSys/css/components/accordion.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'recSys/css/components/slidenav.css' %}" rel="stylesheet" type="text/css">
+    <script src="{% static 'recSys/js/components/tooltip.min.js' %}"></script>
+    <script src="{% static 'recSys/js/components/slideset.min.js' %}"></script>
+    <script src="{% static 'recSys/js/components/grid.min.js' %}"></script>
+    <script src="{% static 'recSys/js/components/slideset.min.js' %}"></script>
+    <style>
+
+        .uk-slidenav-position .uk-slidenav {
+            top: 38%;
+        }
+
+        .out-box {
+            width: 900px;
+            margin: 25px auto 12px auto;
+        }
+
+        .uk-breadcrumb {
+            margin-bottom: 8px;
+            margin-top: 8px;
+        }
+
+        .small-box {
+            position: absolute;
+            box-sizing: border-box;
+            padding-left: 20px;
+            padding-bottom: 20px;
+            top: 0;
+            left: 0;
+            opacity: 1;
+            display: block;
+        }
+
+        .uk-panel-box {
+            height: 210px;
+
+        }
+
+        .small-box, .uk-panel-box {
+            background-color: white;
+            border: none;
+        }
+
+        .box-right p {
+            font-size: 13px;
+            margin-bottom: 0;
+            margin-top: 5px;
+        }
+
+        .box-right .uk-icon-button {
+            float: right;
+            margin-left: 12px;
+            margin-top: 15px;
+            font-size: 15px;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+        }
+
+        .uk-icon-hover {
+            color: #eab941;
+        }
+
+        .uk-icon-hover:hover {
+            color: #eab941;
+        }
+
+        .uk-icon-small {
+            font-size: 140%;
+        }
+    </style>
+
+    <script>
+        $(function () {
+            $('.btn-operate').click(function () {
+                op_type = $(this).attr('data-type')
+                movie_id = $(this).attr('data-id')
+                $.ajax({
+                    type: 'post',
+                    url: '/operate',
+                    data: {
+                        'type': op_type,
+                        'id': movie_id
+                    },
+                    success: function (msg) {
+                        UIkit.notify(msg.msg, {status: 'success', timeout: 1500});
+                    }
+                })
+            })
+        })
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="out-box">
+
+        <p style="font-size: 16px; margin-top: 30px; margin-bottom: 8px">站内推荐 </p>
+        <hr class="uk-article-divider" style="margin-top: 0px">
+        <div class="uk-margin" data-uk-slideset="{default: 5}" style="margin:10px auto;width: 100%;height: 243px">
+            <div class="uk-slidenav-position uk-margin">
+                <ul class="uk-slideset uk-grid uk-flex-center uk-grid-width-1-6">
+                    {% for m in site_rec %}
+                        <li style="display: none;" class="">
+                           <a href="/movie/detail?id={{ m.douban_id }}">
+                               <img style="width: 120px; height: 168px" src="{% static 'recSys/movie_imgs/' %}{{ m.img_name }}"></a>
+                            <p style="font-size: 13px; text-align: center;width: 100%;"><a
+                                    href="/movie/detail?id={{ m.douban_id }}">{{ m.film_name }}</a></p>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <a href="#" class="uk-slidenav uk-slidenav-previous" data-uk-slideset-item="previous"></a>
+                <a href="#" class="uk-slidenav uk-slidenav-next" data-uk-slideset-item="next"></a>
+            </div>
+            <ul class="uk-slideset-nav uk-dotnav uk-flex-center">
+                <li data-uk-slideset-item="0" class=""><a></a></li>
+                <li data-uk-slideset-item="1"><a></a></li>
+                <li data-uk-slideset-item="2" class="uk-active"><a></a></li>
+            </ul>
+        </div>
+
+        <p style="font-size: 16px; margin-top: 40px; margin-bottom: 8px;">我的标签 &nbsp;
+            <small>(<a href="/sort/label">管理我的标签</a>)</small>
+        </p>
+        <hr class="uk-article-divider" style="margin-top: 0px;margin-bottom: 15px">
+
+        <ul id="filter" class="uk-subnav uk-subnav-pill">
+            <li class="uk-active" data-uk-filter=""><a href="#">所有</a></li>
+            {% for m in labels %}
+                <li data-uk-filter="{{ m }}" class=""><a href="#">{{ m }}</a></li>
+            {% endfor %}
+        </ul>
+
+        <div class="uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-5 tm-grid-heights"
+             data-uk-grid="{gutter: 15, controls: '#filter'}"
+             style="position: relative; margin-left: -20px; height: 394px;">
+            {% for m in movies %}
+                <div data-uk-filter="{% for i in m.labels %} {{ i }}, {% endfor %}" data-grid-prepared="true"
+                     aria-hidden="false" class="small-box">
+                    <div class="uk-panel-box">
+                        <a  href="/movie/detail?id={{ m.douban_id }}"><img style="width: 120px; height: 168px; margin: 0px 8px; border: 1px solid #e1e1e1"
+                             src="{% static 'recSys/movie_imgs/' %}{{ m.img_name }}"></a>
+                        <p style="font-size: 13px; text-align: center;width: 100%;"><a
+                                href="/movie/detail?id={{ m.douban_id }}">{{ m.film_name }}</a></p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <p style="font-size: 16px; margin-top: 40px; margin-bottom: 8px;">猜你喜欢</p>
+        <hr class="uk-article-divider" style="margin-top: 0px;margin-bottom: 15px">
+
+        <table class="uk-table">
+            <tbody>
+            {% for m in guess_like %}
+                <tr>
+                    <td>
+                        <div class="uk-grid uk-flex-middle movie-id" data-uk-grid-margin="" style="margin-top: 10px">
+                            <div class="uk-width-medium-1-6 uk-row-first">
+                                <div class="uk-panel">
+                                    <a href="/movie/detail?id={{ m.douban_id }}"><img src="{% static 'recSys/movie_imgs/' %}{{ m.img_name }}"
+                                         style="height: 140px; width: 96px;margin-top: -25px;margin-left: 10px"
+                                         alt="Placeholder"></a></div>
+                            </div>
+                            <div class="uk-width-medium-5-6 uk-flex-middle box-right">
+                                <a style="font-size: 15px" href="/movie/detail?id={{ m.douban_id }}">{{ m.film_name }}
+                                    <span style="color: #888"> ( {{ m.year }} )</span></a>
+                                {#                            <p>主演: {{ m.actors|truncatechars:40 }}</p>#}
+                                <p>类型: {{ m.labels }}</p>
+                                <p>语言: {{ m.language }} </p>
+                                <p>豆瓣评分: {{ m.douban_rate }} &nbsp; (评分人数: {{ m.douban_comment_num }})</p>
+                                <p>推荐指数:
+                                    {% for i in m.point_lst %}
+                                        {% if i == '1' %}
+                                            <a href="#" class="uk-icon-small uk-icon-hover uk-icon-star"></a>
+                                        {% else %}
+                                            <a href="#" class="uk-icon-small uk-icon-hover uk-icon-star-o"></a>
+                                        {% endif %}
+                                    {% endfor %}
+                                </p>
+
+                                <a title="想看" data-uk-tooltip="{pos:'right'}" data-id="{{ m.douban_id }}" data-type="want"
+                                   class="uk-icon-button uk-icon-eye btn-operate"></a>
+                                <a title="喜欢" data-uk-tooltip="{pos:'top'}" data-id="{{ m.douban_id }}" data-type="like"
+                                   class="uk-icon-button uk-icon-heart btn-operate"></a>
+                                <a title="不喜欢" data-uk-tooltip="{pos:'left'}" data-id="{{ m.douban_id }}" data-type="dislike"
+                                   class="uk-icon-button uk-icon-heart-o btn-operate"></a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+{% endblock %}
