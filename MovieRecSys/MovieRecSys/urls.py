@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^find', views.find),
     url(r'^movie/detail', views.movie_detail),
     url(r'^personal/rec', views.personal_rec),
+    url(r'^person/list', views.person_list),
     url(r'^person/center', views.person_center),
     url(r'^logout', views.sign_out),
     url(r'^operate', views.operate),

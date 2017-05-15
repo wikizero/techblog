@@ -266,7 +266,7 @@ def personal_rec(request):
 
 @csrf_exempt
 @login_required(login_url='/login')
-def person_center(request):
+def person_list(request):
 	if request.method == 'GET':
 		want_movies = Movie.objects.filter(love__type='want', love__user=request.user)
 		like_movies = Movie.objects.filter(love__type='like', love__user=request.user)
@@ -276,7 +276,7 @@ def person_center(request):
 			'want': want_movies,
 			'dislike':dislike_movies
 		}
-		return render(request, 'person-center.html', data)
+		return render(request, 'person-list.html', data)
 
 	elif request.method == 'POST':
 		douban_id = request.POST.get('m_id', False)
@@ -392,3 +392,12 @@ def hall(request):
 		'select_filter': select_filter,
 	}
 	return render(request, 'hall.html', data)
+
+
+@csrf_exempt
+@login_required(login_url='/login')
+def person_center(request):
+	if request.method == 'GET':
+		pass
+	return render(request, 'person-center.html', data)
+

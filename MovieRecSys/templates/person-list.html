@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %} 个人中心 {% endblock %}
+{% block head %}
+
+    <style>
+        .content-box {
+            width: 1000px;
+            margin: 30px auto;
+        }
+
+        .uk-icon-small {
+            font-size: 138%;
+        }
+
+        .uk-table {
+            margin-top: 3px;
+        }
+    </style>
+    <script>
+        $(function(){
+            $('.delete').click(function () {
+                m_id = $(this).attr('data')
+                $.ajax({
+                    type: 'post',
+                    url: '/person/list',
+                    data: {
+                      'm_id': m_id
+                    },
+                    success: function (msg) {
+                        UIkit.notify(msg.msg, {status: msg.type, timeout: 1500});
+                        if (msg.type == 'success'){
+                            setTimeout(function(){
+                                location.reload()
+                            }, 1500)
+                        }
+                    }
+                })
+            })
+        })
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="content-box">
+        <table class="uk-table love">
+            <p style="font-size: 16px; margin-top: 40px; margin-bottom: 8px;">我喜欢的</p>
+            <thead>
+            <tr style="border-top: 1px solid #e5e5e5">
+                <th>电影名</th>
+                <th>类型</th>
+                <th>语言</th>
+                <th>移除</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for m in like %}
+                <tr>
+                    <td><a href="/movie/detail?id={{ m.douban_id }}">{{ m.film_name }}
+                        <span style="color: #888"> ( {{ m.year }} )</span></a></td>
+                    <td>{{ m.labels }}</td>
+                    <td>{{ m.language }}</td>
+                    <td><a class="delete" data="{{ m.douban_id }}" ><i class="uk-icon-small uk-icon-close"></i></a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <table class="uk-table collection">
+            <p style="font-size: 16px; margin-top: 40px; margin-bottom: 8px;">我想看的</p>
+            <thead>
+            <tr style="border-top: 1px solid #e5e5e5">
+                <th>电影名</th>
+                <th>类型</th>
+                <th>语言</th>
+                <th>移除</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for m in want %}
+                <tr>
+                    <td><a href="/movie/detail?id={{ m.douban_id }}">{{ m.film_name }}
+                        <span style="color: #888"> ( {{ m.year }} )</span></a></td>
+                    <td>{{ m.labels }}</td>
+                    <td>{{ m.language }}</td>
+                    <td><a class="delete" data="{{ m.douban_id }}" ><i class="uk-icon-small uk-icon-close"></i></a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <table class="uk-table dislike">
+            <p style="font-size: 16px; margin-top: 40px; margin-bottom: 8px;">不喜欢的</p>
+            <thead>
+            <tr style="border-top: 1px solid #e5e5e5">
+                <th>电影名</th>
+                <th>类型</th>
+                <th>语言</th>
+                <th>移除</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for m in dislike %}
+                <tr>
+                    <td><a href="/movie/detail?id={{ m.douban_id }}">{{ m.film_name }}
+                        <span style="color: #888"> ( {{ m.year }} )</span></a></td>
+                    <td>{{ m.labels }}</td>
+                    <td>{{ m.language }}</td>
+                    <td><a class="delete" data="{{ m.douban_id }}" ><i class="uk-icon-small uk-icon-close"></i></a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
