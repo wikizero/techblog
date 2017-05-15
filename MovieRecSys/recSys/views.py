@@ -22,8 +22,6 @@ def sign_in(request):
 		username = request.POST.get('username', False)
 		pw = request.POST.get('pw', False)
 		user = authenticate(username=username, password=pw)
-		print username, pw
-		print user
 		if user:
 			login(request, user)
 			return redirect('/hall')
@@ -95,6 +93,7 @@ def sort_label(request):
 		if labels:
 			labels = labels.replace(' ', '/')
 			ext = ExtUser.objects.get(user=request.user)
+			labels = labels.encode('utf-8')
 			ext.labels = labels
 			ext.save()
 			return redirect('/personal/rec')
@@ -126,9 +125,12 @@ def movie_detail(request):
 		all_label = movie[0].labels.split('/')
 		l_movies = []
 		for l in all_label:
-			l_movies.append(
-				Movie.objects.filter(Q(labels__contains=l.strip()) & ~Q(love__user=request.user) & ~Q(
-					douban_id=movie[0].douban_id)))  # 还可以在这里过滤喜欢／不喜欢的电影
+			if request.user.is_authenticated:
+				plst = Movie.objects.filter(Q(labels__contains=l.strip()) & ~Q(love__user=request.user) & ~Q(
+					douban_id=movie[0].douban_id))
+			else:
+				plst = Movie.objects.filter(Q(labels__contains=l.strip()) & ~Q(douban_id=movie[0].douban_id))
+			l_movies.append(plst)  # 还可以在这里过滤喜欢／不喜欢的电影
 
 		movies_lst = []
 		for movies in l_movies:
@@ -160,7 +162,6 @@ def movie_detail(request):
 			else:
 				com['type'] = u'未知'
 			comment_lst.append(com)
-		print comment_lst
 
 		if movie:
 			return render(request, 'movie_detail.html', {'movie': movie[0], 'movies': movies_lst, 'comments': comment_lst})
@@ -174,6 +175,10 @@ def movie_detail(request):
 			'msg': u'天了噜 ，发生未知错误',
 			'type': 'danger'
 		}
+		if not request.user.is_authenticated:
+			msg['msg'] = u'请先登录，再提交评论!'
+			msg['type'] = 'danger'
+			return HttpResponse(json.dumps(msg), content_type='application/json')
 		if text:
 			Comment.objects.create(user=request.user, movie=movie, comment=text)
 			msg['msg'] = u'评论提交成功，页面即将刷新!'
@@ -195,6 +200,7 @@ def personal_rec(request):
 	if not ext.labels:
 		return redirect('/sort/label')
 	all_label = ext.labels.split('/')  # 获取用户喜爱标签
+	print all_label
 	l_movies = []
 	for l in all_label:
 		l_movies.append(Movie.objects.filter(Q(labels__contains=l) & ~Q(love__user=request.user)))
@@ -294,7 +300,6 @@ def operate(request):
 	if request.method == 'POST':
 		op_type = request.POST.get('type', False)
 		douban_id = request.POST.get('id', False)
-		print douban_id, op_type
 		dct = {
 			'like': u'<喜欢>',
 			'dislike': u'<黑名单>',
@@ -303,7 +308,6 @@ def operate(request):
 		if op_type not in ['like', 'dislike', 'want']:
 			return HttpResponse('type error')
 		movie = Movie.objects.get(douban_id=int(douban_id))
-		print movie.film_name
 		if not movie:
 			return HttpResponse('can find the movie maybe: douban id is error!!!')
 		love = Love.objects.filter(user=request.user, movie=movie)
@@ -372,10 +376,8 @@ def hall(request):
 
 	# filter
 	if select_filter == u'评分最高':
-		print '0'*20
 		movies = movies.order_by('douban_rate')
 	if select_filter == u'评论最多':
-		print '1'*20
 		movies = movies.order_by('douban_comment_num')
 
 	data = {
