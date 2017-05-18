@@ -2,8 +2,10 @@
 from django.shortcuts import render, redirect, HttpResponse, render_to_response
 from models import *
 import random
+import math
 import json
 import re
+import os
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
@@ -12,6 +14,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Q
 from algorithm.UserCF import *
 from datetime import datetime
+from django.core.paginator import Paginator
 
 
 # Create your views here.
@@ -52,7 +55,7 @@ def register(request):
 		number = random.randint(1000000, 9999999)
 		if not ExtUser.objects.filter(number=number):
 			user = User.objects.create_user(username=username, password=pw)
-			ExtUser.objects.create(user=user, number=number)
+			ExtUser.objects.create(user=user, number=number, autograph='photo.jpg')
 			user = authenticate(username=username, password=pw)
 			login(request, user)
 			return redirect('/sort/label')
@@ -155,7 +158,7 @@ def movie_detail(request):
 		for comment in comments:
 			love = Love.objects.filter(movie=comment.movie, user=comment.user)
 			com = model_to_dict(comment)
-			com['username'] = comment.user.username
+			com['user'] = comment.user
 			com['date'] = comment.comment_date
 			if love:
 				com['type'] = love_dct.get(love[0].type, u'未知')
@@ -295,7 +298,6 @@ def person_list(request):
 
 
 @csrf_exempt
-@login_required(login_url='/login')
 def operate(request):
 	if request.method == 'POST':
 		op_type = request.POST.get('type', False)
@@ -305,11 +307,14 @@ def operate(request):
 			'dislike': u'<黑名单>',
 			'want': u'<想看>'
 		}
+		
+		if not request.user.is_authenticated:
+			return HttpResponse(json.dumps({'msg':u'登录后才能加入列表!', 'type': 'danger'}), content_type='application/json')
 		if op_type not in ['like', 'dislike', 'want']:
 			return HttpResponse('type error')
 		movie = Movie.objects.get(douban_id=int(douban_id))
 		if not movie:
-			return HttpResponse('can find the movie maybe: douban id is error!!!')
+			return HttpResponse('can not find the movie maybe: douban id is error!!!')
 		love = Love.objects.filter(user=request.user, movie=movie)
 		if love:
 			love[0].type = op_type
@@ -328,6 +333,7 @@ def hall(request):
 	select_type = request.GET.get('type', False)
 	select_time = request.GET.get('time', False)
 	select_filter = request.GET.get('filter', False)
+	select_p = request.GET.get('p', False)
 	if not select_area:
 		select_area = u'全部'
 	if not select_type:
@@ -379,9 +385,15 @@ def hall(request):
 		movies = movies.order_by('douban_rate')
 	if select_filter == u'评论最多':
 		movies = movies.order_by('douban_comment_num')
+	movies = movies[::-1]  # 倒叙
+	p = Paginator(movies, 20)	
+	if select_p:
+		select_p = int(select_p)
+	else:
+		select_p = 1
 
 	data = {
-		'movies': movies[::-1][:30],
+		'movies': p.page(select_p),
 		'area_lst': area_lst,
 		'type_lst': type_lst,
 		'time_lst': time_lst,
@@ -397,7 +409,23 @@ def hall(request):
 @csrf_exempt
 @login_required(login_url='/login')
 def person_center(request):
-	if request.method == 'GET':
-		pass
+	data = {
+		'_user': request.user
+	}
+	if request.method == 'POST':
+		number = request.user.extuser.number
+		if not number:
+			return HttpResponse('error user number')
+		file_obj = request.FILES.get('files', False)
+		if not file_obj:
+			return HttpResponse('error image file')
+		autograph = str(number)+'.jpg'
+		save_file = os.path.join(os.getcwd(), 'static/recSys/photo/'+autograph)
+		with open(save_file, 'w+') as fp:
+			for chunk in file_obj.chunks():
+				fp.write(chunk)
+		c_user = ExtUser.objects.get(user=request.user)
+		c_user.autograph = autograph
+		c_user.save()
 	return render(request, 'person-center.html', data)
 
