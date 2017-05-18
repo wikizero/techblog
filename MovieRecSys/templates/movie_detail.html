@@ -89,7 +89,7 @@
                         'id': movie_id
                     },
                     success: function(msg){
-                        UIkit.notify(msg.msg, {status:'success', timeout : 1500});
+                        UIkit.notify(msg.msg, {status:msg.type, timeout : 1500});
                     }
                 })
             })
@@ -141,12 +141,13 @@
             <p>豆瓣评分: {{ movie.douban_rate }} &nbsp; (评分人数: {{ movie.douban_comment_num }})</p>
 
 
-            <a title="想看" data-uk-tooltip="{pos:'right'}" data-type="want"
+            <a class="uk-icon-button uk-icon-share-alt btn-share" data-uk-modal="{target:'#mymodal'}"></a>
+            <a title="想看" data-uk-tooltip="{pos:'top'}" data-type="want"
                class="uk-icon-button uk-icon-eye btn-operate"></a>
             <a title="喜欢" data-uk-tooltip="{pos:'top'}" data-type="like"
-               class="uk-icon-button uk-icon-heart btn-operate"></a>
-            <a title="不喜欢" data-uk-tooltip="{pos:'left'}" data-type="dislike"
                class="uk-icon-button uk-icon-heart-o btn-operate"></a>
+            <a title="不喜欢" data-uk-tooltip="{pos:'left'}" data-type="dislike"
+               class="uk-icon-button uk-icon-trash-o btn-operate"></a>
 
         </div>
         <h3 style=" margin-top: 30px; font-size: 16px">{{ movie.film_name }} 的故事简介 :</h3>
@@ -230,9 +231,9 @@
         {% for c in comments %}
         <article class="uk-comment" style="width: 100%">
             <header class="uk-comment-header">
-                <img class="uk-comment-avatar" src="{% static 'recSys/photo/photo.jpg' %}"
+                <img class="uk-comment-avatar" src="{% static 'recSys/photo/' %}{{ c.user.extuser.autograph }}"
                      style="width: 50px; height: 50px; border-radius: 50px">
-                <h4 class="uk-comment-title">{{ c.username }}</h4>
+                <h4 class="uk-comment-title">{{ c.user.username }}</h4>
                 <div class="uk-comment-meta">{{ c.date|date:"Y-m-d" }} | {{ c.type }}</div>
             </header>
             <div class="uk-comment-body">
@@ -246,5 +247,26 @@
             </div>
         </article>
         {% endfor %}
+
+
+                            <div id="mymodal" class="uk-modal" aria-hidden="true" style="display: none; overflow-y: scroll;">
+                                <div class="uk-modal-dialog">
+                                    <button type="button" class="uk-modal-close uk-close"></button>
+                                    <div class="uk-modal-header">
+                                        <h4>{{ movie.film_name}} 分享</h4>
+                                    </div>
+					<form action="" method="post" class="uk-form">
+                {% csrf_token %}
+                <textarea cols="134" rows="6" class="textarea" id="text" placeholder="要说点啥呢..." name="text"
+                          style="padding: 8px 8px;border-radius: 4px"></textarea>
+                           {#  <p class="uk-form-help-block">独乐乐，不如众乐乐，分享也是一种美德哦!</p> #}
+				    </form>
+
+                                    <div class="uk-modal-footer uk-text-right">
+                                        <button type="button" class="uk-button">取消</button>
+                                        <button type="button" class="uk-button uk-button-primary">分享</button>
+                                    </div>
+                                </div>
+                            </div>
     </div>
 {% endblock %}
