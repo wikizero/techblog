@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Attitude 文件中转站{% endblock title %}
+{% block head %}
+    <script src="{% static 'blog/js/notify.min.js' %}"></script>
+    <style>
+
+        table thead th, table tr td {
+            background-color: #ffffff !important;
+            text-align: center !important;
+        }
+
+        .uk-icon-justify {
+            font-size: 18px;
+        }
+    </style>
+{% endblock head %}
+{% block content %}
+    <div style="margin: 100px auto;width:800px">
+        <form class="uk-form"  method="post">
+            {% csrf_token %}
+            <div class="uk-form-icon">
+                <i class="uk-icon-link"></i>
+                <input type="text" placeholder="Paste your url here..." style="width: 800px; height: 40px;
+                font-size: large" name="url" id="url">
+            </div>
+        </form>
+    </div>
+
+
+
+{% endblock content %}

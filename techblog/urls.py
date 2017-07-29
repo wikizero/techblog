@@ -40,6 +40,9 @@ urlpatterns = [
     url(r'^access/info', views.access_info),
     url(r'^message', views.message),
 
+    # tools url
+    url(r'^tool/pdf', views.tool_pdf),
+
 ]
 
 
