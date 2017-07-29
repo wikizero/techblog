@@ -23,20 +23,20 @@ def index(request):
 
     # ip = '159.106.121.75'
     ips = IpInfo.objects.filter(ip=str(ip))
-    if not ips:
-        info = get_addr.addr(str(ip))
-        ips = IpInfo.objects.create(
-            ip=str(ip),
-            country=info['country'],
-            province=info['province'],
-            city=info['city'],
-            area=info['district'],
-        )
-    else:
-        ips = ips[0]
-        ips.times += 1
-	ips.mark=ua  # 更新最后访问的设备信息
-        ips.save()
+    # if not ips:
+    #     info = get_addr.addr(str(ip))
+    #     ips = IpInfo.objects.create(
+    #         ip=str(ip),
+    #         country=info['country'],
+    #         province=info['province'],
+    #         city=info['city'],
+    #         area=info['district'],
+    #     )
+    # else:
+    #     ips = ips[0]
+    #     ips.times += 1
+    # ips.mark = ua  # 更新最后访问的设备信息
+    # ips.save()
 
     data = {
         'notes': notes[:9],
@@ -288,21 +288,21 @@ def upload(request):
         for parent_folder, folder_names, file_names in os.walk(root_dir):
             for filename in file_names:
                 # print filename  # 文件名
-                size = os.path.getsize(root_dir+filename)
+                size = os.path.getsize(root_dir + filename)
                 # file_size = round(size, 1)   # 文件大小
-                create_sec = os.stat(root_dir+filename).st_ctime
+                create_sec = os.stat(root_dir + filename).st_ctime
                 dates = datetime.datetime.fromtimestamp(create_sec)
                 create_date = dates.strftime('%Y/%m/%d %H:%M')  # 文件创建时间（也即是文件上传时间 ）
                 # extension = filename[:filename.rfind('.')]
                 index = filename.rfind('.')
                 if index > 0:
-                    extension = filename[index+1:len(filename)]
+                    extension = filename[index + 1:len(filename)]
                 else:
                     extension = ''
-                file_lst.append([filename, size, create_date, extension])   # filename.decode('gbk') 转中文显示
+                file_lst.append([filename, size, create_date, extension])  # filename.decode('gbk') 转中文显示
         data = {
             'file': file_lst[::-1],
-            'imtype': ['png', 'PNG', 'jpg', 'JPG','gif', 'GIF', 'peg', 'PEG', 'SVG', 'svg'],
+            'imtype': ['png', 'PNG', 'jpg', 'JPG', 'gif', 'GIF', 'peg', 'PEG', 'SVG', 'svg'],
             'mvtype': ['mp4', 'MP4']
         }
         return render(request, 'upload.html', data)
@@ -311,7 +311,7 @@ def upload(request):
         file_obj = request.FILES.getlist('files[]')
         file_list = []
         for f in file_obj:
-            if len(f) / 1024 > 1000000000:   # 不大于10M
+            if len(f) / 1024 > 1000000000:  # 不大于10M
                 result = {
                     'msg': 'err'
                 }
@@ -358,7 +358,7 @@ def download(request):
                 break
         f.close()
 
-    file_name = root_dir+name
+    file_name = root_dir + name
     response = HttpResponse(readFile(file_name))
     response['Content-Type'] = 'application/octet-stream'
     response['Content-Disposition'] = 'attachment;filename="{0}"'.format(name.encode('gbk'))
@@ -373,7 +373,7 @@ def remove(request):
     name = name.split('|')
     root_dir = 'static/blog/files/'
     for n in name:
-        os.remove(root_dir+n)
+        os.remove(root_dir + n)
     return redirect('/upload')
 
 
@@ -383,6 +383,7 @@ def access_info(request):
         'info': info
     }
     return render(request, 'access-info.html', data)
+
 
 @csrf_exempt
 def message(request):
@@ -414,3 +415,43 @@ def message(request):
             )
         Message.objects.create(ip=ips[0], mark=msg)
         return redirect('/message')
+
+
+@csrf_exempt
+def tool_pdf(request):
+    if request.method == 'GET':
+         return render(request, 'htlm-to-pdf.html')
+    elif request.method == 'POST':
+        url = request.POST.get('url', False)
+        if not url:
+            return HttpResponse('No url to export...')
+        print 'url:', url
+    
+        def readFile(fn, buf_size=262144):
+            f = open(fn, "rb")
+            while True:
+                c = f.read(buf_size)
+                if c:
+                    yield c
+                else:
+                    break
+            f.close()
+    
+        name = url
+        file_name = name.split('/')[-1] if name.split('/')[-1] else name.split('/')[-2]
+        file_name += '.pdf'
+    
+        options = {
+            'encoding': 'UTF-8'
+        }
+    
+        # pdfkit.from_url(name, file_name, options=options)
+        import os
+        
+        command = 'wkhtmltopdf ' + name + ' output.pdf'
+        os.system(command)
+        response = HttpResponse(readFile('static/blog/output.pdf'))
+        response['Content-Type'] = 'application/octet-stream'
+        response['Content-Disposition'] = 'attachment;filename="{0}"'.format(file_name)
+        
+        return response
