@@ -25,7 +25,7 @@ SECRET_KEY = 'dzmu9!7gdc9%f@@+fcz18m(x#&(2=6x3t!jn#+zwiy=g+@l)wt'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['119.29.203.34','www.attitudes.cn']
 
 
 # Application definition

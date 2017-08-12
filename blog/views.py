@@ -5,7 +5,10 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from blog.models import *
+import random
 import datetime
+import ncmbot
+import wget
 import json
 import os
 from blog.api import get_addr
@@ -455,3 +458,26 @@ def tool_pdf(request):
         response['Content-Disposition'] = 'attachment;filename="{0}"'.format(file_name)
         
         return response
+
+
+@csrf_exempt
+def download_music(request):
+    def readFile(fn, buf_size=262144):
+        f = open(fn, "rb")
+        while True:
+            c = f.read(buf_size)
+            if c:
+                yield c
+            else:
+                break
+        f.close()
+    lst = [68302, 30500857, 496543881]
+    music_id = random.choice(lst)
+    r = ncmbot.music_url(ids=[music_id])
+    music_url = r.json()['data'][0]['url']
+    response = wget.download(music_url, out='static/blog/myMusic.mp3')
+    response = HttpResponse(readFile('static/blog/myMusic.mp3'))
+    response['Content-Type'] = 'application/octet-stream'
+    response['Content-Disposition'] = 'attachment;filename="{0}"'.format('myMusic.mp3')
+
+    return response
