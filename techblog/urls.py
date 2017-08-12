@@ -34,7 +34,7 @@ urlpatterns = [
     url(r'^del/note', views.del_note),
 
     url(r'^upload', views.upload),
-    url(r'^download', views.download),
+    url(r'^download$', views.download),
     url(r'^remove', views.remove),
 
     url(r'^access/info', views.access_info),
@@ -42,6 +42,7 @@ urlpatterns = [
 
     # tools url
     url(r'^tool/pdf', views.tool_pdf),
+    url(r'^download/music', views.download_music),
 
 ]
 
