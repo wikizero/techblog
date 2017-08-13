@@ -522,12 +522,12 @@ input[class*="span"], select[class*="span"], textarea[class*="span"], .uneditabl
     float: none;
     margin-left: 0;
 }
-
-input:focus, textarea:focus {
+/* by lwx451006 2017/8/13*/
+/*input:focus, textarea:focus {
     border-color: rgba(82, 168, 236, 0.8);
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(82, 168, 236, 0.6);
     outline: 0 none;
-}
+}*/
 
 fieldset {
     padding: 20px;
