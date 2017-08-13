@@ -12,6 +12,9 @@ import wget
 import json
 import os
 from blog.api import get_addr
+from blog.api import music
+import StringIO
+import urllib2
 
 
 def index(request):
@@ -462,22 +465,30 @@ def tool_pdf(request):
 
 @csrf_exempt
 def download_music(request):
-    def readFile(fn, buf_size=262144):
-        f = open(fn, "rb")
-        while True:
-            c = f.read(buf_size)
-            if c:
-                yield c
-            else:
-                break
-        f.close()
-    lst = [68302, 30500857, 496543881]
-    music_id = random.choice(lst)
-    r = ncmbot.music_url(ids=[music_id])
-    music_url = r.json()['data'][0]['url']
-    response = wget.download(music_url, out='static/blog/myMusic.mp3')
-    response = HttpResponse(readFile('static/blog/myMusic.mp3'))
-    response['Content-Type'] = 'application/octet-stream'
-    response['Content-Disposition'] = 'attachment;filename="{0}"'.format('myMusic.mp3')
+    if request.method == 'GET':
+        music_id = request.GET.get('id', False)
+        name = request.GET.get('name', False)
+        _s =  request.GET.get('s', u'热门')
+        if not music_id:
+            musics = music.searchMusic(_s)
+            data = {
+                'musics':'',
+                'find_str':_s
+            }
+            if data:
+                data['musics'] = musics
+            return render(request, 'download-music.html', data)
+        else:
+            r = ncmbot.music_url(ids=[music_id])
+            music_url = r.json()['data'][0]['url']
+            fp = urllib2.urlopen(music_url)  
+            response = HttpResponse(fp.read())  # 将内存中的文件直接返回
+            response['Content-Type'] = 'application/octet-stream'
+            response['Content-Disposition'] = 'attachment;filename="{0}"'.format(name.encode('utf-8'))
+            return response
 
-    return response
+    elif request.method == 'POST':
+        pass
+        # mid = request.POST.get('mid', False)
+        # size = ncmbot.song_detail([int(mid)]).json()['songs'][0]['m']['size'] # m/l
+
