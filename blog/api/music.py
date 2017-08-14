@@ -1,6 +1,7 @@
 # coding:utf-8
 import ncmbot
 
+
 def readFile(fn, buf_size=262144):
     f = open(fn, "rb")
     while True:
@@ -10,6 +11,7 @@ def readFile(fn, buf_size=262144):
         else:
             break
     f.close()
+
 
 def searchMusic(s=u'热门英文歌'):
 	response = ncmbot.search(keyword=s, limit=50)
@@ -45,5 +47,6 @@ if __name__ == '__main__':
 	# 	print i
 	# 	print '-'*100
 	print ncmbot.song_detail([186016]).json()['songs'][0]['m']['size']
+
 
 	
