@@ -22,7 +22,6 @@ def searchMusic(s=u'热门英文歌'):
 	songCount = result['songCount']
 	songs = result['songs']
 	for song in songs:
-		print song
 		id = song['id']
 		name = song['name']
 		# size = ncmbot.music_url(ids=[id]).json()['data'][0]['size']
