@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}{{ note.type }} - {{ note.title }}{% endblock title %}
+{% block head %}
+    <style>
+	*{
+{#	    font-family: arial, "Microsoft YaHei", "\5fae\8f6f\96c5\9ed1"#}
+	}
+        .uk-article-title {
+            margin-top: 20px;
+            font-size: 21px;
+            line-height: 25px;
+            margin-left: 20px;
+        }
+
+        .uk-article-meta {
+            line-height: 20px;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+        .p{
+            padding: 10px 20px;
+            border-top: 1px solid #EEEEEE;
+            font-size: 15px;
+        }
+        .p p{
+            margin: 3px auto;
+        }
+        code{
+	    font-family: Monaco,Menlo,Consolas,"Courier New",monospace, "Microsoft YaHei";
+            background-color: inherit;
+            font-size: 15px;
+	    padding: 0;
+	    margin: 0;
+            line-height: 25px;
+        }
+    * + h1, * + h2, * + h3, * + h4, * + h5, * + h6{
+        margin-top: 0 !important;
+    }
+    </style>
+{% endblock head %}
+{% block content %}
+<div style="width: 1000px;padding: 20px;margin: 0px auto">
+
+    <div class="uk-article" style="margin-bottom: 30px">
+        <h3 class="uk-article-title">{{ note.title }}</h3>
+        <a href="#" style="float: right; margin-right: 20px">下载本页</a>
+        <p class="uk-article-meta"> 创建时间 : {{ note.create|date:"Y-m-d H:i:s" }} &nbsp; &nbsp; 最后更新 : {{ note.edit|date:"Y-m-d H:i:s" }} &nbsp; &nbsp;
+            <span style="background-color: #fafff8;padding: 3px 6px;border: 1px solid #EEEEEE">{{ note.type }}</span> </p>
+
+        <p class="p">{{ note.content|safe }}</p>
+    </div>
+
+</div>
+
+<script>
+</script>
+{% endblock content %}

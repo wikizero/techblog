@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Access-Info{% endblock title %}
+{% block head %}
+    <style>
+        .uk-table tr th, .uk-table tr td{
+            text-align: center;
+        }
+
+
+    </style>
+{% endblock head %}
+{% block content %}
+<div style="width: 1000px;padding: 80px;margin: 0px auto">
+
+    <table class="uk-table uk-table-hover">
+        <tr>
+            <th>IP</th>
+            <th>地理位置</th>
+            <th>最近访问时间</th>
+            <th>备注信息</th>
+            <th>访问次数(主页)</th>
+        </tr>
+        {% for i in info %}
+        <tr>
+            <td>{{ i.ip }}</td>
+            <td>{{ i.country }} {{ i.province }} {{ i.city }} {{ i.area }}</td>
+            <td>{{ i.last_time|date:"Y-m-d H:i:s" }}</td>
+            <td>{{ i.mark }}</td>
+            <td>{{ i.times }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</div>
+
+<script>
+
+</script>
+{% endblock content %}

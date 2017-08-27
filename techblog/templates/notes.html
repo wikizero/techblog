@@ -1,0 +1,106 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="{% static 'blog/css/uikit.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'blog/css/uikit.gradient.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'blog/css/search.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'blog/css/notes.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/simditor-2.3.6/styles/simditor.css' %}"/>
+
+    <script type="text/javascript" src="{% static 'blog/simditor-2.3.6/scripts/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'blog/js/uikit.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'blog/js/search.js' %}"></script>
+    <script type="text/javascript" src="{% static 'blog/js/notes.js' %}" charset="gbk"></script>
+    <script type="text/javascript" src="{% static 'blog/simditor-2.3.6/scripts/module.js' %}"></script>
+    <script type="text/javascript" src="{% static 'blog/simditor-2.3.6/scripts/hotkeys.js' %}"></script>
+    <script type="text/javascript" src="{% static 'blog/simditor-2.3.6/scripts/uploader.js' %}"></script>
+    <script type="text/javascript" src="{% static 'blog/simditor-2.3.6/scripts/simditor.js' %}"></script>
+    <title>wiki-notes</title>
+</head>
+<body>
+<div class="left-side">
+    <div class="left-top">
+        <h1>Wiki notes</h1>
+
+        <form class="uk-search" data-uk-search method="post">
+            <input class="uk-search-field" type="search" placeholder="寻找笔记...">
+        </form>
+    </div>
+    <div class="left-content" style="overflow-y: scroll">
+        <ul class="uk-nav uk-nav-parent-icon left-menu">
+            <li class="uk-parent document">
+                <a class="menu"><i class="uk-icon-laptop"></i> 最新文档</a>
+
+                <div>
+                    <ul class="uk-nav-sub">
+
+                    </ul>
+                </div>
+            </li>
+            <li class="uk-parent">
+                <a class="menu"><i class="uk-icon-folder-open"></i> 常用文档</a>
+
+                <div>
+                    <ul class="uk-nav-sub">
+
+                    </ul>
+                </div>
+            </li>
+            {% for key, val in notes.items %}
+                <li class="uk-parent">
+                    <a class="menu" data="{{ key }}"><i class="uk-icon-folder"></i> {{ key }}</a>
+
+                    <div>
+                        <ul class="uk-nav-sub">
+                            {% for n in val %}
+                                <li class="notes" data="{{ n.id }}"><a><i class="uk-icon-file-text-o"></i>
+                                    <span>{{ n.title }}</span>
+                                </a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+
+
+        <div class="uk-panel mouse-menu">
+            <ul class="uk-list">
+
+            </ul>
+        </div>
+    </div>
+    <div class="left-bottom">
+        <button class="uk-button save" type="button" data="">save</button>
+        <button class="uk-button" type="button" style="margin-left: 25px"
+                onclick="javascript:window.location.href='/notes/share'">share
+        </button>
+        <a class="uk-button" type="button" href="/notes/logout" style="margin-left: 25px">logout</a>
+
+    </div>
+</div>
+<p class="information">open a document...</p>
+
+<form class="p-title" data-uk-search>
+    <i class="uk-icon-commenting-o" style="margin-right:-20px;color: #888"></i>
+    <input class="uk-search-field p-desc" type="search" placeholder="for description..."
+           style="width: 638px;border-bottom: 1px solid #dddddd;text-align: center;color: #888;padding: 0">
+</form>
+<a class="uk-icon-button uk-icon-eye p-hide" alt="toggle"></a>
+<p class="info" style="position: absolute;left: 340px;color: #c3c3c3;display: none" >saving</p>
+
+<div class="right-side">
+    <div class="editor">
+        <textarea id="editor" data-autosave="editor-content" autofocus required></textarea>
+    </div>
+    <div class="visual uk-panel" style='display:none'>
+        <h3 class="uk-panel-title"><i class="uk-icon-paperclip"></i> 下面是笔记预览:</h3>
+        <a class="uk-icon-hover uk-icon-chevron-up close"></a>
+
+        <div></div>
+    </div>
+</div>
+</body>
+</html>
