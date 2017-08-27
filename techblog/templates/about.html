@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Attitude 关于我{% endblock title %}
+{% block head %}
+    <link href="{% static 'blog/css/about.css' %}" rel="stylesheet" type="text/css">
+    <script src="{% static 'blog/js/accordion.min.js' %}"></script>
+    <style>
+        .uk-article-lead {
+            font-size: 16px;
+        }
+
+        .uk-container-center {
+            width: 800px;
+            padding: 40px 80px;
+            text-align: left;
+
+        }
+    </style>
+{% endblock head %}
+{% block content %}
+
+
+    <div class="heading">
+        <div class="wrapper">
+            <h2>About</h2>
+
+            <div class="lead">Attitude's personal website</div>
+            <div class="social">终点的距离，无关前行的速度，而是取决于前行的态度！</div>
+        </div>
+    </div>
+
+    <div class="uk-panel uk-panel-box uk-container-center uk-width-medium-1-2">
+        <h3 class="uk-panel-title"><i class="uk-icon-envelope"></i> &nbsp;Wikizeros:</h3>
+         <p class="uk-article-lead" style="text-indent: 2em">
+            Attitude is Altitude!
+        </p>
+        <p class="uk-article-lead" style="text-indent: 2em">
+            Your attitude determines your ability to succeed. How you respond to challenges,approach change and deal
+            with difficulties—even how you think about yourself—are all key factors in success, both in life and
+            business.
+            <br>
+        </p>
+
+        <p class="uk-article-lead" style="text-indent: 2em">
+            Attitude is Altitude is on a mission to spread a message of inspiration around the world. Through live
+            events, keynote speeches,
+            online resources and inspirational products, we’re reaching out to people across the globe to demonstrate
+            that what ever your circumstances, you can make positive changes and overcome life's challenges.
+        </p>
+
+
+    </div>
+
+    <div class="uk-accordion" data-uk-accordion style="margin: 50px auto;width: 800px; margin-bottom: 80px">
+
+        <h3 class="uk-accordion-title">待做功能</h3>
+
+        <div class="uk-accordion-content">
+            <p class="uk-article-lead">1.接入第三方登录：QQ、微信、新浪、百度</p>
+
+            <p class="uk-article-lead">2.文件中转（考虑到磁盘容量，需要权限）</p>
+
+            <p class="uk-article-lead">3.网站开发时间轴，用于更新动态</p>
+
+            <p class="uk-article-lead">4.给用户添加个性化问候语（匹配真实信息），给user推送实时信息</p>
+
+            <p class="uk-article-lead">5.捉取嗅事百科排名靠前的段子到本站</p>
+
+            <p class="uk-article-lead">7.doc、pdf在线转换工具</p>
+
+            <p class="uk-article-lead">8.接入网易有道词典</p>
+
+            <p class="uk-article-lead">6.登陆ip，匹配地址（数据分析）</p>
+
+            <p class="uk-article-lead">9.部署个人简历</p>
+
+            <p class="uk-article-lead">9.推送网站的错误日志信息到邮箱</p>
+
+        </div>
+
+        {#        <h3 class="uk-accordion-title">完成</h3>#}
+        {##}
+        {#        <div class="uk-accordion-content">asda是dads.</div>#}
+
+    </div>
+
+    <h2 style="text-align: center;">博客时间轴</h2>
+
+    <ul class="timeline">
+        <li class="event">
+            <label></label>
+
+            <div class="thumb" style="background-image:url({% static 'blog/images/photo.jpg' %});">
+                <span>2016-6-26</span></div>
+            <div class="inner">
+                <h3>正式启动项目</h3>
+
+                <p>迷茫，那是因为你的才华还撑不起你的梦想！</p>
+            </div>
+        </li>
+        <li class="event">
+            <label></label>
+
+            <div class="thumb" style="background-image:url({% static 'blog/images/photo.jpg' %});">
+                <span>2016-6-27</span></div>
+            <div class="inner">
+                <h3>Attitude </h3>
+
+                <p>Attitude is everything！</p>
+            </div>
+        </li>
+        <li class="event">
+            <label></label>
+
+            <div class="thumb" style="background-image:url({% static 'blog/images/photo.jpg' %});">
+                <span>2016-6-27</span></div>
+            <div class="inner">
+                <h3>Attitude </h3>
+
+                <p>2016/9/27！</p>
+            </div>
+        </li>
+    </ul>
+
+
+
+{% endblock %}

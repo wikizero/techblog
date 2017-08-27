@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Attitude 文件中转站{% endblock title %}
+{% block head %}
+    <script src="{% static 'blog/js/upload.min.js' %}"></script>
+    <script src="{% static 'blog/js/notify.min.js' %}"></script>
+    <script src="{% static 'blog/js/lightbox.min.js' %}"></script>
+    <style>
+
+        table thead th ,table tr td{
+            background-color: #ffffff !important;
+            text-align: center !important;
+        }
+        .uk-icon-justify{
+            font-size: 18px;
+         }
+    </style>
+{% endblock head %}
+{% block content %}
+    <div style="width: 880px;padding: 200px;margin: 0px auto">
+
+        <div id="upload-drop" class="uk-placeholder uk-text-center">
+            <i class="uk-icon-cloud-upload uk-icon-medium uk-text-muted uk-margin-small-right"></i> 将文件拖拽至此 或 <a
+                class="uk-form-file">选择一个文件 <input id="upload-select" name="upload-select" type="file"></a> (目前仅支持<10M的文件).
+            {% csrf_token %}
+        </div>
+        <div id="progressbar" class="uk-progress uk-hidden">
+            <div class="uk-progress-bar" style="width: 0%;">0%</div>
+        </div>
+
+
+        <table class="uk-table" style="margin-top: 80px">
+            <thead>
+            <tr>
+                <th><input type="checkbox" class="all-check"/></th>
+                <th>文件名</th>
+                <th>文件类型</th>
+                <th>文件大小</th>
+                <th>上传时间</th>
+                <th>删除</th>
+                <th>预览</th>
+                <th>下载</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for f in file %}
+            <tr>
+                <td><input class="checks" type="checkbox"/></td>
+                <td class="filename">{{ f.0 }}</td>
+                <td>{{ f.3 }}</td>
+                <td>{{ f.1|filesizeformat }}</td>
+                <td>{{ f.2 }}</td>
+                <td> <a data="{{ f.0 }}" class="uk-icon-justify uk-icon-trash remove" style="color: #ff7799"></a></td>
+
+                {% if f.0|slice:'-3:' in imtype %}
+                    <td><a data="{{ f.0 }}" href="static/blog/files/{{ f.0 }}" data-uk-lightbox="{group:'my-group'}" title="{{ f.0 }}" class="uk-icon-justify uk-icon-image"></a></td>
+                {% elif f.0|slice:'-3:' in mvtype%}
+                    <td><a data="{{ f.0 }}" href="static/blog/files/{{ f.0 }}" data-uk-lightbox="" title="{{ f.0 }}" class="uk-icon-justify uk-icon-film"></a></td>
+                {% else %}
+                    <td><a data="{{ f.0 }}" href="static/blog/files/{{ f.0 }}" target="_blank" class="uk-icon-justify uk-icon-file-text-o"></a></td>
+                {% endif %}
+
+                <td> <a href="/download?file={{ f.0 }}" class="uk-icon-justify uk-icon-download"></a></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <button class="uk-button del" style="float: right; margin-right: 20px;">移除选中文件</button>
+    </div>
+
+    <script>
+        $(function () {
+            var progressbar = $("#progressbar"),
+                    bar = progressbar.find('.uk-progress-bar'),
+                    settings = {
+
+                        action: '/upload', // upload url
+
+                        {# allow: '*.(jpg|gif|png|jpeg|doc|txt|py|html|css|xlsx|xls|xlst|)', // allow only images#}
+
+                        loadstart: function () {
+                            bar.css("width", "0%").text("0%");
+                            progressbar.removeClass("uk-hidden");
+                        },
+
+                        progress: function (percent) {
+                            percent = Math.ceil(percent);
+                            bar.css("width", percent + "%").text(percent + "%");
+                        },
+
+                        allcomplete: function (response) {
+                            {#                            alert(response.filename)#}
+                            bar.css("width", "100%").text("100%");
+
+                            setTimeout(function () {
+                                progressbar.addClass("uk-hidden");
+                            }, 250);
+
+                            if (response.msg == 'ok') {
+                                UIkit.notify("<i class='uk-icon-paper-plane'></i> 文件上传成功了耶!", {status: 'success'});
+                                setTimeout(function(){
+                                    window.location.reload()
+                                }, 2000)
+
+                            } else {
+                                UIkit.notify("<i class='uk-icon-exclamation-triangle'></i> 不支持大文件上传（>10M）！", {status: 'danger'});
+                            }
+                        },
+                        type: 'json'
+                    };
+            var select = UIkit.uploadSelect($("#upload-select"), settings),
+                    drop = UIkit.uploadDrop($("#upload-drop"), settings);
+
+
+            $('.remove').click(function(){
+                name = $(this).attr('data')
+                UIkit.modal.confirm("此文件将会被移除哦，O不OK？", function(){
+                     // 点击OK确认后开始执行
+                    window.location.href = '/remove?file='+name
+                });
+            })
+
+            $('.all-check').change(function(){
+                bool = $(this).is(':checked')
+                if(bool){
+                    $('.checks').each(function(){
+                        $(this).attr('checked', 'checked')
+                    })
+                }else{
+                     $('.checks').each(function(){
+                        $(this).removeAttr('checked')
+                    })
+                }
+            })
+
+            $('.del').click(function(){
+                UIkit.modal.confirm("选中的文件将会被移除哦，O不OK？", function(){
+                    var text = ''
+                    $('.checks:checked').each(function(){
+                        text +='|'+$(this).parent().siblings('.filename').text()
+                    })
+                    if (text == ''){
+                        alert('please select...')
+                    }else{
+                        text = text.substr(1, text.length)
+                        window.location.href = '/remove?file='+text
+                    }
+                });
+            })
+        });
+
+    </script>
+{% endblock content %}

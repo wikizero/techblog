@@ -1,0 +1,176 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+}
+
+.left-side {
+    position: fixed;
+    width: 310px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    bottom: 0;
+    top: 0;
+    z-index: 1;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+.right-side {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 310px;
+    right: 0;
+    padding: 110px 30px;
+}
+
+.left-top {
+    width: 250px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 20px 30px;
+    height: 110px;
+    text-align: center;
+}
+
+.left-top h1 {
+    text-align: center;
+    font-family: cursive;
+    color: #444;
+
+}
+
+.uk-search {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+    /*{#            border-radius: 30px;#}*/
+}
+
+.left-content {
+    position: absolute;
+    top: 152px;
+    bottom: 116px;
+    left: 0;
+    right: 0;
+    padding: 20px 20px 0 15px;
+    /*{#            overflow-y: scroll;#}*/
+
+}
+
+.left-bottom {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 75px;
+    padding: 20px 30px;
+}
+
+/*     -------------------------- right-------------------        */
+.editor {
+    margin-left:118px;
+    width: 938px;
+    float: left;
+    /*{#            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);#} */
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+.visual {
+    margin-left: 30px;
+    float: left;
+    width: 500px;
+    padding: 10px 25px 10px 8px;
+    border: 1px solid #c9d8db;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+.visual div {
+    padding-left: 20px;
+}
+
+.visual .uk-panel-title {
+    color: #CCCCCC;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px
+}
+
+/*-------------------------------------- right-content--------------------------------- */
+.uk-parent div {
+    display: none;
+    padding: 0px 22px;
+}
+
+.uk-nav-sub a, .menu {
+    color: #666;
+}
+
+.menu:hover {
+    color: #666;
+    background-color: rgba(0, 0, 0, .04);
+}
+
+.uk-nav-sub a:hover {
+    color: #8d8d8d;
+}
+
+.uk-icon-file-text-o {
+    margin-right: 1px;
+}
+
+.mouse-menu {
+    color: #666;
+    width: 90px;
+    position: absolute;
+    display: none;
+    z-index: 999;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    padding: 8px 20px;
+}
+
+.mouse-menu li {
+    /*{#            margin-bottom: 8px;#}*/
+    padding: 5px 0px;
+    cursor: pointer;
+}
+
+.mouse-menu li:hover {
+    color: #2682ed;
+}
+
+.mouse-menu li i {
+    margin-right: 5px;
+}
+
+.information {
+    position: absolute;
+    top: 60px;
+    left: 340px;
+    color: #cccccc;
+}
+.p-title{
+    z-index: 998;
+    position: absolute;
+    top: 68px;
+    left: 588px;
+}
+.p-hide{
+    z-index: 998;
+    position: absolute;
+    top: 72px;
+    left: 1362px;
+    width: 30px;
+    height: 30px;
+    line-height: 26px;
+
+}
+.simditor .simditor-body p, .simditor .simditor-body div, .editor-style p, .editor-style div{
+    margin: 0 0 3px 0 !important;
+}
+.simditor .simditor-body h1, .simditor .simditor-body h2, .simditor .simditor-body h3, .simditor .simditor-body h4, .simditor .simditor-body h5, .simditor .simditor-body h6, .editor-style h1, .editor-style h2, .editor-style h3, .editor-style h4, .editor-style h5, .editor-style h6{
+    margin: 15px 0 15px !important;
+}
