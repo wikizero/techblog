@@ -274,10 +274,8 @@ def save_note(request):
             return HttpResponse('data err')
         note = Notes.objects.get(id=id)
         if show == 'false':
-            print '-' * 100
             note.show = False
         else:
-            print '+' * 100
             note.show = True
         note.save()
         result = {

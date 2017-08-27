@@ -1,2 +1,3 @@
-m, s = divmod(round(230962/1000.0), 60)
-print ("%02d:%02d" % (m, s))
+def application(env, start_response):
+	start_response('200 OK', [('Content-Type', 'text/html')])
+	return 'hello world uwsgi'
