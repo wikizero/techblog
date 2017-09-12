@@ -20,34 +20,34 @@ import urllib2
 def index(request):
     notes = Notes.objects.filter(show=True).order_by('-id')
 
-    if request.META.has_key('HTTP_X_FORWARDED_FOR'):
-        ip = request.META['HTTP_X_FORWARDED_FOR']
-    else:
-        ip = request.META['REMOTE_ADDR']
+    #if request.META.has_key('HTTP_X_FORWARDED_FOR'):
+    #    ip = request.META['HTTP_X_FORWARDED_FOR']
+    #else:
+    #    ip = request.META['REMOTE_ADDR']
 
-    ua = request.META.get('HTTP_USER_AGENT', 'unknown')
+    #ua = request.META.get('HTTP_USER_AGENT', 'unknown')
 
-    # ip = '159.106.121.75'
-    ips = IpInfo.objects.filter(ip=str(ip))
-    if ip != '127.0.0.1':
-        if not ips:
-            info = get_addr.addr(str(ip))
-            ips = IpInfo.objects.create(
-                ip=str(ip),
-                country=info['country'],
-                province=info['province'],
-                city=info['city'],
-                area=info['district'],
-            )
-        else:
-            ips = ips[0]
-            ips.times += 1
-        ips.mark = ua  # 更新最后访问的设备信息
-        ips.save()
+    ## ip = '159.106.121.75'
+    #ips = IpInfo.objects.filter(ip=str(ip))
+    #if ip != '127.0.0.1':
+    #    if not ips:
+    #        info = get_addr.addr(str(ip))
+    #        ips = IpInfo.objects.create(
+    #            ip=str(ip),
+    #            country=info['country'],
+    #            province=info['province'],
+    #            city=info['city'],
+    #            area=info['district'],
+    #        )
+    #    else:
+    #        ips = ips[0]
+    #        ips.times += 1
+    #    ips.mark = ua  # 更新最后访问的设备信息
+    #    ips.save()
 
     data = {
         'notes': notes[:9],
-        'ip': ips,
+    #    'ip': ips,
     }
     return render(request, 'index.html', data)
 
@@ -466,27 +466,27 @@ def tool_pdf(request):
 def download_music(request):
     if request.method == 'GET':
 
-        if request.META.has_key('HTTP_X_FORWARDED_FOR'):
-            ip = request.META['HTTP_X_FORWARDED_FOR']
-        else:
-            ip = request.META['REMOTE_ADDR']
-        ua = request.META.get('HTTP_USER_AGENT', 'unknown')
-        ips = IpInfo.objects.filter(ip=str(ip))
-        if ip != '127.0.0.1':
-            if not ips:
-                info = get_addr.addr(str(ip))
-                ips = IpInfo.objects.create(
-                    ip=str(ip),
-                    country=info['country'],
-                    province=info['province'],
-                    city=info['city'],
-                    area=info['district'],
-                )
-            else:
-                ips = ips[0]
-                ips.times += 1
-            ips.mark = ua  # 更新最后访问的设备信息
-            ips.save()
+        #if request.META.has_key('HTTP_X_FORWARDED_FOR'):
+        #    ip = request.META['HTTP_X_FORWARDED_FOR']
+        #else:
+        #    ip = request.META['REMOTE_ADDR']
+        #ua = request.META.get('HTTP_USER_AGENT', 'unknown')
+        #ips = IpInfo.objects.filter(ip=str(ip))
+        #if ip != '127.0.0.1':
+        #    if not ips:
+        #        info = get_addr.addr(str(ip))
+        #        ips = IpInfo.objects.create(
+        #            ip=str(ip),
+        #            country=info['country'],
+        #            province=info['province'],
+        #            city=info['city'],
+        #            area=info['district'],
+        #        )
+        #    else:
+        #        ips = ips[0]
+        #        ips.times += 1
+        #    ips.mark = ua  # 更新最后访问的设备信息
+        #    ips.save()
 
         music_id = request.GET.get('id', False)
         name = request.GET.get('name', False)
