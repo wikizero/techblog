@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'blog/base.html' %}
 {% load staticfiles %}
 {% block title %}Access-Info{% endblock title %}
 {% block head %}
@@ -25,7 +25,7 @@
         <tr>
             <td>{{ i.ip }}</td>
             <td>{{ i.country }} {{ i.province }} {{ i.city }} {{ i.area }}</td>
-            <td>{{ i.last_time|date:"Y-m-d H:i:s" }}</td>
+            <td>{{ i.last_time|date:"Y-m-d H:i:s"}}</td>
             <td>{{ i.mark }}</td>
             <td>{{ i.times }}</td>
         </tr>

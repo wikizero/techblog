@@ -12,7 +12,7 @@ var right_click
             pasteImage: true,
             //{#                defaultImage: 'assets/images/image.png',#}
             upload: location.search === '?upload' ? {
-                url: '/upload'
+                url: '/blog/upload'
             } : false
         });
         $preview = $('#preview');
@@ -140,7 +140,7 @@ $(function () {
         UIkit.modal.prompt("Create a new document", '', function (value) {
             $.ajax({
                 type: 'post',
-                url: '/add/note',
+                url: '/blog/add/note',
                 data: {
                     'type': type,
                     'value': value,
@@ -162,7 +162,7 @@ $(function () {
         UIkit.modal.confirm('The doc will be del, are you sure to do this?', function () {
             $.ajax({
                 type: 'post',
-                url: '/del/note',
+                url: '/blog/del/note',
                 data: {
                     'id': id,
                 },
@@ -188,7 +188,7 @@ $(function () {
             }
             $.ajax({
                 type: 'post',
-                url: '/add/note',
+                url: '/blog/add/note',
                 data: {
                     'new-type': value,
                 },
@@ -213,7 +213,7 @@ $(function () {
             }
             $.ajax({
                 type: 'post',
-                url: '/save/note',
+                url: '/blog/save/note',
                 data: {
                     'new-name': value,
                     'id': id
@@ -237,7 +237,7 @@ $(function () {
         $('.save').attr('data', id)
         $.ajax({
             type: 'post',
-            url: '/get/note',
+            url: '/blog/get/note',
             data: {
                 'id': id
             },
@@ -268,7 +268,7 @@ $(function () {
             return false
         }
         $.ajax({
-            url: '/save/note',
+            url: '/blog/save/note',
             type: 'post',
             data: {
                 'id': id,
@@ -306,7 +306,7 @@ $(function () {
         }
 
         $.ajax({
-            url: '/save/note',
+            url: '/blog/save/note',
             type: 'get',
             data: {
                 'id': id,

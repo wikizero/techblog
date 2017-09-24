@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'blog/base.html' %}
 {% load staticfiles %}
 {% block title %}Attitude 文件中转站{% endblock title %}
 {% block head %}
@@ -60,7 +60,7 @@
                     <td><a data="{{ f.0 }}" href="static/blog/files/{{ f.0 }}" target="_blank" class="uk-icon-justify uk-icon-file-text-o"></a></td>
                 {% endif %}
 
-                <td> <a href="/download?file={{ f.0 }}" class="uk-icon-justify uk-icon-download"></a></td>
+                <td> <a href="/blog/download?file={{ f.0 }}" class="uk-icon-justify uk-icon-download"></a></td>
             </tr>
             {% endfor %}
             </tbody>
@@ -116,7 +116,7 @@
                 name = $(this).attr('data')
                 UIkit.modal.confirm("此文件将会被移除哦，O不OK？", function(){
                      // 点击OK确认后开始执行
-                    window.location.href = '/remove?file='+name
+                    window.location.href = '/blog/remove?file='+name
                 });
             })
 
@@ -143,7 +143,7 @@
                         alert('please select...')
                     }else{
                         text = text.substr(1, text.length)
-                        window.location.href = '/remove?file='+text
+                        window.location.href = '/blog/remove?file='+text
                     }
                 });
             })
