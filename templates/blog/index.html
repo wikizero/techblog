@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'blog/base.html' %}
 {% load staticfiles %}
 {% block title %}Attitude 主页{% endblock title %}
 {% block head %}{% endblock head %}
@@ -155,20 +155,20 @@
                 <h5>attitude</h5>
                 <p>IP地址: {{ ip.ip }} </br>
                     地理位置: {{ ip.country }} {{ ip.province }} {{ ip.city }} {{ ip.area }}</p>
-                <a class="uk-button uk-button uk-button-small" href="/notes">进入wiki-note</a>
+                <a class="uk-button uk-button uk-button-small" href="/blog/notes">进入wiki-note</a>
 
                 <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86
                         src="http://music.163.com/outchain/player?type=2&id=30780496&auto=0&height=66"
                         style="margin: 20px -10px"></iframe>
 
                 <p style="margin-bottom: 5px;cursor: pointer">
-                    <a href="/notes/share" style="font-size: 15px;color:#7F8C8D;text-decoration: none">最新文章(点这进入列表)
+                    <a href="/blog/notes/share" style="font-size: 15px;color:#7F8C8D;text-decoration: none">最新文章(点这进入列表)
                         <span style="float: right">>></span></a></p>
 
                 <div class="singlerolling">
                     <ul style="margin-top: 0; padding-left: 8px">
                         {% for note in notes %}
-                            <li><a href="/notes/details?id={{ note.id }}">{{ forloop.counter }}. {{ note.title }}</a>
+                            <li><a href="/blog/notes/details?id={{ note.id }}">{{ forloop.counter }}. {{ note.title }}</a>
                             </li>
                         {% endfor %}
                     </ul>

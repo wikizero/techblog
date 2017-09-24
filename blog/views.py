@@ -49,15 +49,15 @@ def index(request):
         'notes': notes[:9],
     #    'ip': ips,
     }
-    return render(request, 'index.html', data)
+    return render(request, 'blog/index.html', data)
 
 
 def about_us(request):
-    return render(request, 'about.html')
+    return render(request, 'blog/about.html')
 
 
 def full_page(request):
-    return render(request, 'fullpage.html')
+    return render(request, 'blog/fullpage.html')
 
 
 def notes_logout(request):
@@ -77,13 +77,13 @@ def notes(request):
     data = {
         'notes': dct
     }
-    return render(request, 'notes.html', data)
+    return render(request, 'blog/notes.html', data)
 
 
 @csrf_exempt
 def notes_login(request):
     if request.method == "GET":
-        return render(request, 'notes-login.html')
+        return render(request, 'blog/notes-login.html')
     elif request.method == "POST":
         username = request.POST.get('username', False)
         password = request.POST.get('password', False)
@@ -117,7 +117,7 @@ def notes_share(request):
         }
     elif request.method == 'POST':
         print 'to do'
-    return render(request, 'notes-share.html', data)
+    return render(request, 'blog/notes-share.html', data)
 
 
 def notes_details(request):
@@ -128,7 +128,7 @@ def notes_details(request):
     data = {
         'note': note
     }
-    return render(request, 'notes-details.html', data)
+    return render(request, 'blog/notes-details.html', data)
 
 
 def file_download(request):
@@ -150,7 +150,7 @@ def sign_sys(request):
     }
 
     if request.method == 'GET':
-        return render(request, 'sign-in.html', data)
+        return render(request, 'blog/sign-in.html', data)
     elif request.method == 'POST':
         task_id = request.POST.getlist('checkbox', False)
         text = request.POST.get('textarea', '')
@@ -310,7 +310,7 @@ def upload(request):
             'imtype': ['png', 'PNG', 'jpg', 'JPG', 'gif', 'GIF', 'peg', 'PEG', 'SVG', 'svg'],
             'mvtype': ['mp4', 'MP4']
         }
-        return render(request, 'upload.html', data)
+        return render(request, 'blog/upload.html', data)
 
     elif request.method == 'POST':
         file_obj = request.FILES.getlist('files[]')
@@ -387,7 +387,7 @@ def access_info(request):
     data = {
         'info': info
     }
-    return render(request, 'access-info.html', data)
+    return render(request, 'blog/access-info.html', data)
 
 
 @csrf_exempt
@@ -397,7 +397,7 @@ def message(request):
         data = {
             'msg': msg
         }
-        return render(request, 'message.html', data)
+        return render(request, 'blog/message.html', data)
     elif request.method == 'POST':
         msg = request.POST.get('text', False)
         if not msg:
@@ -425,7 +425,7 @@ def message(request):
 @csrf_exempt
 def tool_pdf(request):
     if request.method == 'GET':
-         return render(request, 'htlm-to-pdf.html')
+         return render(request, 'blog/htlm-to-pdf.html')
     elif request.method == 'POST':
         url = request.POST.get('url', False)
         if not url:
@@ -499,7 +499,7 @@ def download_music(request):
             }
             if data:
                 data['musics'] = musics
-            return render(request, 'download-music.html', data)
+            return render(request, 'blog/download-music.html', data)
         else:
             r = ncmbot.music_url(ids=[music_id])
             music_url = r.json()['data'][0]['url']

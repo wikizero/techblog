@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'blog/base.html' %}
 {% load staticfiles %}
 {% block title %}Music{% endblock title %}
 {% block head %}
@@ -22,7 +22,7 @@
 {% block content %}
     <div style="width: 980px;padding: 100px;margin: 0px auto">
 
- 		<form class="uk-search" action="/download/music" data-uk-search style="float: right; margin-bottom: 10px">
+ 		<form class="uk-search" action="/blog/download/music" data-uk-search style="float: right; margin-bottom: 10px">
             <input class="uk-search-field" type="search" placeholder="搜索歌曲..." id="s" , name="s">
         </form>        
 
@@ -47,11 +47,11 @@
                 <td><input class="checks" data="{{ m.id }}" name="{{ m.download_name }}" type="checkbox"/></td>
                 <td>{{ forloop.counter }}</td>
                 <td>{{ m.name|truncatechars:30 }}</td>
-                <td><a href='/download/music?s={{m.singers}}'>{{ m.singers|truncatechars:20  }}</a></td>
-                <td><a href='/download/music?s={{m.album}}'>{{ m.album|truncatechars:20  }}</a></td>
+                <td><a href='/blog/download/music?s={{m.singers}}'>{{ m.singers|truncatechars:20 }}</a></td>
+                <td><a href='/blog/download/music?s={{m.album}}'>{{ m.album|truncatechars:20 }}</a></td>
                 <!-- <td>{{ m.size|filesizeformat }}</td> -->
                 <td>{{ m.duration }}</td>
-                <td> <a  data = '{{ m.id }}' href="/download/music?id={{ m.id }}&name={{ m.download_name }}" class="uk-icon-justify uk-icon-download"></a></td>
+                <td> <a  data = '{{ m.id }}' href="/blog/download/music?id={{ m.id }}&name={{ m.download_name }}" class="uk-icon-justify uk-icon-download"></a></td>
             </tr>
             {% endfor %}
             </tbody>

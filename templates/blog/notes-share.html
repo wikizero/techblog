@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'blog/base.html' %}
 {% load staticfiles %}
 {% load my_tags %}
 {% block title %}Attitude 笔记分享{% endblock title %}
@@ -83,7 +83,7 @@
             </p>
 
             <p class="p" style="font-size: 15px">{{ n.desc }}</p>
-            <a href="/notes/details?id={{ n.id }}" style="float: right" target="_blank">点击阅读</a>
+            <a href="/blog/notes/details?id={{ n.id }}" style="float: right" target="_blank">点击阅读</a>
         </div>
     {% endfor %}
     <div>
@@ -93,9 +93,9 @@
             $('.left-bar').click(function () {   // 其实没必要这样，django直接渲染就可以了，但js出错，或许jquery版本太低了
                 var type = $(this).attr('data')
                 if (type == null) {
-                    window.location.href = '/notes/share'
+                    window.location.href = '/blog/notes/share'
                 } else {
-                    window.location.href = '/notes/share?type=' + type
+                    window.location.href = '/blog/notes/share?type=' + type
                 }
             })
         })
