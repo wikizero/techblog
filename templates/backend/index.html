@@ -1,10 +1,63 @@
 {% extends 'backend/base.html' %}
 {% load staticfiles %}
-{% block title %}剑与家园{% endblock title %}
+{% block title %}主页{% endblock title %}
 {% block head %}
 
 {% endblock head %}
 {% block content %}
-    内容主体区域
-    功能待开发中...
+
+    <div id="main" style="width: 600px;height:400px;"></div>
+
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '国家分布情况'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                x: 'center',
+                data: ['国家分布']
+            },
+            radar: [
+                {
+                    indicator: [
+                        {text: '桑多瑞', max: 200},
+                        {text: '葛雷', max: 200},
+                        {text: '利萨姆', max: 200},
+                        {text: '莉维塔', max: 200},
+                        {text: '夏亚', max: 200},
+                        {text: '达姆斯', max: 200},
+                    ],
+                    center: ['25%', '40%'],
+                    radius: 80
+                },
+
+            ],
+            series: [
+                {
+                    type: 'radar',
+                    tooltip: {
+                        trigger: 'item'
+                    },
+                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                    data: [
+                        {
+                            value: [108, 123, 139, 100, 110, 80],
+                            name: '玩家数量'
+                        }
+                    ]
+                },
+            ]
+        };
+
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
 {% endblock %}
