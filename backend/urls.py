@@ -18,7 +18,10 @@ from django.contrib import admin
 import views
 
 urlpatterns = [
-    url(r'index', views.index)
+    url(r'index', views.index),
+    url(r'myWorldData', views.get_world_data),
+    url(r'swordData', views.get_sword_data),
+    url(r'^getRawData', views.get_raw_data),
 
 ]
 

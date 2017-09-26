@@ -1,0 +1,26 @@
+{% extends 'backend/base.html' %}
+{% load staticfiles %}
+{% block title %}朕的江山{% endblock title %}
+{% block head %}
+
+{% endblock head %}
+{% block content %}
+    {#内容主体区域#}
+    <table class="layui-table" lay-data="{height:715, url:'/backend/getRawData?t=info', page:true, id:'info_id'}"
+           lay-filter="info_id">
+        <thead>
+        <tr>
+            <th lay-data="{field:'title', width:250, sort: true}">商品名</th>
+            <th lay-data="{field:'account_type', width:100}">账户类型</th>
+            <th lay-data="{field:'desc', width:450}">描述</th>
+            <th lay-data="{field:'status', width:100}">状态</th>
+            <th lay-data="{field:'release_date', width:180, sort: true}">发布时间</th>
+            <th lay-data="{field:'level', width:100, sort: true}">等级</th>
+            <th lay-data="{field:'soul_num', width:100, sort: true}">魂数量</th>
+            <th lay-data="{field:'bind_info', width:100, sort: true}">绑定信息</th>
+            <th lay-data="{field:'price', width:100, sort: true}">价格</th>
+            <th lay-data="{field:'url', width:235}">链接</th>
+        </tr>
+        </thead>
+    </table>
+{% endblock %}
