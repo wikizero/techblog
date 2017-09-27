@@ -4,8 +4,7 @@ from django.shortcuts import render
 import pandas as pd
 from sqlalchemy import create_engine
 import json
-from api.CJson import CJsonEncoder
-
+from django.core.serializers.json import DjangoJSONEncoder
 
 # Create your views here.
 
@@ -47,4 +46,4 @@ def get_raw_data(request):
         'count': 400,
         'data': lst_dct
     }
-    return HttpResponse(json.dumps(_json, cls=CJsonEncoder), content_type="application/json")
+    return HttpResponse(json.dumps(_json, cls=DjangoJSONEncoder), content_type="application/json")
