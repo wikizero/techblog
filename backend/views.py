@@ -5,6 +5,7 @@ import pandas as pd
 from sqlalchemy import create_engine
 import json
 from django.core.serializers.json import DjangoJSONEncoder
+import pymongo
 
 # Create your views here.
 
@@ -35,15 +36,22 @@ def get_raw_data(request):
     page = request.GET.get('page', False)
     limit = request.GET.get('limit', False)
     num = (int(page) - 1)*int(limit)
-    engine = create_engine("mysql://root:root@39.108.141.110:3306/world", encoding="utf-8")
-    sql = 'select * from ' + table + ' limit ' + str(num) + ' , ' + limit
-    df = pd.read_sql_query(sql, engine)
+
+    # engine = create_engine("mysql://root:root@39.108.141.110:3306/world", encoding="utf-8")
+    # sql = 'select * from ' + table + ' order by release_date desc limit ' + str(num) + ' , ' + limit
+    # df = pd.read_sql_query(sql, engine)
+
+    client = pymongo.MongoClient('localhost', 27017)
+    db = client['world']
+    collection = db[table]
+    count = collection.find().count()
+    df = pd.DataFrame(list(collection.find({}, {'_id': 0}).sort([('release_date', -1)]).skip(num).limit(int(limit))))
     lst_dct = df.to_dict(orient='records')
 
     _json = {
         'code': 0,
         'msg': "",
-        'count': 400,
+        'count': count,
         'data': lst_dct
     }
     return HttpResponse(json.dumps(_json, cls=DjangoJSONEncoder), content_type="application/json")
