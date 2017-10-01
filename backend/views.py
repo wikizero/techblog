@@ -27,7 +27,6 @@ def get_raw_data(request):
     ① select * from table limit 2,1;
     //含义是跳过2条取出1条数据，limit后面是从第2条开始读，读取1条信息，即读取第3条数据
     
-    
     ② select * from table limit 2 offset 1;
     //含义是从第1条（不包括）数据开始取出2条数据，limit后面跟的是2条数据，offset后面是从第1条开始读取，即读取第2,3条
     '''
