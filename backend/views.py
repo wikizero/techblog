@@ -37,17 +37,22 @@ def get_raw_data(request):
     limit = request.GET.get('limit', False)
     num = (int(page) - 1)*int(limit)
 
-    # engine = create_engine("mysql://root:root@39.108.141.110:3306/world", encoding="utf-8")
-    # sql = 'select * from ' + table + ' order by release_date desc limit ' + str(num) + ' , ' + limit
-    # df = pd.read_sql_query(sql, engine)
-
-    client = pymongo.MongoClient('localhost', 27017)
-    db = client['world']
-    collection = db[table]
-    count = collection.find().count()
-    df = pd.DataFrame(list(collection.find({}, {'_id': 0}).sort([('release_date', -1)]).skip(num).limit(int(limit))))
+    #engine = create_engine("mysql://root:root@39.108.141.110:3306/world", encoding="utf-8")
+    import pymysql as mysql
+    table = 'swordinfo' if table == 'sword' else table
+    engine = mysql.connect(host="localhost",user="root",passwd="root",db="world",charset='utf8')
+    sql = 'select * from ' + table + ' order by release_date desc limit ' + str(num) + ' , ' + limit
+    df = pd.read_sql(sql, engine)
+    count = pd.read_sql('select count(*) as sum from '+table, engine)
     lst_dct = df.to_dict(orient='records')
-
+    count = count['sum'].tolist()[0]
+    #client = pymongo.MongoClient('localhost', 27017)
+    #db = client['world']
+    #collection = db[table]
+    #count = collection.find().count()
+    #df = pd.DataFrame(list(collection.find({}, {'_id': 0}).sort([('release_date', -1)]).skip(num).limit(int(limit))))
+    #lst_dct = df.to_dict(orient='records')
+    
     _json = {
         'code': 0,
         'msg': "",
