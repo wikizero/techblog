@@ -6,12 +6,34 @@ from sqlalchemy import create_engine
 import json
 from django.core.serializers.json import DjangoJSONEncoder
 import pymongo
+import pymysql as mysql
+
 
 # Create your views here.
 
 
 def index(request):
-    return render(request, 'backend/index.html')
+    # select country, count(*) as sum  from swordinfo group by country;
+    engine = mysql.connect(host="localhost", user="root", passwd="root", db="world", charset='utf8')
+
+    sql = 'select release_date as date, count(*) as sum  from info group by release_date'
+    df = pd.read_sql(sql, engine)
+    df = df[-10:]
+    info_date, info_data = map(str, df['date'].tolist()), df['sum'].tolist()
+
+    sql = 'select release_date as date, count(*) as sum  from swordinfo group by release_date'
+    df = pd.read_sql(sql, engine)
+    df = df[-10:]
+    sword_date, sword_data = map(str, df['date'].tolist()), df['sum'].tolist()
+
+    data = {
+        'info_date': info_date,
+        'info_data': info_data,
+        'sword_date': sword_date,
+        'sword_data': sword_data,
+    }
+
+    return render(request, 'backend/index.html', data)
 
 
 def get_sword_data(request):
@@ -36,8 +58,8 @@ def get_raw_data(request):
     limit = request.GET.get('limit', False)
     num = (int(page) - 1)*int(limit)
 
-    #engine = create_engine("mysql://root:root@39.108.141.110:3306/world", encoding="utf-8")
-    import pymysql as mysql
+    # engine = create_engine("mysql://root:root@39.108.141.110:3306/world", encoding="utf-8")
+
     table = 'swordinfo' if table == 'sword' else table
     engine = mysql.connect(host="localhost",user="root",passwd="root",db="world",charset='utf8')
     sql = 'select * from ' + table + ' order by release_date desc limit ' + str(num) + ' , ' + limit
@@ -45,12 +67,13 @@ def get_raw_data(request):
     count = pd.read_sql('select count(*) as sum from '+table, engine)
     lst_dct = df.to_dict(orient='records')
     count = count['sum'].tolist()[0]
-    #client = pymongo.MongoClient('localhost', 27017)
-    #db = client['world']
-    #collection = db[table]
-    #count = collection.find().count()
-    #df = pd.DataFrame(list(collection.find({}, {'_id': 0}).sort([('release_date', -1)]).skip(num).limit(int(limit))))
-    #lst_dct = df.to_dict(orient='records')
+
+    # client = pymongo.MongoClient('localhost', 27017)
+    # db = client['world']
+    # collection = db[table]
+    # count = collection.find().count()
+    # df = pd.DataFrame(list(collection.find({}, {'_id': 0}).sort([('release_date', -1)]).skip(num).limit(int(limit))))
+    # lst_dct = df.to_dict(orient='records')
     
     _json = {
         'code': 0,
