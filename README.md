@@ -1,2 +1,0 @@
-# techblog
-technology blog
