@@ -1,8 +1,0 @@
-
-更改数据表名： alter table recSys_movie rename movie;
-
-导出数据：mysqldump -uroot -p databasename table1 table2 > foo.sql
-
-导入数据：mysql -uroot -p databasename < foo.sql
-
-推荐公式：豆瓣评分+人数／10000 数值越大越能受推荐(评分+热度)
