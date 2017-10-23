@@ -8,8 +8,7 @@
     boss_count: {{ boss_count }} <br>
     lagou_count: {{lagou_count }} <br>
     <div id="main" style="width: 600px;height:400px;"></div>
-    <div id="info" style="width: 1200px;height:400px;"></div>
-    <div id="sword" style="width: 1200px;height:400px;"></div>
+    <div id="info" style="width: 1380px;height:500px;"></div>
 
     <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
@@ -62,20 +61,26 @@
         var info = echarts.init(document.getElementById('info'));
         var info_date = '{% for i in info_date %}{{ i }} {% endfor %}'
         info_date = info_date.split(' ')
+		info_date.pop()
 
         var info_data = '{% for i in info_data %}{{ i }} {% endfor %}'
         info_data = info_data.split(' ')
+		info_data.pop()
+
+        var sword_data = '{% for i in sword_data %}{{ i }} {% endfor %}'
+        sword_data = sword_data.split(' ')
+		sword_data.pop()
 
         optionInfo = {
             title: {
-                text: '朕的江山每日数据量',
+                text: '每日数据量',
                 subtext: '按天统计'
             },
             tooltip: {
                 trigger: 'axis'
             },
             legend: {
-                data: ['蒸发量']
+                data: ['朕的江山', '剑与家园']
             },
             toolbox: {
                 show: true,
@@ -100,7 +105,7 @@
             ],
             series: [
                 {
-                    name: '数据量',
+                    name: '朕的江山',
                     type: 'bar',
                     data: info_data,
                     markPoint: {
@@ -115,51 +120,8 @@
                         ]
                     }
                 },
-            ]
-        };
-
-        var sword = echarts.init(document.getElementById('sword'));
-        var sword_date = '{% for i in sword_date %}{{ i }} {% endfor %}'
-        sword_date = sword_date.split(' ')
-
-        var sword_data = '{% for i in sword_data %}{{ i }} {% endfor %}'
-        sword_data = sword_data.split(' ')
-
-        optionSword = {
-            title: {
-                text: '朕的江山每日数据量',
-                subtext: '按天统计'
-            },
-            tooltip: {
-                trigger: 'axis'
-            },
-            legend: {
-                data: ['蒸发量']
-            },
-            toolbox: {
-                show: true,
-                feature: {
-                    dataView: {show: true, readOnly: false},
-                    magicType: {show: true, type: ['line', 'bar']},
-                    restore: {show: true},
-                    saveAsImage: {show: true}
-                }
-            },
-            calculable: true,
-            xAxis: [
-                {
-                    type: 'category',
-                    data: sword_date
-                }
-            ],
-            yAxis: [
-                {
-                    type: 'value'
-                }
-            ],
-            series: [
-                {
-                    name: '数据量',
+				{
+                    name: '剑与家园',
                     type: 'bar',
                     data: sword_data,
                     markPoint: {
@@ -177,10 +139,8 @@
             ]
         };
 
-
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
         info.setOption(optionInfo);
-        sword.setOption(optionSword);
     </script>
 {% endblock %}

@@ -18,12 +18,12 @@ def index(request):
 
     sql = 'select release_date as date, count(*) as sum  from info group by release_date'
     df = pd.read_sql(sql, engine)
-    df = df[-10:]
+    df = df[-12:]
     info_date, info_data = map(str, df['date'].tolist()), df['sum'].tolist()
 
     sql = 'select release_date as date, count(*) as sum  from swordinfo group by release_date'
     df = pd.read_sql(sql, engine)
-    df = df[-10:]
+    df = df[-12:]
     sword_date, sword_data = map(str, df['date'].tolist()), df['sum'].tolist()
 
     engine = MySQLHelper.create_engine('root:root@127.0.0.1:3306/Jobs')
