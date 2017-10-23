@@ -2,11 +2,11 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 import pandas as pd
-from sqlalchemy import create_engine
 import json
 from django.core.serializers.json import DjangoJSONEncoder
 import pymongo
 import pymysql as mysql
+from api.MySQlHelper import *
 
 
 # Create your views here.
@@ -26,11 +26,19 @@ def index(request):
     df = df[-10:]
     sword_date, sword_data = map(str, df['date'].tolist()), df['sum'].tolist()
 
+    engine = MySQLHelper.create_engine('root:root@127.0.0.1:3306/Jobs')
+    boss_count = MySQLHelper.execute_query(u'select count(*) from job where source = "Boss直聘"', engine)[0][0]
+    lagou_count = MySQLHelper.execute_query(u'select count(*) from job where source = "拉勾网"', engine)[0][0]
+    print boss_count, '*'*20
+
     data = {
         'info_date': info_date,
         'info_data': info_data,
         'sword_date': sword_date,
         'sword_data': sword_data,
+        'boss_count': boss_count,
+        'lagou_count': lagou_count
+
     }
 
     return render(request, 'backend/index.html', data)
@@ -79,6 +87,6 @@ def get_raw_data(request):
         'code': 0,
         'msg': "",
         'count': count,
-        'data': lst_dct
+        'data': lst_dct,
     }
     return HttpResponse(json.dumps(_json, cls=DjangoJSONEncoder), content_type="application/json")
