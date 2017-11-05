@@ -7,7 +7,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 import pymongo
 import pymysql as mysql
 from api.MySQlHelper import *
-
+from api.forData import *
 
 # Create your views here.
 
@@ -90,3 +90,38 @@ def get_raw_data(request):
         'data': lst_dct,
     }
     return HttpResponse(json.dumps(_json, cls=DjangoJSONEncoder), content_type="application/json")
+
+
+def job_analysis(request):
+    engine = mysql.connect(host="localhost", user="root", passwd="root", db="Jobs", charset='utf8')
+    sql = 'select address, count(*) as count from job group by address order by count desc;'
+    df = pd.read_sql(sql, engine)
+    address, address_num = df['address'].tolist()[:10], df['count'].tolist()[:10]
+    data = {
+        'address': address,
+        'address_num': address_num
+    }
+    return render(request, 'backend/job.html', data)
+
+
+def job_python(request):
+    for_data = forData()
+    python_field_type, python_field_num = for_data.job_python('position_type','Python')
+    python_label_type, python_label_num = for_data.job_python('label', 'Python')
+    # for i in python_label_type:
+    #     print i
+    # print python_label_num
+    exp_type, exp_num = for_data.job_query('exp')
+    edu_type, edu_num = for_data.job_query('salary')
+
+    data = {
+        'python_field_type': python_field_type[:15],
+        'python_field_num': python_field_num[:15],
+        'python_label_type': python_label_type[:15],
+        'python_label_num': python_label_num[:15],
+        'exp_type': exp_type,
+        'exp_num': exp_num,
+        'edu_type': edu_type[:15],
+        'edu_num': edu_num[:15]
+    }
+    return render(request, 'backend/python.html', data)

@@ -1,0 +1,196 @@
+{% extends 'backend/base.html' %}
+{% load staticfiles %}
+{% block title %}Python{% endblock title %}
+{% block head %}
+
+{% endblock head %}
+{% block content %}
+<div id="main" style="width: 1500px;height:500px;"></div>
+<div id="exp" style="width: 1000px;height:500px;"></div>
+<div id="edu" style="width: 1500px;height:500px;"></div>
+<!--<div id="info" style="width: 1380px;height:500px;"></div>-->
+
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    var myChartForExp = echarts.init(document.getElementById('exp'));
+    var myChartForEdu = echarts.init(document.getElementById('edu'));
+
+    // 指定图表的配置项和数据
+    var field_type = '{% for i in python_field_type %}{{ i }} {% endfor %}'
+    field_type = field_type.split(' ')
+    field_type.pop()
+
+    var field_num = '{% for i in python_field_num %}{{ i }} {% endfor %}'
+    field_num = field_num.split(' ')
+    field_num.pop()
+
+
+    // 指定图表的配置项和数据text
+    var option = {
+        title: {
+            text: 'Python使用领域分布情况',
+            subtext: '仅供参考'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['Python']
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                dataView: {show: true, readOnly: false},
+                magicType: {show: true, type: ['line', 'bar']},
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+        calculable: true,
+        xAxis: [
+            {
+                type: 'category',
+                data: field_type
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        series: [
+            {
+                name: 'Python',
+                type: 'bar',
+                data: field_num,
+                markPoint: {
+                    data: [
+                        {type: 'max', name: '最大值'},
+                        {type: 'min', name: '最小值'}
+                    ]
+                },
+            },
+
+        ]
+    };
+
+    var edu_type = '{% for i in edu_type %}{{ i }} {% endfor %}'
+    edu_type = edu_type.split(' ')
+    edu_type.pop()
+
+    var edu_num = '{% for i in edu_num %}{{ i }} {% endfor %}'
+    edu_num = edu_num.split(' ')
+    edu_num.pop()
+
+    var EduOption = {
+        title: {
+            text: 'Python学历要求',
+            subtext: '仅供参考'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['Python']
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                dataView: {show: true, readOnly: false},
+                magicType: {show: true, type: ['line', 'bar']},
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+        calculable: true,
+        xAxis: [
+            {
+                type: 'category',
+                data: edu_type
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        series: [
+            {
+                name: 'Python',
+                type: 'bar',
+                data: edu_num,
+                markPoint: {
+                    data: [
+                        {type: 'max', name: '最大值'},
+                        {type: 'min', name: '最小值'}
+                    ]
+                },
+            },
+
+        ]
+    };
+
+
+    var exp_type = '{% for i in exp_type %}{{ i }} {% endfor %}'
+    exp_type = exp_type.split(' ')
+    exp_type.pop()
+
+    var exp_num = '{% for i in exp_num %}{{ i }} {% endfor %}'
+    exp_num = exp_num.split(' ')
+    exp_num.pop()
+
+    var ExpOption = {
+        title: {
+            text: 'Python经验要求',
+            subtext: '仅供参考'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['Python']
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                dataView: {show: true, readOnly: false},
+                magicType: {show: true, type: ['line', 'bar']},
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+        calculable: true,
+        xAxis: [
+            {
+                type: 'category',
+                data: exp_type
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        series: [
+            {
+                name: 'Python',
+                type: 'bar',
+                data: exp_num,
+                markPoint: {
+                    data: [
+                        {type: 'max', name: '最大值'},
+                        {type: 'min', name: '最小值'}
+                    ]
+                },
+            },
+
+        ]
+    };
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+    myChartForExp.setOption(ExpOption);
+    myChartForEdu.setOption(EduOption);
+
+</script>
+{% endblock %}

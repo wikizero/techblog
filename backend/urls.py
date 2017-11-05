@@ -22,6 +22,8 @@ urlpatterns = [
     url(r'myWorldData', views.get_world_data),
     url(r'swordData', views.get_sword_data),
     url(r'^getRawData', views.get_raw_data),
+    url(r'^job/analysis', views.job_analysis),
+    url(r'^job/Python', views.job_python),
 
 ]
 

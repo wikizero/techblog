@@ -1,0 +1,67 @@
+{% extends 'backend/base.html' %}
+{% load staticfiles %}
+{% block title %}职位分布情况{% endblock title %}
+{% block head %}
+
+{% endblock head %}
+{% block content %}
+<div id="main" style="width: 800px;height:500px;"></div>
+<!--<div id="info" style="width: 1380px;height:500px;"></div>-->
+
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+
+    // 指定图表的配置项和数据
+    var address = '{% for i in address %}{{ i }} {% endfor %}'
+    address = address.split(' ')
+    address.pop()
+
+    var address_num = '{% for i in address_num %}{{ i }} {% endfor %}'
+    address_num = address_num.split(' ')
+    address_num.pop()
+
+    var _data = []
+    for(var x=0; x<address_num.length; x++){
+        _data.push({value:address_num[x], name:address[x]})
+    }
+
+    option = {
+        title: {
+            text: '全国职位分布情况(前十)',
+            subtext: '数据来源: Boss直聘、拉钩',
+            x: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: address
+        },
+        series: [
+            {
+                name: '访问来源',
+                type: 'pie',
+                radius: '55%',
+                center: ['50%', '60%'],
+                data: _data,
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+
+</script>
+{% endblock %}
