@@ -2,7 +2,7 @@
 {% load staticfiles %}
 {% block title %}Python{% endblock title %}
 {% block head %}
-
+<script src="{% static 'backend/worldcloud.js' %}"></script>
 {% endblock head %}
 {% block content %}
 <div id="main" style="width: 1500px;height:500px;"></div>
@@ -187,6 +187,8 @@
 
         ]
     };
+
+
     // 使用刚指定的配置项和数据显示图表。
     myChart.setOption(option);
     myChartForExp.setOption(ExpOption);

@@ -1,0 +1,97 @@
+{% extends 'backend/base.html' %}
+{% load staticfiles %}
+{% block title %}Python{% endblock title %}
+{% block head %}
+<script src="{% static 'backend/worldcloud.js' %}"></script>
+{% endblock head %}
+{% block content %}
+<div id="word" style="width: 800px;height:400px;"></div>
+<!--<div id="info" style="width: 1380px;height:500px;"></div>-->
+
+
+<select  id="select">
+    <option value="Python">请选择领域</option>
+    <option value="Python">Python</option>
+    <option value="Java">Java</option>
+    <option value="C/C++">C/C++</option>
+    <option value="iOS">iOS</option>
+    <option value="Android">Android</option>
+    <option value="PHP">PHP</option>
+    <option value="数据挖掘">数据挖掘</option>
+</select>
+
+
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChartForWord = echarts.init(document.getElementById('word'));
+
+    function createRandomItemStyle() {
+        return {
+            normal: {
+                color: 'rgb(' + [
+                    Math.round(Math.random() * 160),
+                    Math.round(Math.random() * 160),
+                    Math.round(Math.random() * 160)
+                ].join(',') + ')'
+            }
+        };
+    }
+    function setOption(data) {
+        option = {
+            title: {
+                text: '技术栈',
+                link: '数据来源：Boss直聘、拉勾网'
+            },
+            tooltip: {
+                show: true
+            },
+            series: [{
+                name: '技术栈',
+                type: 'wordCloud',
+                size: ['100%', '100%'],
+                textRotation: [0, 45, 60, -45],
+                textPadding: 0,
+                autoSize: {
+                    enable: true,
+                    minSize: 25
+                },
+                data: data
+            }]
+        };
+        return option
+    }
+
+
+    // 使用刚指定的配置项和数据显示图表。
+    function get_data(language) {
+        $.ajax({
+            type: 'post',
+            url: '/backend/job/techStack',
+            data: {
+                'language': language,
+            },
+            success: function (data) {
+                var json_data = JSON.parse(data.data);
+                var data = []
+                for (x in json_data) {
+                    data.push({name: x, value: json_data[x], itemStyle: createRandomItemStyle()})
+                }
+                myChartForWord.setOption(setOption(data));
+
+            }
+        })
+    }
+    $(function () {
+        $('#select').change(function () {
+            choice = $(this).val();
+            if(choice == ''){
+                choice = 'All'
+            }
+            get_data(choice)
+        })
+    })
+
+    get_data('Python')
+
+</script>
+{% endblock %}

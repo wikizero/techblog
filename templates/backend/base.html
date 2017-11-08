@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="{% static 'backend/layui/css/layui.css' %}">
     <script src="{% static 'backend/echarts.min.js' %}"></script>
+    <script src="{% static 'backend/jquery-1.7.1.min.js' %}"></script>
     {% block head %}
     {% endblock %}
     <title>{% block title %}Attitude 站点{% endblock %}</title>
@@ -60,7 +61,7 @@
                     <dl class="layui-nav-child">
                         <dd><a href="/backend/job/analysis">职位分布</a></dd>
                         <dd><a href="/backend/job/Python">Python</a></dd>
-                        <dd><a href="">超链接</a></dd>
+                        <dd><a href="/backend/job/techStack">技术栈</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item"><a href="">云市场</a></li>

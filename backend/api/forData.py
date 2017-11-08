@@ -6,6 +6,8 @@ import random
 import pymysql as mysql
 from pandas import read_sql
 from compiler.ast import flatten
+import jieba
+import re
 from collections import Counter
 
 
@@ -30,3 +32,20 @@ class forData:
 		      "COUNT(*) desc;".format(field=field)
 		df = read_sql(sql, self.engine)
 		return df[field].tolist(), df['count'].tolist()
+
+
+if __name__ == '__main__':
+	# label, num = forData().job_python('label', 'Python')
+	# for k, v in zip(label, num):
+	# 	print k, ' : ', v
+	engine = mysql.connect(host="localhost", user="root", passwd="root", db="Jobs", charset='utf8')
+	sql = "SELECT `desc` FROM jobanalysis WHERE type = 'Python'"
+	df = read_sql(sql, engine)
+	desc = ' '.join(df['desc'].tolist())
+	word_lst = jieba.cut(desc)
+	words = [re.sub('\s', '', w).lower() for w in word_lst if re.sub('\s', '', w) and len(w) > 1 and re.findall(r'[0-9a-zA-Z]+', w)]
+	ret = Counter(words)
+	for k, v in ret.most_common(50):
+		print k.capitalize(), v
+	print dict(ret.most_common(50))
+
