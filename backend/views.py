@@ -154,7 +154,7 @@ def job_technology_stack(request):
 		# for k, v in ret.most_common(50):
 		# 	print k.capitalize(), v
 		dct = dict(ret.most_common(80))
-		pop_lst = ['211', '985', 'Python', 'Java', 'And', 'Android', 'C++', 'Php', 'Ios']
+		pop_lst = ['211', '985', 'Python', 'Java', 'And', 'Android', 'C++', 'Php', 'Ios', 'The']
 		for p in pop_lst:
 			if p in dct:
 				dct.pop(p)
