@@ -192,14 +192,24 @@ def stack(request):
         # for k, v in ret.most_common(50):
         #     print k.capitalize(), v
         dct = dict(ret.most_common(40))
-        pop_lst = ['211', '985', 'Python', 'Java', 'And', 'Android', 'C++', 'Php', 'Ios']
+        pop_lst = ['211', '985', 'Python', 'Java', 'And', 'Android', 'C++', 'Php', 'Ios', 'Web', 'Api']
         for p in pop_lst:
             if p in dct:
                 dct.pop(p)
 
         wordcloud = WordCloud(width=1300, height=620)
-        print dct.keys(), dct.values()
-        wordcloud.add("", dct.keys(), dct.values(), word_size_range=[25, 80])
+        rename = {
+            'Mysql': 'MySQL',
+            'Sql': 'SQL',
+            'Mongodb': 'MongoDB',
+            'Nosql': 'NoSQL',
+            'Html': 'HTML',
+            'Css': 'CSS',
+            'Openstack': 'OpenStack'
+        }
+        keys = [rename.get(k, k) for k in dct.keys()]
+
+        wordcloud.add("", keys, dct.values(), word_size_range=[25, 80])
 
         html = wordcloud.render_embed()
         data = {
