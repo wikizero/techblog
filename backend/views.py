@@ -209,3 +209,4 @@ def stack(request):
 
     elif request.method == 'GET':
         return render(request, 'backend/stack.html')
+
