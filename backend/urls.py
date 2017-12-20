@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^job/analysis', views.job_analysis),
     url(r'^job/Python', views.job_python),
     url(r'^job/techStack', views.job_technology_stack),
+    url(r'^job/stack', views.stack),
 
 ]
 

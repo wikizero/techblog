@@ -1,0 +1,58 @@
+{% extends 'backend/base.html' %}
+{% load staticfiles %}
+{% block title %}Python{% endblock title %}
+{% block head %}
+<script src="{% static 'backend/pyecharts/echarts.min.js' %}"></script>
+<script src="{% static 'backend/pyecharts/echarts-worldColud.js' %}"></script>
+{% endblock head %}
+{% block content %}
+<script>
+
+    $(function () {
+
+        // 使用刚指定的配置项和数据显示图表。
+        function get_data(language) {
+            $.ajax({
+                type: 'post',
+                url: '/backend/job/stack',
+                data: {
+                    'language': language,
+                },
+                success: function (data) {
+//                    $('.dd').remove()
+                    $('.dd').html('')
+                    $('.dd').append(data.data)
+                }
+            })
+        }
+
+        $(function () {
+            $('#select').change(function () {
+                choice = $(this).val();
+                if (choice == '') {
+                    choice = 'All'
+                }
+                get_data(choice)
+            })
+        })
+
+        get_data('Python')
+
+    })
+</script>
+
+<div class="dd"></div>
+
+
+<select id="select">
+    <option value="Python">请选择领域</option>
+    <option value="Python">Python</option>
+    <option value="Java">Java</option>
+    <option value="C/C++">C/C++</option>
+    <option value="iOS">iOS</option>
+    <option value="Android">Android</option>
+    <option value="PHP">PHP</option>
+    <option value="数据挖掘">数据挖掘</option>
+</select>
+
+{% endblock %}
