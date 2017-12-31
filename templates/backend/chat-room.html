@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../static/blog/css/uikit.css">
+    <link rel="stylesheet" href="../../static/blog/css/uikit.gradient.css">
+    <script src="../../static/blog/js/jquery-1.7.1.min.js"></script>
+    <title>Title</title>
+
+    <style>
+        .content{
+            width:900px;
+            height:600px;
+            border:1px solid #ccc;
+            padding:8px 8px;
+            overflow: scroll;
+        }
+
+        .message{
+            width:100%;
+        }
+
+        .message-right p{
+            text-align:right;
+        }
+    </style>
+
+    <script>
+        $(function(){
+            $('.edit-box').keypress(function(e){
+
+                text = $('.edit-box').val()
+                text = '<div class="message message-right"><p>'+text+' : (深圳)192.168.1.1</p></div>'
+                if(e.ctrlKey && e.which == 13 || e.which == 10) {
+                   $('.content').append(text)
+                   $('.edit-box').val('')
+                } else if (e.shiftKey && e.which==13 || e.which == 10) {
+                   alert('ctrl+enter')
+                }
+            })
+        })
+
+    </script>
+</head>
+<body>
+
+<div style="width: 1000px;padding: 20px;margin: 0px auto">
+
+    <div class="uk-form-row" style="margin: 50px auto">
+        <form method="post">
+            <div class="content">
+                <div class="message message-left">
+                    <p>192.168.1.1(深圳) : kjasdas绿卡</p>
+                </div>
+
+                <div class="message message-right">
+                    <p>kjasdasdasddddddddddd绿卡 : (深圳)192.168.1.1</p>
+                </div>
+            </div>
+            <textarea class="edit-box" cols="123" rows="8" placeholder="Ctrl+Enter 发送消息" name="text" style="padding: 8px 8px;"></textarea>
+        </form>
+    </div>
+
+</div>
+
+</body>
+</html>
