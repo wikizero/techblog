@@ -4,17 +4,19 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from blog.models import *
+from models import *
 import random
 import datetime
 import ncmbot
 import wget
 import json
 import os
-from blog.api import get_addr
-from blog.api import music
+from api import get_addr, music, PublishSubscribe
 import StringIO
 import urllib2
+from dwebsocket.decorators import accept_websocket, require_websocket
+
+chat_users = set()  # 聊天用户
 
 
 def index(request):
@@ -514,3 +516,37 @@ def download_music(request):
         # mid = request.POST.get('mid', False)
         # size = ncmbot.song_detail([int(mid)]).json()['songs'][0]['m']['size'] # m/l
 
+
+@csrf_exempt
+@accept_websocket
+def chat_room(request):
+    # 聊天记录本地缓存
+    if not request.is_websocket():
+        if request.method == 'GET':
+            ret = get_addr.ip_info()
+            ip, address = ret if not ret else ('Client-'+str(len(chat_users)+1), 'Unknow')
+            data = {
+                'ip': ip,
+                'address': address
+            }
+            return render(request, 'blog/chat-room.html', data)
+
+        elif request.method == 'POST':
+            msg = request.POST.get('msg')
+            PublishSubscribe.public('default', msg)
+            data = {
+                'msg': msg
+            }
+
+            return HttpResponse(json.dumps(data), content_type="application/json")
+    else:
+        # request belong websocket
+        user = request.websocket
+        chat_users.add(user)
+        for msg in user:
+            for u in chat_users:
+                print u
+                # msg.split(sep=':', maxsplit=1)
+                print msg
+                u.send(msg)  # 发送消息到客户端
+        chat_users.remove(user)

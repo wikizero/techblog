@@ -44,6 +44,7 @@ urlpatterns = [
     # tools url
     url(r'^tool/pdf', views.tool_pdf),
     url(r'^download/music', views.download_music),
+    url(r'^chat_room', views.chat_room),
 
 ]
 

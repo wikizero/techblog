@@ -1,0 +1,163 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="{% static 'blog/css/uikit.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'blog/css/uikit.gradient.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{% static 'blog/layui/css/layui.css' %}">
+    <script src="{% static 'blog/js/jquery-1.7.1.min.js' %}"></script>
+    <script src="{% static 'blog/js/uikit.js' %}"></script>
+    <script src="{% static 'blog/layui/layui.js' %}"></script>
+    <title>Title</title>
+
+    <style>
+        .content{
+            width:900px;
+            height:550px;
+            <!--border:1px solid #ccc;-->
+            padding:8px 8px;
+            padding-right:20px;
+            overflow: scroll;
+
+        }
+
+        .message{
+            width:100%;
+        }
+        .layui-form{
+            width: 900px;
+        }
+        .message-right p{
+            text-align:right;
+        }
+
+
+
+
+
+
+
+
+    </style>
+
+    <script>
+        $(function(){
+
+            var wsServer = 'ws://127.0.0.1:8000/blog/chat_room'; //服务器地址
+            var websocket = new WebSocket(wsServer); //创建WebSocket对象
+
+            websocket.onopen = function (evt) {
+                //已经建立连接
+                console.log("websocket success")
+            };
+            websocket.onclose = function (evt) {
+                //已经关闭连接
+                console.log("websocket close")
+            };
+            websocket.onmessage = function (evt) {
+                //收到服务器消息，使用evt.data提取
+               ret = evt.data.split('<:>')
+               user = ret[0]
+               msg = ret[1]
+               var me = $('.layui-form-label').text()
+               if(user == me){
+                    <!--text = '<div class="message message-right"><p>'+msg+' : '+user+'</p></div>'-->
+                    text = '<header class="uk-comment-header"><img class="uk-comment-avatar uk-border-circle" src="{% static 'blog/images/photo.jpg' %}" alt="" height="50" width="50" style="float:right;margin-right:0"><div class="uk-comment-meta" style="float:right;margin-right:15px">'+user+'</div><h4 class="uk-comment-title" style="font-size:14px;margin-top:20px;text-align:right;margin-right:65px">'+msg+'</h4></header>'
+
+               }else{
+                    <!--text = '<div class="message message-left"><p>'+user+' : '+msg+'</p></div>'-->
+                    text = '<header class="uk-comment-header"><img class="uk-comment-avatar uk-border-circle" src="{% static 'blog/images/photo.jpg' %}" alt="" height="50" width="50"> <div class="uk-comment-meta">'+user+'</div><h4 class="uk-comment-title" style="font-size:14px;margin-left:65px">'+msg+'</h4></header>'
+
+               }
+               $('.content').append(text)
+               $('.edit-box').val('')
+               $('.content').scrollTop($('.content').prop("scrollHeight"));
+            };
+            websocket.onerror = function (evt) {
+                //产生异常
+                console.log('error')
+
+            };
+
+            // request backend by ajax
+            function postData(msg) {
+                $.ajax({
+                    type: 'post',
+                    url: '/blog/chat_room',
+                    data: {
+                        'msg': msg
+                    },
+                    success : function(ret){
+                        console.log(ret.msg)
+                    }
+                })
+            }
+
+            $('.edit-box').keypress(function(e){
+                var user = $('.layui-form-label').text()
+                var msg = $('.edit-box').val()
+
+                if(e.ctrlKey && e.which == 13 || e.which == 10) {
+
+                    websocket.send(user+'<:>'+msg); //向服务器发送消息
+
+                }
+            });
+
+        })
+
+
+
+
+
+
+
+
+    </script>
+</head>
+<body>
+
+<div style="width: 1000px;padding: 20px;margin: 0px auto">
+
+    <div class="uk-form-row" style="margin: 20px auto">
+        <div class="content">
+            <!--<header class="uk-comment-header">-->
+                <!--<img class="uk-comment-avatar uk-border-circle" src="{% static 'blog/images/photo.jpg' %}" alt=""-->
+                     <!--height="50" width="50">-->
+                <!--<div class="uk-comment-meta">Client-1</div>-->
+                <!--<h4 class="uk-comment-title" style="font-size:14px;margin-left:65px">大家好呀</h4>-->
+            <!--</header>-->
+
+            <!--<header class="uk-comment-header">-->
+                <!--<img class="uk-comment-avatar uk-border-circle" src="{% static 'blog/images/photo.jpg' %}" alt=""-->
+                     <!--height="50" width="50" style="float:right;margin-right:0">-->
+                <!--<div class="uk-comment-meta" style="float:right;margin-right:15px">Client-1</div>-->
+                <!--<h4 class="uk-comment-title" style="font-size:14px;margin-top:20px;text-align:right;margin-right:65px">-->
+                    <!--你好呀,小鬼头</h4>-->
+            <!--</header>-->
+        </div>
+        <!--<div class="uk-form-row">-->
+        <!--<textarea class="edit-box" cols="123" rows="8" placeholder="Ctrl+Enter 发送消息" name="text"-->
+        <!--style="padding: 8px 8px;"></textarea>-->
+        <!--<p class="uk-form-help-block">...</p>-->
+        <!--</div>-->
+
+    </div>
+
+    <form class="layui-form layui-form-pane" action="">
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">{{ ip }}</label>
+            <div class="layui-input-block">
+                <textarea placeholder="Ctrl+Enter 发送消息" class="layui-textarea edit-box"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <button class="layui-btn" type="button" lay-filter="demo2">发送</button>
+        </div>
+    </form>
+
+</div>
+
+</body>
+</html>
